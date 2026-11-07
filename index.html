@@ -58,6 +58,10 @@ p{margin:0}
 .savebox{font-size:14px;color:var(--chalk-dim)}
 .credit{font-size:13.5px;color:var(--chalk-dim);text-align:center;border:1.5px dashed var(--line);border-radius:999px;padding:6px 14px;margin:0 auto}
 .credit b{color:var(--accent)}
+.linebtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:0 auto;padding:10px 20px;border-radius:999px;background:#06c755;color:#fff;font-family:var(--display);font-size:16px;text-decoration:none;border-bottom:4px solid #04964a;min-height:48px}
+.linebtn svg{width:24px;height:24px}
+.linebtn b{font-weight:600}
+.linebtn:active{transform:translateY(2px);border-bottom-width:2px}
 .lbl text{font-size:11.5px}
 
 /* story */
@@ -520,8 +524,9 @@ sup{font-size:.62em}
 .g24op:disabled{opacity:.4}
 .g24m{min-height:26px;text-align:center;margin:10px 0;font-family:var(--display);color:var(--accent)}
 /* คัตซีนเปลี่ยนฉาก */
-#trans{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden;perspective:1100px}
-.tr-door{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(90deg,#7a4a26,#9a6232 50%,#7a4a26);box-shadow:inset 0 0 0 6px #5a3418;transition:transform .85s cubic-bezier(.6,.05,.3,1) .25s}
+#trans{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden;perspective:1100px;transition:opacity .4s ease .3s}
+#trans.go{opacity:0}
+.tr-door{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(90deg,#7a4a26,#9a6232 50%,#7a4a26);box-shadow:inset 0 0 0 6px #5a3418;transition:transform .55s cubic-bezier(.5,.05,.3,1) .08s}
 .tr-door.l{left:0;transform-origin:left center}
 .tr-door.r{right:0;transform-origin:right center}
 .tr-dfr{position:absolute;inset:7% 14%;display:grid;grid-template-rows:1fr 1fr;gap:6%}
@@ -531,23 +536,40 @@ sup{font-size:.62em}
 .tr-door.l .tr-knob{right:8%}.tr-door.r .tr-knob{left:8%}
 #trans.go .tr-door.l{transform:rotateY(-105deg)}
 #trans.go .tr-door.r{transform:rotateY(105deg)}
-.tr-plate{position:absolute;left:50%;top:20%;transform:translateX(-50%);background:#fff6dc;color:#33261d;border:3px solid #5a3418;border-radius:10px;padding:6px 18px;font-family:var(--display);font-size:22px;white-space:nowrap;transition:opacity .3s .3s,transform .5s .3s}
+.tr-plate{position:absolute;left:50%;top:20%;transform:translateX(-50%);background:#fff6dc;color:#33261d;border:3px solid #5a3418;border-radius:10px;padding:6px 18px;font-family:var(--display);font-size:22px;white-space:nowrap;transition:opacity .25s .1s,transform .35s .1s}
 #trans.go .tr-plate{opacity:0;transform:translateX(-50%) translateY(-20px)}
-.tr-sky{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#ffffff,#bfe0ff);transition:opacity .6s .45s}
-.tr-storm .tr-sky{background:radial-gradient(circle at 50% 50%,#4a4f70,#1a1d30)}
+.tr-sky{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#ffffff,#bfe0ff);transition:opacity .35s .15s}
+.trk-storm .tr-sky{background:radial-gradient(circle at 50% 50%,#4a4f70,#1a1d30)}
 #trans.go .tr-sky{opacity:0}
-.tr-cl{position:absolute;top:-4%;bottom:-4%;width:66%;display:flex;transition:transform 1s cubic-bezier(.55,.05,.3,1) .2s}
+.tr-cl{position:absolute;top:-4%;bottom:-4%;width:66%;display:flex;transition:transform .6s cubic-bezier(.5,.05,.3,1) .08s}
 .tr-cl svg{height:100%;width:100%}
 .tr-cl.l{left:-8%;transform:scaleX(-1)}
 .tr-cl.r{right:-8%}
 #trans.go .tr-cl.l{transform:scaleX(-1) translateX(115%)}
 #trans.go .tr-cl.r{transform:translateX(115%)}
 .tr-plate.cl{top:46%;background:rgba(255,255,255,.9);border-color:#7fb3e0;color:#23406a}
-.tr-storm .tr-plate.cl{background:rgba(30,32,52,.9);border-color:#ffe36b;color:#ffe36b}
-.tr-flash{position:absolute;inset:0;background:#fff;opacity:0;animation:trflash .5s .1s}
+.trk-storm .tr-plate.cl{background:rgba(30,32,52,.9);border-color:#ffe36b;color:#ffe36b}
+.tr-flash{position:absolute;inset:0;background:#fff;opacity:0;animation:trflash .35s .05s}
 @keyframes trflash{0%,100%{opacity:0}20%{opacity:.75}40%{opacity:.1}55%{opacity:.5}}
-.tr-bolt{position:absolute;left:50%;top:14%;width:60px;transform:translateX(-50%);opacity:0;animation:trbolt .6s .05s}
+.tr-bolt{position:absolute;left:50%;top:14%;width:60px;transform:translateX(-50%);opacity:0;animation:trbolt .4s 0s}
 @keyframes trbolt{0%{opacity:0}15%,45%{opacity:1}100%{opacity:0}}
+
+.tr-pat{position:absolute;inset:0;width:100%;height:100%}
+.tr-emb{position:absolute;left:50%;top:34%;width:64px;height:64px;transform:translateX(-50%)}
+.tr-door.l .tr-emb{left:56%}.tr-door.r .tr-emb{left:44%}
+.kn-gold .tr-knob{background:#f2c14e}
+.kn-ring .tr-knob{width:26px;height:26px;background:none;border:5px solid #f2c14e;box-shadow:0 0 0 2px #7a3a12}
+.kn-iron .tr-knob{background:#3a3f47;border-color:#1f2328}
+.kn-pearl .tr-knob{background:#fff;border-color:#c9a66b}
+.kn-neon .tr-knob{width:8px;height:60px;border-radius:4px;margin-top:-30px;background:#39ffb6;border:none;box-shadow:0 0 10px #39ffb6}
+.kn-bar .tr-knob{width:8px;height:70px;border-radius:4px;margin-top:-35px;background:#c9d1d9;border:2px solid #6b7886}
+#trans.m-slide .tr-door{transition:transform .5s cubic-bezier(.5,.05,.3,1) .08s}
+#trans.go.m-slide .tr-door.l{transform:translateX(-102%)}
+#trans.go.m-slide .tr-door.r{transform:translateX(102%)}
+.st-arcade .tr-plate{background:#1a1a2e;color:#39ffb6;border-color:#ff5df0}
+.st-chest .tr-plate,.st-trophy .tr-plate{background:#fff6c2;border-color:#9a6f10}
+.st-ready .tr-plate{background:#f5ead2;border-color:#4a2c14}
+.st-hub .tr-plate{background:#e9edf2;border-color:#3a3f47}
 </style>
 </head>
 <body>
@@ -558,7 +580,8 @@ sup{font-size:.62em}
   <h1 class="logo">ปีศาจข้อสอบ<span class="two">ภาค 2</span><small>ผจญภัยคณิตศาสตร์ ม.1 – ม.3 · เตรียมสอบเข้า ม.4</small></h1>
   <p class="savebox" id="saveInfo"></p>
   <div class="tbtns" id="tbtns"></div>
-  <p class="credit">สร้างโดย <b>KruBoy</b> · ติดต่อ LINE ID: <b>thanapats</b></p>
+  <p class="credit">สร้างโดย <b>KruBoy</b></p>
+  <a class="linebtn" href="https://line.me/ti/p/~thanapats" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 .9l-.1.9c0 .3-.2 1 .9.5s5.9-3.5 8-6C21.4 14.2 22 12.7 22 11c0-4.4-4.5-8-10-8z" fill="#fff"/><path d="M6.5 9v4h2.2M9.8 9v4M11.6 13V9l2.6 4V9M17.4 9h-2.2v4h2.2M15.2 11h2" fill="none" stroke="#06c755" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>แอดไลน์ติดต่อ · ID: <b>thanapats</b></a>
 </section>
 
 <section id="story" class="screen" aria-label="เรื่องราว">
@@ -3598,17 +3621,34 @@ function mini24(){MG.t=120;MG.sc=0;MG.skip=0;const A=$('#miniArea');
 const TR_REDUCE=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TR_NAME={shop:'ร้านค้า',school:'โรงเรียน',arcade:'ตู้มินิเกม',chest:'วิหารหีบ',trophy:'หอถ้วยรางวัล',quests:'กระดานเควส',ready:'ห้องสมุดสอบ',ward:'ตู้เสื้อผ้า',bagS:'กระเป๋าไอเทม',hub:'เมือง'};
 const CLOUD=(fill,edge)=>`<svg viewBox="0 0 300 1000" preserveAspectRatio="none"><g fill="${fill}" stroke="${edge}" stroke-width="5">${[...Array(11)].map((_,i)=>{const y=i*100,x=60+((i*37)%3)*28;return `<circle cx="${x}" cy="${y}" r="${78+(i%3)*10}"/>`}).join('')}</g><g fill="${fill}"><rect x="70" y="-50" width="240" height="1100"/>${[...Array(11)].map((_,i)=>`<circle cx="${60+((i*37)%3)*28}" cy="${i*100}" r="${72+(i%3)*10}"/>`).join('')}</g></svg>`;
-function playTrans(kind,label){if(TR_REDUCE)return;let o=$('#trans');if(o)o.remove();o=document.createElement('div');o.id='trans';o.className='tr-'+kind;o.setAttribute('aria-hidden','true');
-  if(kind==='door'){const pan=s=>`<div class="tr-door ${s}"><div class="tr-dfr"><i></i><i></i><i></i><i></i></div><b class="tr-knob"></b></div>`;o.innerHTML=pan('l')+pan('r')+(label?`<div class="tr-plate">${label}</div>`:'')}
+
+/* ประตูแต่ละสถานที่ หน้าตาไม่ซ้ำกัน: bg=พื้นบาน, pat=ลวดลายบนบาน (viewBox 100x200), emb=ตราสัญลักษณ์, kn=ลูกบิด, mode=วิธีเปิด */
+const DPAT=(svg)=>`<svg class="tr-pat" viewBox="0 0 100 200" preserveAspectRatio="none">${svg}</svg>`;
+const DEMB=(svg)=>`<svg class="tr-emb" viewBox="0 0 60 60">${svg}</svg>`;
+const DOORS={
+ shop:{bg:'linear-gradient(180deg,#e8eef5,#c9d6e3)',pat:s=>`<rect x="8" y="8" width="84" height="184" fill="none" stroke="#8a99ab" stroke-width="5"/><rect x="16" y="16" width="68" height="140" fill="#bfe3ff" opacity=".85"/><path d="M22 30L44 22M22 50L60 34" stroke="#fff" stroke-width="4" opacity=".7"/><rect x="16" y="164" width="68" height="20" fill="#8a99ab"/>${s==='l'?'<rect x="0" y="0" width="100" height="14" fill="#e0453a"/>':'<rect x="0" y="0" width="100" height="14" fill="#fff"/>'}`,emb:s=>s==='r'?DEMB('<rect x="6" y="18" width="48" height="24" rx="5" fill="#e0453a" stroke="#fff" stroke-width="3"/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">OPEN</text><path d="M20 18L30 6L40 18" fill="none" stroke="#8a99ab" stroke-width="2"/>'):'',kn:'bar',mode:'slide'},
+ school:{bg:'linear-gradient(180deg,#f3e6c4,#e3cf9c)',pat:()=>`<rect x="6" y="6" width="88" height="188" fill="none" stroke="#2f6a3a" stroke-width="6"/><rect x="18" y="18" width="64" height="58" fill="#bfe3ff" stroke="#2f6a3a" stroke-width="4"/><path d="M50 18V76M18 47H82" stroke="#2f6a3a" stroke-width="3"/><rect x="18" y="96" width="64" height="86" fill="none" stroke="#c9a66b" stroke-width="4"/>`,emb:s=>s==='l'?DEMB('<path d="M30 8C20 8 16 18 16 30V40H44V30C44 18 40 8 30 8Z" fill="#f2c14e" stroke="#7a5a10" stroke-width="2.5"/><rect x="12" y="40" width="36" height="5" rx="2" fill="#7a5a10"/><circle cx="30" cy="50" r="5" fill="#f2c14e" stroke="#7a5a10" stroke-width="2"/>'):DEMB('<rect x="8" y="12" width="44" height="34" rx="3" fill="#2f5a3c" stroke="#8a5a30" stroke-width="4"/><text x="30" y="35" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">ม.1</text>'),kn:'gold',mode:'swing'},
+ arcade:{bg:'linear-gradient(180deg,#2a1450,#120a2e)',pat:()=>`<rect x="6" y="6" width="88" height="188" fill="none" stroke="#ff5df0" stroke-width="3"/><rect x="12" y="12" width="76" height="176" fill="none" stroke="#39ffb6" stroke-width="2" stroke-dasharray="4 4"/>${[...Array(8)].map((_,i)=>`<rect x="${20+(i%4)*17}" y="${120+Math.floor(i/4)*16}" width="10" height="10" fill="${['#ff5df0','#39ffb6','#ffe36b','#5fb3f0'][i%4]}"/>`).join('')}`,emb:s=>s==='l'?DEMB('<rect x="8" y="12" width="44" height="36" rx="6" fill="#1a1a2e" stroke="#39ffb6" stroke-width="3"/><path d="M18 30h10M23 25v10" stroke="#39ffb6" stroke-width="3"/><circle cx="38" cy="27" r="3" fill="#ff5df0"/><circle cx="44" cy="33" r="3" fill="#ffe36b"/>'):DEMB('<text x="30" y="26" text-anchor="middle" font-size="14" font-weight="700" fill="#ff5df0">GAME</text><text x="30" y="46" text-anchor="middle" font-size="14" font-weight="700" fill="#39ffb6">ON!</text>'),kn:'neon',mode:'slide'},
+ chest:{bg:'linear-gradient(180deg,#a8231c,#6b1410)',pat:()=>`<rect x="5" y="5" width="90" height="190" fill="none" stroke="#f2c14e" stroke-width="6"/>${[...Array(5)].map((_,r)=>[...Array(3)].map((_,c)=>`<circle cx="${25+c*25}" cy="${30+r*36}" r="4" fill="#f2c14e" stroke="#7a3a12" stroke-width="1.5"/>`).join('')).join('')}<path d="M5 100H95" stroke="#f2c14e" stroke-width="4"/>`,emb:()=>DEMB('<path d="M30 6L50 18V42L30 54L10 42V18Z" fill="#f2c14e" stroke="#7a3a12" stroke-width="3"/><rect x="20" y="24" width="20" height="16" rx="2" fill="#a8652f" stroke="#7a3a12" stroke-width="2"/><circle cx="30" cy="32" r="2.5" fill="#7a3a12"/>'),kn:'ring',mode:'swing'},
+ trophy:{bg:'linear-gradient(180deg,#ffe58a,#d9a520 60%,#b88512)',pat:()=>`<rect x="8" y="8" width="84" height="184" rx="4" fill="none" stroke="#fff6c2" stroke-width="4"/><rect x="16" y="16" width="68" height="168" rx="3" fill="none" stroke="#9a6f10" stroke-width="2"/>${[0,1,2,3,4].map(i=>`<path d="M${20+i*15} 168l2 4 4 .6-3 2.8.7 4L${20+i*15} 177l-3.6 2 .7-4-3-2.8 4-.6z" fill="#fff6c2"/>`).join('')}`,emb:()=>DEMB('<path d="M18 8H42V20C42 32 36 38 30 38C24 38 18 32 18 20Z" fill="#fff6c2" stroke="#7a5a10" stroke-width="2.5"/><path d="M18 12H10C10 22 14 26 20 26M42 12H50C50 22 46 26 40 26" fill="none" stroke="#7a5a10" stroke-width="2.5"/><rect x="26" y="38" width="8" height="8" fill="#7a5a10"/><rect x="18" y="46" width="24" height="7" rx="2" fill="#7a5a10"/>'),kn:'gold',mode:'swing'},
+ quests:{bg:'linear-gradient(90deg,#9a6232 0 24%,#8a5428 24% 26%,#9a6232 26% 49%,#8a5428 49% 51%,#9a6232 51% 74%,#8a5428 74% 76%,#9a6232 76%)',pat:s=>`<path d="M0 40H100M0 160H100" stroke="#5a3418" stroke-width="8"/>${(s==='l'?[[18,60,-6],[52,92,4],[22,118,3]]:[[20,64,5],[50,96,-4],[26,126,-3]]).map(([x,y,r])=>`<g transform="rotate(${r} ${x+15} ${y+15})"><rect x="${x}" y="${y}" width="32" height="28" fill="#fff6dc"/><path d="M${x+5} ${y+9}h22M${x+5} ${y+15}h18M${x+5} ${y+21}h14" stroke="#9a8a6a" stroke-width="2"/><circle cx="${x+16}" cy="${y+3}" r="2.5" fill="#e0453a"/></g>`).join('')}`,emb:s=>s==='r'?DEMB('<circle cx="30" cy="30" r="20" fill="#ffe36b" stroke="#7a5a10" stroke-width="3"/><text x="30" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#7a3a12">!</text>'):'',kn:'iron',mode:'swing'},
+ ready:{bg:'#6b4422',pat:()=>`${[0,1,2,3,4].map(r=>`<rect x="0" y="${r*40+34}" width="100" height="6" fill="#4a2c14"/>`+[...Array(7)].map((_,i)=>`<rect x="${6+i*13}" y="${r*40+6+(i%3)*3}" width="10" height="${28-(i%3)*3}" fill="${['#c0392b','#2b5fa8','#f2c14e','#2f6a3a','#8a4fc8','#e07a3a','#3fb6e8'][(i+r)%7]}"/>`).join('')).join('')}`,emb:()=>'',kn:'none',mode:'swing'},
+ ward:{bg:'linear-gradient(180deg,#fffaf2,#efe3d0)',pat:s=>`<rect x="6" y="6" width="88" height="188" rx="4" fill="none" stroke="#c9a66b" stroke-width="4"/>${s==='l'?'<rect x="16" y="20" width="68" height="150" rx="34" fill="#cfe8f5" stroke="#c9a66b" stroke-width="4"/><path d="M28 50L50 30M28 80L64 46" stroke="#fff" stroke-width="5" opacity=".8"/>':'<rect x="16" y="20" width="68" height="70" rx="4" fill="none" stroke="#e3d2b4" stroke-width="3"/><rect x="16" y="104" width="68" height="70" rx="4" fill="none" stroke="#e3d2b4" stroke-width="3"/>'}`,emb:s=>s==='r'?DEMB('<path d="M30 10a6 6 0 1 1 6 6c-3 0-6 2-6 5v3L8 40h44L30 24" fill="none" stroke="#8a6a3a" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>'):'',kn:'pearl',mode:'swing'},
+ bagS:{bg:'linear-gradient(180deg,#a8743a,#7a4f22)',pat:s=>`<rect x="8" y="8" width="84" height="184" rx="10" fill="none" stroke="#5a3418" stroke-width="3" stroke-dasharray="6 5"/><rect x="${s==='l'?84:0}" y="0" width="16" height="200" fill="#c9d1d9"/>${[...Array(20)].map((_,i)=>`<rect x="${s==='l'?88:4}" y="${i*10+2}" width="8" height="5" fill="#8a99ab"/>`).join('')}`,emb:s=>s==='l'?DEMB('<rect x="10" y="20" width="40" height="30" rx="6" fill="#c9a66b" stroke="#5a3418" stroke-width="3"/><path d="M20 20V14a10 10 0 0 1 20 0v6" fill="none" stroke="#5a3418" stroke-width="3"/><rect x="25" y="28" width="10" height="8" rx="2" fill="#f2c14e" stroke="#5a3418" stroke-width="2"/>'):'',kn:'none',mode:'slide'},
+ hub:{bg:'linear-gradient(180deg,#9aa3ad,#7d8792)',pat:()=>`${[...Array(10)].map((_,r)=>[...Array(3)].map((_,c)=>`<rect x="${(r%2?-16:0)+c*34+2}" y="${r*20+2}" width="31" height="17" rx="2" fill="#8a939d" stroke="#5f6873" stroke-width="2"/>`).join('')).join('')}<path d="M0 60H100M0 140H100" stroke="#3a3f47" stroke-width="7"/>${[15,50,85].map(x=>[60,140].map(y=>`<circle cx="${x}" cy="${y}" r="4" fill="#c9d1d9"/>`).join('')).join('')}`,emb:s=>s==='l'?DEMB('<path d="M30 6L52 16V30C52 44 42 52 30 56C18 52 8 44 8 30V16Z" fill="#2b5fa8" stroke="#f2c14e" stroke-width="3"/><path d="M30 18l4 8 9 1.3-6.5 6.3 1.5 9L30 38l-8 4.3 1.5-9L17 27.3l9-1.3z" fill="#f2c14e"/>'):'',kn:'iron',mode:'swing'}
+};
+function doorPanel(st,side){const D=DOORS[st]||DOORS.hub;return `<div class="tr-door ${side} kn-${D.kn}" style="background:${D.bg}">${DPAT(D.pat(side))}${D.emb(side)}${D.kn==='none'?'':'<b class="tr-knob"></b>'}</div>`}
+function playTrans(kind,label,st){if(TR_REDUCE)return;let o=$('#trans');if(o)o.remove();o=document.createElement('div');o.id='trans';o.className='trk-'+kind;o.setAttribute('aria-hidden','true');
+  if(kind==='door'){const D=DOORS[st]||DOORS.hub;o.classList.add('m-'+D.mode,'st-'+(st||'hub'));o.innerHTML=doorPanel(st,'l')+doorPanel(st,'r')+(label?`<div class="tr-plate">${label}</div>`:'')}
   else{const dark=kind==='storm';const f=dark?'#454b6e':'#ffffff',e=dark?'#2a2e48':'#cfe0f5';o.innerHTML=`<div class="tr-sky"></div><div class="tr-cl l">${CLOUD(f,e)}</div><div class="tr-cl r">${CLOUD(f,e)}</div>${dark?'<div class="tr-flash"></div><svg class="tr-bolt" viewBox="0 0 60 120"><path d="M34 0L8 66h20L18 120L54 44H32L44 0z" fill="#fff59a" stroke="#c9a20c" stroke-width="3" stroke-linejoin="round"/></svg>':''}${label?`<div class="tr-plate cl">${label}</div>`:''}`}
-  document.body.appendChild(o);requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('go')));setTimeout(()=>o.remove(),1500)}
+  document.body.appendChild(o);requestAnimationFrame(()=>requestAnimationFrame(()=>o.classList.add('go')));setTimeout(()=>o.remove(),850)}
 const _goT=go;go=function(id){const prev=cur;_goT(id);if(id===prev)return;
   if(id==='map')playTrans('clouds',curIsle>=3?'สนามสอบเข้า ม.4':`เกาะ ม.${curIsle+1}`);
-  else if(id==='hub')playTrans(['title','create','story','result','map','prep'].includes(prev)?'clouds':'door',['title','create','story'].includes(prev)?'เมืองของผู้กล้า':'');
-  else if(TR_NAME[id]&&!['mini','lesson'].includes(prev))playTrans('door',TR_NAME[id])};
+  else if(id==='hub')playTrans(['title','create','story','result','map','prep'].includes(prev)?'clouds':'door',['title','create','story'].includes(prev)?'เมืองของผู้กล้า':'กลับเมือง','hub');
+  else if(TR_NAME[id]&&!['mini','lesson'].includes(prev))playTrans('door',TR_NAME[id],id)};
 const _sbT=startBattle;startBattle=function(){_sbT.apply(this,arguments);playTrans('storm',curStage&&curStage.name?curStage.name:'')};
 
 </script>
 </body>
 </html>
-<!-- KruBoy ภาค2 v2.3 : END OF FILE -->
+<!-- KruBoy ภาค2 v2.5 : END OF FILE -->
