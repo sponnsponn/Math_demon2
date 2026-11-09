@@ -332,6 +332,7 @@ text.halo{paint-order:stroke;stroke:var(--board-2);stroke-width:5px;stroke-linej
 .wi{border-radius:14px;background:var(--board-2);border:2px solid var(--line);padding:6px 4px 8px;display:grid;justify-items:center;gap:2px;font-size:12px;font-weight:700;line-height:1.3;text-align:center}
 .wi svg.av{height:92px;width:auto}
 .wi.lockd svg.av{filter:brightness(0) opacity(.45)}
+.wi.lockd .sw{filter:grayscale(1) brightness(.9) contrast(.85);opacity:.8}
 .wi.on{border-color:var(--good);box-shadow:0 0 0 2px var(--good) inset}
 .wi small{font-weight:400;font-size:11px}
 .bag{display:grid;gap:8px}
@@ -589,6 +590,77 @@ sup{font-size:.62em}
 @keyframes biteB{from{transform:translateY(70px)}to{transform:translateY(-22px)}}
 .atkfx.burst .bst,.atkfx.burst text{transform-origin:100px 100px;animation:bst .5s ease-out forwards}
 @keyframes bst{0%{transform:scale(.2) rotate(-20deg);opacity:0}30%{transform:scale(1.15) rotate(4deg);opacity:1}70%{transform:scale(1);opacity:1}100%{transform:scale(1.1);opacity:0}}
+
+/* พลังโจมตีตามความเร็ว */
+.spd{position:relative;height:24px;margin-top:10px;border-radius:999px;background:rgba(0,0,0,.18);overflow:hidden;border:1.5px solid var(--line)}
+.spd i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;transition:width .1s linear,background .2s}
+.spd b{position:relative;display:block;text-align:center;font-family:var(--display);font-size:13.5px;line-height:21px;color:#1a1410;text-shadow:0 0 4px rgba(255,255,255,.9)}
+.spd::before,.spd::after{content:"";position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.55);z-index:1}
+.spd::before{left:30%}.spd::after{left:60%}
+.spd[data-t="3"] i{box-shadow:0 0 12px #ffe36b}
+.qcard.wait .spd{visibility:hidden}
+.mon.hit2{animation:hit2 .5s}
+@keyframes hit2{0%{transform:none;filter:none}15%{transform:translateX(-18px) rotate(-6deg) scale(.92);filter:brightness(2.4)}35%{transform:translateX(14px) rotate(4deg)}55%{transform:translateX(-8px);filter:brightness(1.4)}100%{transform:none;filter:none}}
+.hitfx{position:absolute;left:50%;top:50%;width:min(70vw,300px);height:min(70vw,300px);transform:translate(-50%,-50%);pointer-events:none;z-index:4}
+.hitfx svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hitfx .hs{stroke-dasharray:260;stroke-dashoffset:260;animation:hsd .2s ease-out forwards,fxo .3s .35s forwards}
+.hitfx .hs.b{animation-delay:.12s,.45s}
+@keyframes hsd{to{stroke-dashoffset:0}}
+@keyframes fxo{to{opacity:0}}
+.hitfx .sp{animation:spk .55s ease-out forwards}
+@keyframes spk{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--x),var(--y));opacity:0}}
+.hitfx.h3 .bolt{inset:auto;left:25%;top:-90%;width:50%;height:140%;animation:bolt .45s ease-out forwards;filter:drop-shadow(0 0 18px #fff59a)}
+@keyframes bolt{0%{opacity:0;transform:translateY(-40%) scaleY(.4)}20%{opacity:1;transform:none}60%{opacity:1}100%{opacity:0}}
+.hitfx.h3 .ring circle:first-child{transform-origin:100px 100px;animation:ring .55s ease-out forwards}
+@keyframes ring{from{transform:scale(.2);opacity:1}to{transform:scale(1.8);opacity:0}}
+.hitfx.h3 .hcrit{position:absolute;left:50%;top:-6%;transform:translateX(-50%);font-family:var(--display);font-weight:700;font-size:30px;color:#ffe36b;-webkit-text-stroke:5px #5a2a00;paint-order:stroke fill;white-space:nowrap;animation:crit .8s ease-out forwards}
+@keyframes crit{0%{transform:translateX(-50%) scale(2.4);opacity:0}25%{transform:translateX(-50%) scale(1);opacity:1}80%{opacity:1}100%{transform:translateX(-50%) translateY(-24px);opacity:0}}
+.flashw{position:fixed;inset:0;background:#fffbe0;opacity:0;pointer-events:none;z-index:6}
+.flashw.on{animation:flw .35s ease-out}
+@keyframes flw{0%{opacity:.85}100%{opacity:0}}
+.float.t3{font-size:34px;color:#ffe36b;-webkit-text-stroke:5px #5a2a00;paint-order:stroke fill}
+.float.t2{font-size:28px;color:#ff9f1c;-webkit-text-stroke:4px #4a1a00;paint-order:stroke fill}
+.float.t0{font-size:18px;opacity:.85}
+
+/* โหมด + วงพลัง */
+#prep>*{flex-shrink:0}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mdcard{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 8px;border-radius:16px;border:2px solid var(--line);background:var(--board-2);color:var(--chalk);font:inherit;cursor:pointer;transition:transform .15s,border-color .2s,box-shadow .2s;opacity:.7}
+.mdcard i{font-style:normal;font-size:30px;line-height:1.1}
+.mdcard b{font-family:var(--display);font-size:19px}
+.mdcard span{font-size:12.5px;line-height:1.45;text-align:center;color:var(--chalk-dim)}
+.mdcard[aria-pressed="true"]{opacity:1;transform:translateY(-2px)}
+.mdcard.cl[aria-pressed="true"]{border-color:#5fb3f0;box-shadow:0 0 0 3px rgba(95,179,240,.3)}
+.mdcard.ad[aria-pressed="true"]{border-color:#ffb020;box-shadow:0 0 0 3px rgba(255,176,32,.35),0 0 18px rgba(255,200,60,.35)}
+.modeb{flex:none;font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;border:1.5px solid currentColor}
+.modeb.cl{color:#5fb3f0}.modeb.ad{color:#ffb020}
+.pring{position:absolute;right:8px;bottom:6px;width:58px;height:58px;z-index:3;--rc:#38d46a;transition:opacity .3s,filter .3s;pointer-events:none}
+.pring[hidden]{display:none}
+.pring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pring .rg{fill:rgba(0,0,0,.35);stroke:rgba(255,255,255,.25);stroke-width:9}
+.pring .rc{fill:none;stroke:var(--rc);stroke-width:7;transition:stroke .6s;filter:drop-shadow(0 0 6px var(--rc))}
+.pring b{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;line-height:1}
+.pring[data-t="3"] .rc{animation:rglow 1.2s ease-in-out infinite}
+@keyframes rglow{50%{stroke-width:9}}
+.pring[data-t="0"]{filter:grayscale(.7) brightness(.75)}
+.pring[data-t="0"] .rc{stroke:#111;filter:none}
+.pring[data-t="0"] .rg{stroke:rgba(255,255,255,.12)}
+.pring.pulse{animation:rpulse .4s ease-out}
+@keyframes rpulse{0%{transform:scale(1)}40%{transform:scale(1.25)}100%{transform:scale(1)}}
+.qcard.wait~* .pring,.arena:has(~.qcard.wait) .pring{opacity:.35}
+
+.cubecity{background:linear-gradient(#e8f4ff,#f6fbff);border-radius:12px;padding:4px}
+
+/* หมุนตัวละคร */
+.avrot{position:absolute;right:6px;bottom:6px;z-index:3;display:flex;align-items:center;gap:4px;padding:5px 10px 5px 8px;border-radius:999px;border:2px solid var(--line);background:var(--board-2);color:var(--chalk);font:inherit;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.avrot svg{width:16px;height:16px}
+.avrot:active{transform:translateY(1px)}
+.avturn{animation:avturn .34s ease-in-out}
+@keyframes avturn{0%{transform:scaleX(1)}50%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+.avpair{display:flex;gap:6px;justify-content:center;height:auto!important}
+.avpair>div{display:flex;flex-direction:column;align-items:center}
+.avpair svg{height:190px!important;width:auto}
+.avpair small{font-size:12px;color:var(--chalk-dim)}
 </style>
 </head>
 <body>
@@ -652,6 +724,7 @@ sup{font-size:.62em}
   <div class="top" style="margin-bottom:0"><button class="back" data-go="map" aria-label="กลับ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 5l-7 7 7 7"/></svg></button><h2 id="pName"></h2></div>
   <p class="dim" id="pDesc" style="line-height:1.6"></p>
   <div class="card"><div class="lineup" id="pLine"></div><p class="center dim" id="pLineTxt" style="font-size:13px;margin-top:6px"></p></div>
+  <div><h3 style="font-size:17px;margin-bottom:8px">เลือกโหมด</h3><div class="modes" id="pModes"></div></div>
   <div><h3 style="font-size:17px;margin-bottom:8px">เลือกระดับความยาก</h3><div class="diffs" id="pDiffs"></div></div>
   <p class="dim" id="pAcc" style="font-size:13.5px"></p>
   <button class="btn" id="pGo">เริ่มต่อสู้</button>
@@ -664,12 +737,13 @@ sup{font-size:.62em}
     <button class="iconbtn" id="bPause" aria-label="หยุดพัก"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg></button>
   </div>
   <div class="tray" id="tray"></div>
-  <div class="prog"><div class="dots" id="dots"></div><span id="bStage"></span></div>
+  <div class="prog"><div class="dots" id="dots"></div><span class="modeb" id="modeB"></span><span id="bStage"></span></div>
   <div class="arena" id="arena">
     <div class="combo" id="combo" aria-live="polite"></div>
     <div class="focus" id="focus"></div>
     <div class="buffs" id="buffs"></div>
     <div class="mon-head"><div class="mon-title" id="monTitle"></div><div class="mon-name" id="monName"></div><div class="hpbar"><div class="hpfill" id="hp"></div></div></div>
+    <div class="pring" id="spd" data-t="-1" hidden aria-label="พลังโจมตี"><svg viewBox="0 0 60 60"><circle class="rg" cx="30" cy="30" r="24"/><circle class="rc" cx="30" cy="30" r="24"/></svg><b></b></div>
     <div class="monwrap" id="monwrap"><div class="mon" id="mon"></div><div class="slash" id="slash"></div></div>
     <div class="banner" id="banner"></div>
   </div>
@@ -787,6 +861,60 @@ sup{font-size:.62em}
 </div>
 <div class="modal" id="modal" role="dialog" aria-modal="true"><div class="mbox" id="mbox"></div></div>
 
+<script>
+/* ---------- เมืองลูกบาศก์: วาดตึกลูกบาศก์ 3 มิติ แทนตารางตัวเลข ----------
+   H[แถว][คอลัมน์] โดยแถวสุดท้าย = ด้านหน้า (ใกล้ผู้มองที่สุด) · ทุกลูกต้องมองเห็นหน้าด้านหน้าอย่างน้อย 30% */
+const CV=(()=>{
+const S=24,OX=.5*S,OY=.62*S,PC=1.8,PR=1.6;
+const PAL=[['#ffd84a','#ffe98f','#d9a91a'],['#7fd3e8','#b5ecf7','#4aa8c2'],['#ff9fb8','#ffc7d6','#d8708c'],['#9be0a0','#c8f0cb','#62b06a'],['#c3a6ff','#ddccff','#9178d8'],['#ffb36b','#ffd2a6','#d9853a']];
+function geo(H){const r=H.length,c=H[0].length,cubes=[];
+  for(let f=r-1;f>=0;f--){const row=H[r-1-f];for(let i=0;i<c;i++)for(let k=0;k<row[i];k++)cubes.push({i,f,k,col:PAL[(i+2*(r-1-f))%PAL.length]})}
+  const P=(x,y,z)=>[x*S+y*OX,-z*S-y*OY];
+  cubes.forEach(q=>{const x=q.i*PC,y=q.f*PR,z=q.k;q.fr=[P(x,y,z),P(x+1,y,z),P(x+1,y,z+1),P(x,y,z+1)];q.tp=[P(x,y,z+1),P(x+1,y,z+1),P(x+1,y+1,z+1),P(x,y+1,z+1)];q.rt=[P(x+1,y,z),P(x+1,y+1,z),P(x+1,y+1,z+1),P(x+1,y,z+1)];
+    q.hull=[P(x,y,z),P(x+1,y,z),P(x+1,y+1,z),P(x+1,y+1,z+1),P(x,y+1,z+1),P(x,y,z+1)]});
+  return {cubes,P,r,c}}
+const inPoly=(pt,a)=>{let c=false;for(let i=0,j=a.length-1;i<a.length;j=i++){const [xi,yi]=a[i],[xj,yj]=a[j];if(((yi>pt[1])!==(yj>pt[1]))&&(pt[0]<(xj-xi)*(pt[1]-yi)/(yj-yi)+xi))c=!c}return c};
+function visibleOK(H,need=.55){const {cubes}=geo(H);for(let n=0;n<cubes.length;n++){const q=cubes[n],later=cubes.slice(n+1).filter(o=>!(o.i===q.i&&o.f===q.f));let vis=0,tot=0;
+  for(let a=.1;a<1;a+=.2)for(let b=.1;b<1;b+=.2){const [p0,p1,,p3]=q.fr,pt=[p0[0]+(p1[0]-p0[0])*a,p0[1]+(p3[1]-p0[1])*b];tot++;if(!later.some(o=>inPoly(pt,o.hull)))vis++}
+  if(vis/tot<need)return false}return true}
+/* สุ่มความสูงที่มองเห็นได้ครบทุกลูก */
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+function heights(r,c,lo,hi,ok=()=>true){for(let t=0;t<400;t++){const H=Array.from({length:r},()=>Array(c).fill(0));
+  for(let j=0;j<c;j++){let prev=-9;for(let i=r-1;i>=0;i--){const v=t<200&&prev>=0?rnd(Math.max(lo,Math.min(hi,prev)),hi):rnd(lo,hi);H[i][j]=v;prev=v?v:prev}}
+  if(t%3===2)for(let i=0;i<r;i++)for(let j=0;j<c;j++)if(Math.random()<.25)H[i][j]=rnd(lo,hi);if(H.flat().some(v=>v)&&ok(H)&&visibleOK(H))return H}
+  const H=Array.from({length:r},(_,i)=>Array.from({length:c},()=>Math.max(lo,Math.min(hi,r-i))));return H}
+const pts=a=>a.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ');
+function city(H,o={}){const {cubes,P,r,c}=geo(H),O='#33261d';
+  const all=[...cubes.flatMap(q=>[...q.fr,...q.tp,...q.rt])];
+  const ground=[P(-.35,-.45,0),P((c-1)*PC+1.35,-.45,0),P((c-1)*PC+1.35,(r-1)*PR+1.45,0),P(-.35,(r-1)*PR+1.45,0)];all.push(...ground);
+  let x0=Math.min(...all.map(p=>p[0]))-14,x1=Math.max(...all.map(p=>p[0]))+48,y0=Math.min(...all.map(p=>p[1]))-10,y1=Math.max(...all.map(p=>p[1]))+30;
+  let s=`<polygon points="${pts(ground)}" fill="#c9d8c0" stroke="#8aa080" stroke-width="1.5"/>`;
+  for(let f=0;f<r;f++)for(let i=0;i<c;i++){const x=i*PC,y=f*PR;s+=`<polygon points="${pts([P(x-.12,y-.12,0),P(x+1.12,y-.12,0),P(x+1.12,y+1.12,0),P(x-.12,y+1.12,0)])}" fill="#e9efe2" stroke="#a9b8a0" stroke-width="1" ${H[r-1-f][i]?'':'stroke-dasharray="3 2"'}/>`}
+  cubes.forEach(q=>{s+=`<polygon points="${pts(q.rt)}" fill="${q.col[2]}" stroke="${O}" stroke-width="1.3" stroke-linejoin="round"/><polygon points="${pts(q.tp)}" fill="${q.col[1]}" stroke="${O}" stroke-width="1.3" stroke-linejoin="round"/><polygon points="${pts(q.fr)}" fill="${q.col[0]}" stroke="${O}" stroke-width="1.3" stroke-linejoin="round"/>`});
+  const fb=P(((c-1)*PC+1)/2,-.45,0),rb0=P((c-1)*PC+1.35,((r-1)*PR+1)/2,0),mxX=Math.max(...cubes.flatMap(q=>q.rt.map(p=>p[0])),rb0[0]),rb=[mxX+4,rb0[1]];
+  s+=`<g fill="#e0455a" stroke="#e0455a"><path d="M${fb[0]} ${fb[1]+26}V${fb[1]+6}" stroke-width="3"/><path d="M${fb[0]-5} ${fb[1]+10}L${fb[0]} ${fb[1]+3}L${fb[0]+5} ${fb[1]+10}Z" stroke="none"/></g><text x="${fb[0]+8}" y="${fb[1]+24}" style="font-size:12px;font-weight:700;fill:#e0455a">ด้านหน้า</text>`;
+  s+=`<g fill="#2b7fc0" stroke="#2b7fc0"><path d="M${rb[0]+30} ${rb[1]}H${rb[0]+8}" stroke-width="3"/><path d="M${rb[0]+11} ${rb[1]-5}L${rb[0]+4} ${rb[1]}L${rb[0]+11} ${rb[1]+5}Z" stroke="none"/></g><text x="${rb[0]+2}" y="${rb[1]+18}" style="font-size:12px;font-weight:700;fill:#2b7fc0">ด้านขวา</text>`;
+  return `<svg class="cubecity" viewBox="${x0.toFixed(0)} ${y0.toFixed(0)} ${(x1-x0).toFixed(0)} ${(y1-y0).toFixed(0)}" style="width:100%;max-width:${Math.min(320,(x1-x0)*1.25).toFixed(0)}px;height:auto;display:block;margin:0 auto" role="img" aria-label="ภาพตึกลูกบาศก์">${s}</svg>`}
+/* ภาพมุมมอง 2 มิติ: cols = ความสูงแต่ละคอลัมน์ (ซ้าย→ขวา) */
+function view(cols,label,col='#ffd84a'){const s=16,mx=Math.max(1,...cols),w=cols.length*s,h=mx*s;let g='';
+  cols.forEach((v,i)=>{for(let k=0;k<v;k++)g+=`<rect x="${i*s}" y="${h-(k+1)*s}" width="${s}" height="${s}" fill="${col}" stroke="#33261d" stroke-width="1.4"/>`});
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin:4px 8px;vertical-align:bottom"><svg viewBox="-2 -2 ${w+4} ${h+6}" style="width:${w+4}px;height:${h+6}px"><path d="M-2 ${h+1}H${w+2}" stroke="#33261d" stroke-width="2"/>${g}</svg><small>${label}</small></span>`}
+function topView(H,label){const s=16,r=H.length,c=H[0].length;let g='';H.forEach((row,i)=>row.forEach((v,j)=>{g+=`<rect x="${j*s}" y="${i*s}" width="${s}" height="${s}" fill="${v?'#7fd3e8':'none'}" stroke="#33261d" stroke-width="${v?1.4:.6}" ${v?'':'stroke-dasharray="2 2"'}/>`}));
+  return `<span style="display:inline-flex;flex-direction:column;align-items:center;gap:2px;margin:4px 8px;vertical-align:bottom"><svg viewBox="-2 -2 ${c*s+4} ${r*s+4}" style="width:${c*s+4}px;height:${r*s+4}px">${g}</svg><small>${label}</small></span>`}
+const frontCols=H=>H[0].map((_,j)=>Math.max(...H.map(x=>x[j])));
+const rightCols=H=>H.map(row=>Math.max(...row)).reverse(); /* มองจากขวา: ซ้ายมือ = แถวหน้า */
+/* รูปคลี่ */
+const NETS_OK=[
+ ...[0,1,2,3].flatMap(a=>[0,1,2,3].map(b=>[[0,1],[1,1],[2,1],[3,1],[a,0],[b,2]])),
+ [[0,0],[1,0],[1,1],[2,1],[3,1],[1,2]],[[0,0],[1,0],[1,1],[2,1],[3,1],[2,2]],[[0,0],[1,0],[1,1],[2,1],[3,1],[3,2]],
+ [[0,0],[1,0],[1,1],[2,1],[2,2],[3,2]],[[0,0],[1,0],[2,0],[2,1],[3,1],[4,1]]];
+const NETS_BAD=[[[0,0],[1,0],[2,0],[3,0],[4,0],[5,0]],[[0,1],[1,1],[2,1],[3,1],[0,0],[1,0]],[[0,1],[1,1],[2,1],[3,1],[1,0],[3,0]],[[0,1],[1,1],[2,1],[3,1],[4,1],[2,0]],
+ [[0,0],[1,0],[2,0],[0,1],[1,1],[2,1]],[[0,1],[1,1],[2,1],[3,1],[0,2],[1,2]],[[0,0],[1,0],[1,1],[2,1],[2,2],[2,3]],[[1,0],[0,1],[1,1],[2,1],[1,2],[2,2]]];
+function net(cells){const s=22,mx=Math.max(...cells.map(p=>p[0]))+1,my=Math.max(...cells.map(p=>p[1]))+1;
+  return `<svg viewBox="-3 -3 ${mx*s+6} ${my*s+6}" style="width:${mx*s+6}px;max-width:100%;height:auto;display:block;margin:0 auto" role="img" aria-label="รูปคลี่">${cells.map(([x,y],i)=>`<rect x="${x*s}" y="${y*s}" width="${s}" height="${s}" fill="${['#ffd84a','#7fd3e8','#ff9fb8','#9be0a0','#c3a6ff','#ffb36b'][i]}" stroke="#33261d" stroke-width="2"/>`).join('')}</svg>`}
+return {city,heights,visibleOK,view,topView,frontCols,rightCols,net,NETS_OK,NETS_BAD}})();
+
+</script>
 <script>
 /* ===== ปีศาจข้อสอบ ภาค 2 : ตัวสร้างโจทย์ ม.1–ม.3 (d = 1 ง่าย … 4 ยากมาก) =====
    ทุกข้อคืนค่า {prompt, vis?, expr?, parts:[{ask, choices, answer, explain}], hints:[แนวคิด, ขั้นแรก]} */
@@ -1471,10 +1599,10 @@ cube1:[
  {lv:[1,2],f(){const NM={3:'สามเหลี่ยม',4:'สี่เหลี่ยม',5:'ห้าเหลี่ยม',6:'หกเหลี่ยม',8:'แปดเหลี่ยม'},n=pick([3,4,5,6,8]),pr=coin(.5),w=pick(['หน้า','สัน','จุดยอด']),v=pr?{หน้า:n+2,สัน:3*n,จุดยอด:2*n}:{หน้า:n+1,สัน:2*n,จุดยอด:n+1},ans=v[w];
    return one2(`${pr?'ปริซึม':'พีระมิดฐาน'}${NM[n]}มี${w}กี่${w==='จุดยอด'?'จุด':w}`,mk(nc(ans),Object.values(v).map(x=>nc(x)).concat([nc(ans+2)]),near(ans,1)),`${pr?`ปริซึม: หน้า n + 2, สัน 3n, จุดยอด 2n`:`พีระมิด: หน้า n + 1, สัน 2n, จุดยอด n + 1`} (n = ${n})<br>${w} = <b>${ans}</b>`,['ปริซึมมีฐานสองฐาน พีระมิดมีฐานเดียวกับยอดแหลม','ฐานมี '+n+' ด้าน'])}},
  {lv:[2,3],f(){const a=ri(2,6),b=ri(2,6),c=ri(1,5),S=2*(a*b+b*c+a*c);return one2(`นำลูกบาศก์ขนาด 1 ซม. มาเรียงเป็นทรงสี่เหลี่ยมมุมฉาก ${a} × ${b} × ${c} พื้นที่ผิวทั้งหมดของทรงนี้กี่ตารางเซนติเมตร`,mk(nc(S,'ตร.ซม.'),[nc(a*b*c,'ตร.ซม.'),nc(S/2,'ตร.ซม.'),nc(6*a*b*c,'ตร.ซม.')],near(S,2,'ตร.ซม.')),`2(${a}×${b} + ${b}×${c} + ${a}×${c}) = <b>${S}</b> ตร.ซม.`,['พื้นที่ผิว = ผลรวมพื้นที่ทั้ง 6 หน้า','ไม่ใช่จำนวนลูกบาศก์ × 6 เพราะหน้าที่ติดกันมองไม่เห็น'])}},
- {lv:[3,4],f(){const r=ri(2,3),c=ri(3,4),H=Array.from({length:r},()=>Array.from({length:c},()=>ri(0,4)));if(H.flat().every(v=>!v))return EXTRA.cube1[2].f();const side=H.map(row=>Math.max(...row)),ss=side.reduce((a,b)=>a+b,0);
-   return one2('มองจากด้านขวา จะเห็นรูปสี่เหลี่ยมจัตุรัสทั้งหมดกี่รูป',mk(nc(ss),[nc(H.flat().reduce((a,b)=>a+b,0)),nc(Array.from({length:c},(_,j)=>Math.max(...H.map(x=>x[j]))).reduce((a,b)=>a+b,0)),nc(ss+1)],near(ss,1)),`มองจากด้านขวา แต่ละแถวเห็นความสูงเท่ากับค่าสูงสุดในแถว: ${side.join(', ')}<br>รวม <b>${ss}</b> รูป`,['ภาพด้านข้าง: ดูค่ามากที่สุดของแต่ละแถว (แนวนอนของตาราง)','ภาพด้านหน้าดูทีละคอลัมน์ ภาพด้านข้างดูทีละแถว'],{vis:`<div style="display:grid;justify-items:center;gap:2px"><div class="dim" style="font-size:12px">ภาพด้านบน · ตัวเลขคือจำนวนลูกบาศก์ที่ซ้อนกัน</div>${tbl(['แถว',...Array.from({length:c},(_,j)=>'คอลัมน์ '+(j+1))],H.map((row,i)=>['แถว '+(i+1),...row]))}<div class="dim" style="font-size:12px">มองจากด้านขวาของตาราง →</div></div>`})}},
- {lv:[1],f(){const r=ri(2,3),c=ri(3,4),H=Array.from({length:r},()=>Array.from({length:c},()=>ri(0,3)));const nz2=H.flat().filter(v=>v).length;if(!nz2)return EXTRA.cube1[3].f();
-   return one2('มองจากด้านบนลงมา จะเห็นรูปสี่เหลี่ยมจัตุรัสกี่รูป',mk(nc(nz2),[nc(H.flat().reduce((a,b)=>a+b,0)),nc(r*c),nc(nz2+1)],near(nz2,1)),`มองจากด้านบนเห็นทุกช่องที่มีลูกบาศก์อย่างน้อย 1 ลูก (ไม่สนความสูง)<br>มี <b>${nz2}</b> ช่อง`,['ภาพด้านบนนับเฉพาะช่องที่ไม่เป็น 0','ความสูงไม่มีผลต่อภาพด้านบน'],{vis:tbl(['',...Array.from({length:c},(_,j)=>'ค.'+(j+1))],H.map((row,i)=>['แถว '+(i+1),...row]))})}}],
+ {lv:[3,4],f(){const r=ri(2,3),c=ri(3,4),H=CV.heights(r,c,0,4),side=CV.rightCols(H),ss=side.reduce((a,b)=>a+b,0);
+   return one2('มองจากด้านขวา (ตามลูกศรสีน้ำเงิน) จะเห็นรูปสี่เหลี่ยมจัตุรัสทั้งหมดกี่รูป',mk(nc(ss),[nc(H.flat().reduce((a,b)=>a+b,0)),nc(CV.frontCols(H).reduce((a,b)=>a+b,0)),nc(ss+1)],near(ss,1)),`มองจากด้านขวา แต่ละแถว (หน้า→หลัง) จะเห็นสูงเท่าตึกที่สูงที่สุดในแถวนั้น: ${side.join(', ')}<br>${CV.view(side,'ภาพด้านขวา','#7fd3e8')}<br>รวม <b>${ss}</b> รูป`,['ภาพด้านขวา: ดูตึกที่สูงที่สุดของแต่ละแถว (แถวหน้า แถวกลาง แถวหลัง)','ภาพด้านหน้าดูทีละคอลัมน์ ภาพด้านขวาดูทีละแถว'],{vis:CV.city(H)})}},
+ {lv:[1],f(){const r=ri(2,3),c=ri(3,4),H=CV.heights(r,c,0,3,H=>H.flat().some(v=>!v)),nz2=H.flat().filter(v=>v).length;
+   return one2('มองจากด้านบนลงมา จะเห็นรูปสี่เหลี่ยมจัตุรัสกี่รูป',mk(nc(nz2),[nc(H.flat().reduce((a,b)=>a+b,0)),nc(r*c),nc(nz2+1)],near(nz2,1)),`มองจากด้านบนจะเห็นหลังคาของทุกตึก ตึกละ 1 รูป (ความสูงไม่มีผล) ช่องว่างไม่มีตึกจึงไม่เห็น<br>${CV.topView(H,'ภาพด้านบน')}<br>มี <b>${nz2}</b> ตึก`,['ภาพด้านบนนับเฉพาะช่องที่มีตึก','ความสูงไม่มีผลต่อภาพด้านบน'],{vis:CV.city(H)})}}],
 pyth2:[
  {lv:[3,4],f(){const T=[[5,6,7],[4,5,6],[6,8,10],[5,12,13],[4,6,9],[3,5,7],[7,8,9],[2,3,4]],t=pick(T),[a,b,c]=t,lhs=a*a+b*b,k=lhs===c*c?1:c*c<lhs?0:2;return one2(`รูปสามเหลี่ยมมีด้านยาว ${a}, ${b} และ ${c} หน่วย เป็นรูปสามเหลี่ยมชนิดใด`,{choices:['มุมแหลม','มุมฉาก','มุมป้าน'].map(x=>`<span class="txt">สามเหลี่ยม${x}</span>`),answer:k},`เทียบ ${c}² = ${c*c} กับ ${a}² + ${b}² = ${lhs}<br>${c*c===lhs?'เท่ากัน → <b>มุมฉาก</b>':c*c<lhs?'น้อยกว่า → <b>มุมแหลม</b>':'มากกว่า → <b>มุมป้าน</b>'}`,['เทียบกำลังสองของด้านยาวที่สุดกับผลรวมกำลังสองของอีกสองด้าน','c² < a² + b² มุมแหลม · c² = a² + b² มุมฉาก · c² > a² + b² มุมป้าน'])}},
  {lv:[1,2],f(){const [a,b,c]=pick([[3,4,5],[6,8,10],[5,12,13],[9,12,15],[8,15,17],[12,16,20]]),k=ri(1,3);return one2(`สี่เหลี่ยมผืนผ้ากว้าง ${a*k} ซม. ยาว ${b*k} ซม. เส้นทแยงมุมยาวเท่าใด`,mk(nc(c*k,'ซม.'),[nc((a+b)*k,'ซม.'),nc(c*k+1,'ซม.'),nc(2*(a+b)*k,'ซม.')],near(c*k,1,'ซม.')),`เส้นทแยงมุมแบ่งสี่เหลี่ยมเป็นสามเหลี่ยมมุมฉาก<br>√(${a*k}² + ${b*k}²) = <b>${c*k}</b> ซม.`,['เส้นทแยงมุมคือด้านตรงข้ามมุมฉากของสามเหลี่ยม','d² = กว้าง² + ยาว²'])}},
@@ -1751,11 +1879,11 @@ P2('cube1',[2,3,4],d=>{const n=ri(3,4+d);return N(`ลูกบาศก์ใ�
 P2('cube1',[2,3,4],d=>{const n=ri(3,5);return N(`ลูกบาศก์ใหญ่ขนาด ${n} × ${n} × ${n} ทาสีผิวนอก มีลูกบาศก์เล็กที่ถูกทาสี 3 ด้านกี่ลูก`,8,[12*(n-2),6*(n-2)**2,4,6],`ลูกที่ถูกทาสี 3 ด้านคือลูกที่มุม ลูกบาศก์มี 8 มุม<br>= <b>8</b> ลูก (ไม่ขึ้นกับขนาด)`,['ลูกที่อยู่ตรงมุมจะโดนสี 3 หน้า','ลูกบาศก์มีกี่จุดยอด'],{u:'ลูก'})});
 P2('cube1',[3,4],d=>{const n=ri(3,6);return N(`ลูกบาศก์ใหญ่ขนาด ${n} × ${n} × ${n} ทาสีผิวนอก มีลูกบาศก์เล็กที่ถูกทาสีเพียง 2 ด้านกี่ลูก`,12*(n-2),[8,6*(n-2)**2,12*(n-1),(n-2)**3],`ลูกที่โดนสี 2 ด้านอยู่ตามสัน (ไม่รวมมุม) สันละ ${n-2} ลูก มี 12 สัน<br>12 × ${n-2} = <b>${12*(n-2)}</b> ลูก`,['ลูกที่โดนสี 2 หน้าอยู่บนสันแต่ไม่ใช่มุม','ลูกบาศก์มี 12 สัน'],{u:'ลูก'})});
 P2('cube1',[1,2],d=>{const sh=pick([['ทรงกระบอก','วงกลม','สี่เหลี่ยมผืนผ้า'],['กรวย','วงกลม','สามเหลี่ยม'],['ทรงกลม','วงกลม','วงกลม'],['ปริซึมสามเหลี่ยม','สามเหลี่ยม','สี่เหลี่ยมผืนผ้า'],['พีระมิดฐานสี่เหลี่ยมจัตุรัส','สี่เหลี่ยมจัตุรัส','สามเหลี่ยม']]),top=coin(.5);const ans=top?sh[1]:sh[2];const opts=['วงกลม','สามเหลี่ยม','สี่เหลี่ยมผืนผ้า','สี่เหลี่ยมจัตุรัส'];return CH(`วาง${sh[0]}ตั้งบนพื้น เมื่อมอง${top?'จากด้านบน':'จากด้านหน้า'}จะเห็นเป็นรูปใด`,opts,opts.indexOf(ans),`${sh[0]}มองจากด้านบนเห็นเป็น${sh[1]} มองจากด้านหน้าเห็นเป็น${sh[2]}<br>คำตอบ <b>${ans}</b>`,['นึกภาพวัตถุจริง แล้วมองจากทิศที่โจทย์กำหนด','ภาพด้านบนคือรูปที่เห็นเมื่อมองลงมาตรง ๆ'])});
-P2('cube1',AL,d=>{const r=ri(2,3),c=ri(2,4),H=Array.from({length:r},()=>Array.from({length:c},()=>ri(1,3+(d>2?1:0))));const tot=sum(H.flat());return N('จากภาพด้านบน (ตัวเลขคือจำนวนลูกบาศก์ที่ซ้อนกันในช่องนั้น) มีลูกบาศก์ทั้งหมดกี่ลูก',tot,[r*c,tot+1,Math.max(...H.flat())*r*c,tot-2],`รวมตัวเลขทุกช่อง: ${H.flat().join(' + ')} = <b>${tot}</b> ลูก`,['ตัวเลขในแต่ละช่องบอกความสูงของกองนั้น','บวกตัวเลขทุกช่อง'],{u:'ลูก',x:{vis:tbl(['',...Array.from({length:c},(_,j)=>'ค.'+(j+1))],H.map((row,i)=>['แถว '+(i+1),...row]))}})});
-P2('cube1',[2,3,4],d=>{const r=2,c=ri(3,4),H=Array.from({length:r},()=>Array.from({length:c},()=>ri(0,4)));if(!sum(H.flat()))return GEN.cube1(d);const fr=Array.from({length:c},(_,j)=>Math.max(...H.map(x=>x[j]))),mx=Math.max(...fr);return N('มองจากด้านหน้า (แถวล่างของตารางอยู่ด้านหน้า) จะเห็นรูปสี่เหลี่ยมจัตุรัสทั้งหมดกี่รูป',sum(fr),[sum(H.flat()),sum(H.map(x=>Math.max(...x))),sum(fr)+1,mx*c],`ภาพด้านหน้าแต่ละคอลัมน์สูงเท่าค่ามากที่สุดในคอลัมน์: ${fr.join(', ')}<br>รวม <b>${sum(fr)}</b> รูป`,['ภาพด้านหน้า: ดูค่ามากที่สุดของแต่ละคอลัมน์','กองที่อยู่ด้านหลังและเตี้ยกว่าจะถูกบังมองไม่เห็น'],{x:{vis:tbl(['',...Array.from({length:c},(_,j)=>'ค.'+(j+1))],H.map((row,i)=>['แถว '+(i+1)+(i===r-1?' (หน้า)':''),...row]))}})});
+P2('cube1',AL,d=>{const r=2,c=ri(3,d>2?4:3),H=CV.heights(r,c,1,3+(d>1?1:0));const tot=sum(H.flat());return N('จากรูปเมืองลูกบาศก์ มีลูกบาศก์ทั้งหมดกี่ลูก',tot,[r*c,tot+1,Math.max(...H.flat())*r*c,tot-2],`นับความสูงของแต่ละตึก แล้วรวมกัน: ${H.flat().join(' + ')} = <b>${tot}</b> ลูก`,['นับทีละตึก ว่าแต่ละตึกซ้อนกันกี่ชั้น','นำจำนวนของทุกตึกมารวมกัน'],{u:'ลูก',x:{vis:CV.city(H)}})});
+P2('cube1',[2,3,4],d=>{const r=2,c=ri(3,4),H=CV.heights(r,c,0,4);const fr=CV.frontCols(H),mx=Math.max(...fr);return N('มองจากด้านหน้า (ตามลูกศรสีแดง) จะเห็นรูปสี่เหลี่ยมจัตุรัสทั้งหมดกี่รูป',sum(fr),[sum(H.flat()),sum(H.map(x=>Math.max(...x))),sum(fr)+1,mx*c],`มองจากด้านหน้า แต่ละคอลัมน์จะเห็นสูงเท่าตึกที่สูงที่สุดในคอลัมน์นั้น: ${fr.join(', ')}<br>${CV.view(fr,'ภาพด้านหน้า')}<br>รวม <b>${sum(fr)}</b> รูป`,['ภาพด้านหน้า: ดูตึกที่สูงที่สุดของแต่ละคอลัมน์ (ซ้ายไปขวา)','ตึกที่อยู่ด้านหลังและเตี้ยกว่าจะถูกบังมองไม่เห็น'],{x:{vis:CV.city(H)}})});
 P2('cube1',[1,2,3],d=>{const k=pick([['ปริซึมห้าเหลี่ยม',7,15,10],['ปริซึมหกเหลี่ยม',8,18,12],['พีระมิดฐานห้าเหลี่ยม',6,10,6],['ทรงสี่หน้า (พีระมิดฐานสามเหลี่ยม)',4,6,4],['ลูกบาศก์',6,12,8]]);const [n,F0,E,V]=k;return N(`${n}มี จำนวนหน้า + จำนวนจุดยอด − จำนวนสัน เท่ากับเท่าใด`,F0+V-E,[F0+V+E,E-F0,F0,3],`หน้า ${F0} จุดยอด ${V} สัน ${E}<br>${F0} + ${V} − ${E} = <b>${F0+V-E}</b> (สูตรออยเลอร์ F + V − E = 2)`,['นับหน้า สัน และจุดยอดของรูปทรง','สูตรออยเลอร์สำหรับทรงหลายหน้า: F + V − E = 2'])});
 P2('cube1',[2,3,4],d=>{const n=ri(2,5);return N(`ลูกบาศก์ ${n} × ${n} × ${n} มีพื้นที่ผิวคิดเป็นหน้าลูกบาศก์เล็กกี่หน้า`,6*n*n,[n**3,6*n,4*n*n,6*n*n-n],`6 หน้า หน้าละ ${n} × ${n} = ${n*n}<br>6 × ${n*n} = <b>${6*n*n}</b> หน้า`,['ลูกบาศก์มี 6 หน้าเท่ากัน','แต่ละหน้ามีหน้าลูกบาศก์เล็ก n × n หน้า'])});
-P2('cube1',[1,2],d=>{const nets=[['รูปตัวทีหกช่อง (แถว 4 ช่อง มีช่องบนและล่างอยู่คนละช่อง)',1],['แถวยาว 6 ช่องต่อกันเป็นเส้นตรง',0],['แถว 4 ช่อง มีช่องบน 2 ช่องอยู่ข้างเดียวกันติดกัน',0],['รูปกากบาท (แถว 4 ช่อง มีช่องบนและล่างอยู่ช่องที่ 2)',1]];const [t,ok]=pick(nets);return CH(`รูปคลี่ที่มีสี่เหลี่ยมจัตุรัส 6 ช่องเรียงแบบ "${t}" พับเป็นลูกบาศก์ได้หรือไม่`,['พับได้','พับไม่ได้','ไม่แน่ใจ ต้องตัดดู'],ok?0:1,ok?'แถว 4 ช่องพับเป็นผนังรอบ ช่องบนและล่างที่อยู่คนละด้านกลายเป็นฝาบนและฝาล่าง → <b>พับได้</b>':'จะมีหน้าซ้อนกัน หรือขาดฝาด้านหนึ่ง → <b>พับไม่ได้</b>',['ลองนึกพับแถวยาว 4 ช่องเป็นผนังรอบกล่องก่อน','ฝาบนกับฝาล่างต้องอยู่คนละฝั่งของแถว'])});
+P2('cube1',[1,2],d=>{const ok=Math.random()<.5,cells=pick(ok?CV.NETS_OK:CV.NETS_BAD);return CH('รูปคลี่ในภาพ พับเป็นลูกบาศก์ได้หรือไม่',['พับได้','พับไม่ได้'],ok?0:1,ok?'ลองพับในใจ: ทุกช่องพับไปเป็นหน้าคนละหน้าได้ครบ 6 หน้า ไม่มีหน้าซ้อนกัน → <b>พับได้</b>':'เมื่อพับจะมีอย่างน้อย 2 ช่องไปทับหน้าเดียวกัน ทำให้ขาดอีกหน้าหนึ่ง → <b>พับไม่ได้</b>',['แถวยาว 4 ช่องพับเป็นผนังรอบกล่อง ช่องที่เหลือต้องเป็นฝาบนกับฝาล่าง','ถ้ามี 2 ช่องอยู่ข้างเดียวกันของแถว จะพับไปทับหน้าเดียวกัน · บล็อก 2×2 หรือแถวยาว 5 ช่องขึ้นไปพับไม่ได้'],{vis:CV.net(cells)})});
 
 /* ---------- stat1 สถิติ ---------- */
 P2('stat1',AL,d=>{const n=pick([5,7,9]),a=Array.from({length:n},()=>ri(10,60*d)),s=[...a].sort((x,y)=>x-y),m=s[(n-1)/2];return N(`ข้อมูล: ${a.join(', ')}<br>มัธยฐานเท่ากับเท่าใด`,m,[a[(n-1)/2],Math.round(sum(a)/n),s[(n-1)/2+1],s[(n-1)/2-1]],`เรียงข้อมูล: ${s.join(', ')}<br>ตัวกลาง (ตัวที่ ${(n+1)/2}) = <b>${m}</b>`,['ต้องเรียงข้อมูลจากน้อยไปมากก่อน','ข้อมูล '+n+' ตัว มัธยฐานคือตัวที่ '+(n+1)/2])});
@@ -2028,7 +2156,7 @@ P2('geo1',[3,4],d=>{const x=ri(10,40),a=ri(2,4),b=ri(-10,20);const A=a*x+b;if(A<
 P2('cube1',AL,d=>{const a=ri(2,5),b=ri(2,5),c=ri(1,4);return N(`กล่องทรงสี่เหลี่ยมมุมฉากขนาด ${a} × ${b} × ${c} หน่วย เรียงด้วยลูกบาศก์ขนาด 1 หน่วยได้กี่ลูก`,a*b*c,[a+b+c,2*(a*b+b*c+a*c),a*b,a*b*c+c],`${a} × ${b} × ${c} = <b>${a*b*c}</b> ลูก`,['นับเป็นชั้น ชั้นละ '+a+' × '+b,'มี '+c+' ชั้น'],{u:'ลูก'})});
 P2('cube1',[2,3,4],d=>{const n=ri(3,6);return N(`ลูกบาศก์ใหญ่ ${n} × ${n} × ${n} ทาสีผิวนอก มีลูกบาศก์เล็กที่ถูกทาสีเพียงด้านเดียวกี่ลูก`,6*(n-2)**2,[(n-2)**3,12*(n-2),8,6*n*n],`ลูกที่โดนสีด้านเดียวอยู่กลางหน้า หน้าละ (${n} − 2)² = ${(n-2)**2}<br>6 หน้า × ${(n-2)**2} = <b>${6*(n-2)**2}</b> ลูก`,['ลูกที่โดนสีหน้าเดียวอยู่ตรงกลางของแต่ละหน้า (ไม่ใช่สันและมุม)','ลูกบาศก์มี 6 หน้า'],{u:'ลูก'})});
 P2('cube1',[1,2,3],d=>{const sh=pick([['ลูกบาศก์',6],['ปริซึมสามเหลี่ยม',5],['พีระมิดฐานสี่เหลี่ยม',5],['ปริซึมหกเหลี่ยม',8],['พีระมิดฐานสามเหลี่ยม',4]]);return N(`${sh[0]}มีหน้าทั้งหมดกี่หน้า`,sh[1],[sh[1]+1,sh[1]-1,sh[1]*2,12],`${sh[0]}มี <b>${sh[1]}</b> หน้า`,['นับหน้าฐานและหน้าข้างทั้งหมด','ปริซึมมีฐาน 2 หน้า พีระมิดมีฐาน 1 หน้า'],{u:'หน้า'})});
-P2('cube1',[2,3,4],d=>{const r=2,c=3,H=Array.from({length:r},()=>Array.from({length:c},()=>ri(1,4))),mx=Math.max(...H.flat());return N('จากภาพด้านบน (ตัวเลขคือจำนวนลูกบาศก์ที่ซ้อนกัน) กองที่สูงที่สุดสูงกี่ลูก และถ้าต้องเติมให้ทุกช่องสูงเท่ากองที่สูงที่สุด ต้องเติมอีกกี่ลูก — ตอบจำนวนที่ต้องเติม',mx*r*c-sum(H.flat()),[mx*r*c,sum(H.flat()),mx,mx*r*c-sum(H.flat())+1],`สูงสุด ${mx} ลูก ถ้าทุกช่องสูง ${mx} ต้องใช้ ${mx*r*c} ลูก<br>มีอยู่ ${sum(H.flat())} → เติม <b>${mx*r*c-sum(H.flat())}</b> ลูก`,['หาจำนวนที่ต้องมีถ้าทุกช่องสูงเท่ากัน','ลบจำนวนที่มีอยู่แล้ว'],{u:'ลูก',x:{vis:tbl(['',...Array.from({length:c},(_,j)=>'ค.'+(j+1))],H.map((row,i)=>['แถว '+(i+1),...row]))}})});
+P2('cube1',[2,3,4],d=>{const r=2,c=3,H=CV.heights(r,c,1,4),mx=Math.max(...H.flat());return N('จากรูปเมืองลูกบาศก์ ถ้าต้องต่อเติมให้ทุกตึกสูงเท่าตึกที่สูงที่สุด ต้องใช้ลูกบาศก์เพิ่มอีกกี่ลูก',mx*r*c-sum(H.flat()),[mx*r*c,sum(H.flat()),mx,mx*r*c-sum(H.flat())+1],`ตึกสูงสุดสูง ${mx} ลูก ถ้าทั้ง ${r*c} ตึกสูง ${mx} ต้องใช้ ${mx*r*c} ลูก<br>ตอนนี้มี ${H.flat().join(' + ')} = ${sum(H.flat())} ลูก → เติม <b>${mx*r*c-sum(H.flat())}</b> ลูก`,['หาจำนวนลูกบาศก์ที่ต้องมี ถ้าทุกตึกสูงเท่ากัน','ลบจำนวนที่มีอยู่แล้ว'],{u:'ลูก',x:{vis:CV.city(H)}})});
 P2('cube1',[3,4],d=>{const k=ri(2,4),a=ri(1,3),b=ri(1,3),c=ri(1,3);return N(`กล่อง ${a*k} × ${b*k} × ${c*k} ซม. บรรจุลูกเต๋าขนาด ${k} ซม. เต็มกล่อง ใช้ลูกเต๋ากี่ลูก`,a*b*c,[a*b*c*k,a*b*c*k**3,(a+b+c)*k,a*b*c+1],`แต่ละด้านเรียงได้ ${a}, ${b}, ${c} ลูก<br>${a} × ${b} × ${c} = <b>${a*b*c}</b> ลูก`,['หารแต่ละด้านด้วย '+k,'แล้วคูณกัน'],{u:'ลูก'})});
 /* stat1 */
 P2('stat1',AL,d=>{const a=Array.from({length:ri(5,8)},()=>ri(1,20)*(d>2?3:1)),m=sum(a)/a.length;return one2(`ข้อมูล: ${a.join(', ')}<br>ค่าเฉลี่ยเลขคณิตเท่ากับเท่าใด (ทศนิยม 2 ตำแหน่ง)`,mk(dch(m),[dch(sum(a)/(a.length-1)),dch(m+1),dch([...a].sort((x,y)=>x-y)[a.length>>1]),dch(m-1)],()=>dch(m+ri(-8,8)/4)),`ผลรวม ${sum(a)} ÷ ${a.length} = <b>${m.toFixed(2)}</b>`,['บวกข้อมูลทั้งหมด','หารด้วยจำนวนข้อมูล'])});
@@ -2178,7 +2306,7 @@ lin1:{k:['สมการเชิงเส้นตัวแปรเดีย�
 ratio1:{k:['อัตราส่วน a : b เปรียบเทียบปริมาณสองปริมาณ คูณหรือหารทั้งสองด้วยจำนวนเดียวกันได้อัตราส่วนที่เท่ากัน','สัดส่วน a : b = c : d ↔ ad = bc (คูณไขว้)','ร้อยละ x% = x/100 · "x% ของ y" = x/100 × y','กำไร/ขาดทุนคิดจากราคาทุน · ส่วนลดคิดจากราคาตั้ง','ดอกเบี้ยคงต้น I = Prt'],f:'ร้อยละที่เปลี่ยน = (ส่วนที่เปลี่ยน ÷ ค่าเดิม) × 100',ex:['ซื้อมา 400 บาท ขายได้กำไร 15% ขายราคาเท่าใด','กำไร = 15/100 × 400 = 60 บาท','ราคาขาย = 400 + 60','= <b>460 บาท</b>']},
 graph1:{k:['คู่อันดับ (x, y) บอกตำแหน่งบนระนาบ x คือแนวนอน y คือแนวตั้ง','จตุภาคที่ 1 (+,+) · 2 (−,+) · 3 (−,−) · 4 (+,−) นับทวนเข็มนาฬิกา','กราฟของ y = mx + c เป็นเส้นตรง m คือความชัน c คือจุดตัดแกน Y','ความชัน = (y₂ − y₁)/(x₂ − x₁) · m > 0 เส้นชันขึ้น m < 0 เส้นลาดลง','เส้นขนานมีความชันเท่ากัน'],f:'m = (y₂ − y₁)/(x₂ − x₁)',ex:['หาสมการเส้นตรงผ่าน (1, 3) และ (3, 7)','m = (7 − 3)/(3 − 1) = 2','แทน (1, 3): 3 = 2(1) + c → c = 1','<b>y = 2x + 1</b>']},
 geo1:{k:['มุมประกอบมุมฉากรวม 90° · มุมประกอบสองมุมฉากรวม 180°','มุมตรงข้าม (เส้นตรงสองเส้นตัดกัน) เท่ากัน · มุมรอบจุดรวม 360°','มุมภายในสามเหลี่ยมรวม 180° · มุมภายนอก = ผลรวมมุมภายในที่ไม่ติดกัน','มุมภายใน n เหลี่ยมรวม (n − 2) × 180°','มุมภายนอกของรูปหลายเหลี่ยมใด ๆ รวม 360°'],f:'Σมุมภายใน = (n − 2) × 180°',ex:['รูปหกเหลี่ยมด้านเท่ามุมเท่า มุมภายในแต่ละมุมเท่ากับเท่าใด','มุมภายในรวม (6 − 2) × 180° = 720°','หาร 6 มุม','= <b>120°</b>']},
-cube1:{k:['ภาพด้านหน้า ด้านข้าง ด้านบน คือภาพที่เห็นเมื่อมองตรง ๆ จากแต่ละทิศ','ตารางภาพด้านบนที่มีตัวเลข บอกความสูงของกองลูกบาศก์ในแต่ละช่อง','ภาพด้านหน้า: ค่ามากที่สุดของแต่ละคอลัมน์ · ภาพด้านข้าง: ค่ามากที่สุดของแต่ละแถว','ลูกบาศก์ n×n×n ทาสีผิว: สามด้าน 8 ลูก · สองด้าน 12(n−2) · ด้านเดียว 6(n−2)² · ไม่โดนสี (n−2)³','ทรงหลายหน้า: หน้า + จุดยอด − สัน = 2'],f:'F + V − E = 2',ex:['ลูกบาศก์ 4×4×4 ทาสีผิวนอก มีลูกที่โดนสีด้านเดียวกี่ลูก','ลูกที่โดนด้านเดียวอยู่กลางหน้า หน้าละ (4 − 2)² = 4 ลูก','มี 6 หน้า','6 × 4 = <b>24 ลูก</b>']},
+cube1:{k:['ภาพด้านหน้า ด้านข้าง ด้านบน คือภาพที่เห็นเมื่อมองตรง ๆ จากแต่ละทิศ','ในรูปเมืองลูกบาศก์ นับความสูงของแต่ละตึก แล้วรวมกันจะได้จำนวนลูกบาศก์ทั้งหมด','ภาพด้านหน้า: ตึกที่สูงที่สุดของแต่ละคอลัมน์ · ภาพด้านขวา: ตึกที่สูงที่สุดของแต่ละแถว · ภาพด้านบน: นับหลังคาทุกตึก','ลูกบาศก์ n×n×n ทาสีผิว: สามด้าน 8 ลูก · สองด้าน 12(n−2) · ด้านเดียว 6(n−2)² · ไม่โดนสี (n−2)³','ทรงหลายหน้า: หน้า + จุดยอด − สัน = 2'],f:'F + V − E = 2',ex:['ลูกบาศก์ 4×4×4 ทาสีผิวนอก มีลูกที่โดนสีด้านเดียวกี่ลูก','ลูกที่โดนด้านเดียวอยู่กลางหน้า หน้าละ (4 − 2)² = 4 ลูก','มี 6 หน้า','6 × 4 = <b>24 ลูก</b>']},
 stat1:{k:['ค่าเฉลี่ยเลขคณิต = ผลรวม ÷ จำนวนข้อมูล','มัธยฐาน = ค่ากลางเมื่อเรียงข้อมูล (n คู่ ใช้ค่าเฉลี่ยของสองตัวกลาง)','ฐานนิยม = ค่าที่ซ้ำมากที่สุด ใช้กับข้อมูลที่ไม่ใช่ตัวเลขได้','พิสัย = ค่ามากสุด − ค่าน้อยสุด','ข้อมูลมีค่าผิดปกติ มัธยฐานเหมาะกว่าค่าเฉลี่ย'],f:'x̄ = Σx/N',ex:['ข้อมูล 5 ค่ามีค่าเฉลี่ย 12 ถ้าเพิ่มค่า 18 ค่าเฉลี่ยใหม่เป็นเท่าใด','ผลรวมเดิม = 5 × 12 = 60','ผลรวมใหม่ = 78 จำนวน 6 ค่า','78 ÷ 6 = <b>13</b>']},
 pyth2:{k:['สามเหลี่ยมมุมฉาก: c² = a² + b² (c คือด้านตรงข้ามมุมฉาก ยาวที่สุด)','บทกลับ: ถ้า a² + b² = c² แล้วเป็นสามเหลี่ยมมุมฉาก','c² < a² + b² มุมแหลม · c² > a² + b² มุมป้าน','ชุดตัวเลขที่พบบ่อย: 3-4-5, 5-12-13, 8-15-17, 7-24-25 และพหุคูณ','ระยะทางบนระนาบ = √(Δx² + Δy²)'],f:'c² = a² + b²',ex:['บันไดยาว 13 ม. เท้าห่างกำแพง 5 ม. ยอดบันไดสูงเท่าใด','บันไดเป็นด้านตรงข้ามมุมฉาก','h² = 13² − 5² = 169 − 25 = 144','h = <b>12 ม.</b>']},
 real2:{k:['จำนวนจริง = ตรรกยะ (เขียนเป็นเศษส่วนได้) + อตรรกยะ (ทศนิยมไม่รู้จบไม่ซ้ำ เช่น √2, π)','√a คือรากที่สองที่ไม่เป็นลบ · ∛a ของจำนวนลบเป็นลบได้','√(ab) = √a·√b · √(a/b) = √a/√b','บวกลบได้เฉพาะพจน์ที่รากเหมือนกัน: 2√3 + 5√3 = 7√3','ทำตัวส่วนไม่มีราก: คูณทั้งเศษและส่วนด้วยรากนั้น'],f:'√(a²b) = a√b',ex:['ทำ √50 + √18 ให้อยู่ในรูปอย่างง่าย','√50 = √(25 × 2) = 5√2','√18 = √(9 × 2) = 3√2','รวม = <b>8√2</b>']},
@@ -2373,17 +2501,7 @@ function avatar(o){
     if(typeof AVX!=='undefined'&&AVX.aura[k])s+=AVX.aura[k](pts);
     if(k==='fire')pts.forEach(([x,y])=>s+=`<path d="M${x} ${y-9}C${x+6} ${y-2} ${x+5} ${y+5} ${x} ${y+6}C${x-5} ${y+5} ${x-6} ${y-2} ${x} ${y-9}Z" fill="#ff9a4a"/><path d="M${x} ${y-3}C${x+3} ${y+1} ${x+2} ${y+4} ${x} ${y+4}C${x-2} ${y+4} ${x-3} ${y+1} ${x} ${y-3}Z" fill="#ffe36b"/>`);
   }
-  const back=eq.back||(f>=3?'evocape':null);
-  if(back==='evocape'||back==='cape'){const c=back==='cape'?'#d6453a':out.trim;s+=`<path d="M${cx-tw/2+2} ${top+4}L${cx+tw/2-2} ${top+4}L${cx+tw/2+14} ${hip+18}Q${cx} ${hip+28} ${cx-tw/2-14} ${hip+18}Z" fill="${c}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`}
-  if(back==='batwing'||back==='dragonwing')for(const k of[-1,1])s+=`<path d="M${cx+k*10} ${top+12}C${cx+k*40} ${top-24} ${cx+k*66} ${top-6} ${cx+k*72} ${top+18}C${cx+k*60} ${top+12} ${cx+k*56} ${top+22} ${cx+k*58} ${top+32}C${cx+k*48} ${top+24} ${cx+k*40} ${top+30} ${cx+k*40} ${top+40}C${cx+k*32} ${top+30} ${cx+k*22} ${top+30} ${cx+k*10} ${top+36}Z" fill="${back==='batwing'?'#3b2a4a':'#c33b2e'}" stroke="${ink}" stroke-width="2"/>`;
-  if(back==='angel')for(const k of[-1,1])s+=`<path d="M${cx+k*10} ${top+10}C${cx+k*44} ${top-30} ${cx+k*74} ${top-4} ${cx+k*68} ${top+26}C${cx+k*58} ${top+22} ${cx+k*58} ${top+34} ${cx+k*50} ${top+40}C${cx+k*40} ${top+34} ${cx+k*34} ${top+44} ${cx+k*12} ${top+34}Z" fill="#ffffff" stroke="#c9d6e6" stroke-width="2.5"/>`;
-  if(back==='jet')for(const k of[-1,1])s+=`<rect x="${cx+k*(tw/2-2)-(k>0?0:14)}" y="${top+2}" width="14" height="${G.th}" rx="6" fill="#9aa9c4" stroke="${ink}" stroke-width="2"/><path d="M${cx+k*(tw/2+5)-4} ${top+G.th+2}L${cx+k*(tw/2+5)} ${top+G.th+20}L${cx+k*(tw/2+5)+4} ${top+G.th+2}Z" fill="#ffb347"/>`;
-  if(back==='fairy')for(const k of[-1,1])s+=`<path d="M${cx+k*8} ${top+12}C${cx+k*34} ${top-30} ${cx+k*60} ${top-14} ${cx+k*52} ${top+10}C${cx+k*46} ${top+20} ${cx+k*24} ${top+18} ${cx+k*8} ${top+14}Z" fill="#bfe8ff88" stroke="#7fd0ff" stroke-width="2"/><path d="M${cx+k*8} ${top+16}C${cx+k*40} ${top+16} ${cx+k*46} ${top+40} ${cx+k*30} ${top+44}C${cx+k*20} ${top+40} ${cx+k*12} ${top+28} ${cx+k*8} ${top+18}Z" fill="#ffd6f088" stroke="#ff9ad1" stroke-width="2"/>`;
-  if(back==='ribbonback')s+=`<path d="M${cx} ${top+14}c-18 -16 -30 -4 -22 8c-6 6 2 16 12 6zM${cx} ${top+14}c18 -16 30 -4 22 8c6 6 -2 16 -12 6z" fill="#ff8fb1" stroke="${ink}" stroke-width="2"/><path d="M${cx-4} ${top+16}l-10 ${G.th}M${cx+4} ${top+16}l10 ${G.th}" stroke="#ff8fb1" stroke-width="6" stroke-linecap="round"/>`;
-  if(typeof AVX!=='undefined'&&AVX.back[back])s+=AVX.back[back]({cx,top,hip,tw,th:G.th,ink});
-  if(back==='bag')s+=`<rect x="${cx-tw/2-6}" y="${top+6}" width="${tw+12}" height="${G.th*.75}" rx="8" fill="#2b5fa8" stroke="${ink}" stroke-width="2.5"/>`;
-  if(back==='guitar')s+=`<g transform="rotate(30 ${cx} ${top+G.th/2})"><ellipse cx="${cx+4}" cy="${top+G.th*.75}" rx="16" ry="19" fill="#c98a3a" stroke="${ink}" stroke-width="2"/><rect x="${cx+1}" y="${top-28}" width="6" height="${G.th*.6+28}" fill="#7a4a12" stroke="${ink}" stroke-width="1.5"/><circle cx="${cx+4}" cy="${top+G.th*.72}" r="5" fill="#3a2410"/></g>`;
-  if(back==='book')s+=`<g transform="translate(${cx+30} ${top-26}) rotate(12)"><path d="M0 0C-8 -4 -18 -4 -24 0V22C-18 18 -8 18 0 22Z" fill="#f3efe2" stroke="${ink}" stroke-width="2"/><path d="M0 0C8 -4 18 -4 24 0V22C18 18 8 18 0 22Z" fill="#e9e2cf" stroke="${ink}" stroke-width="2"/><circle cx="0" cy="10" r="16" fill="#ffe9a6" opacity=".3"/></g>`;
+  const back=eq.back||(f>=3?'evocape':null);const bkS=drawBack(back,{cx,top,hip,tw,G,ink,out,f});if(!o.bv)s+=bkS;
   const [hb,hf]=hairSVG(eq.hair||'base',girl,cx,hcy,hr,ink);s+=hb;
   const lw=10,l1=cx-12,l2=cx+2;
   s+=`<rect x="${l1}" y="${hip-2}" width="${lw}" height="${G.lh-2}" rx="4" fill="${out.long?out.bot:skin}" stroke="${ink}" stroke-width="2"/><rect x="${l2}" y="${hip-2}" width="${lw}" height="${G.lh-2}" rx="4" fill="${out.long?out.bot:skin}" stroke="${ink}" stroke-width="2"/>`;
@@ -2393,14 +2511,16 @@ function avatar(o){
   s+=`<ellipse cx="${l1+lw/2-1}" cy="${feet-2}" rx="8" ry="4.5" fill="${boot}" stroke="${ink}" stroke-width="2"/><ellipse cx="${l2+lw/2+1}" cy="${feet-2}" rx="8" ry="4.5" fill="${boot}" stroke="${ink}" stroke-width="2"/>`;
   s+=`<rect x="${cx-tw/2-9}" y="${top+3}" width="10" height="${armL}" rx="5" fill="${out.top}" stroke="${ink}" stroke-width="2"/><rect x="${cx+tw/2-1}" y="${top+3}" width="10" height="${armL}" rx="5" fill="${out.top}" stroke="${ink}" stroke-width="2"/>`;
   s+=`<rect x="${cx-tw/2}" y="${top}" width="${tw}" height="${G.th+2}" rx="10" fill="${out.top}" stroke="${ink}" stroke-width="2.5"/>`;
-  s+=`<path d="M${cx-8} ${top+1}L${cx} ${top+10}L${cx+8} ${top+1}" fill="${out.trim}" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/>`;
-  if(typeof outfitDetail==='function')s+=outfitDetail(eq.outfit||'school',{cx,top,hip,tw,th:G.th,lh:G.lh,ink,girl,armL,f});
+  if(!o.bv)s+=`<path d="M${cx-8} ${top+1}L${cx} ${top+10}L${cx+8} ${top+1}" fill="${out.trim}" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/>`;
+  if(!o.bv&&BACKFRONT[back])s+=BACKFRONT[back]({cx,top,hip,tw,th:G.th,ink,armL});if(o.bv)s+=`<path d="M${cx} ${top+6}V${top+G.th-4}" stroke="${ink}" stroke-width="1.2" opacity=".35"/>`;
+  if(!o.bv&&typeof outfitDetail==='function')s+=outfitDetail(eq.outfit||'school',{cx,top,hip,tw,th:G.th,lh:G.lh,ink,girl,armL,f});
   const plain=!eq.outfit||eq.outfit==='school';
   if(f>=2)s+=`<rect x="${cx-tw/2+1}" y="${hip-9}" width="${tw-2}" height="6" fill="#6b4a2a"/><rect x="${cx-4}" y="${hip-10}" width="8" height="8" rx="1.5" fill="#f2c14e" stroke="${ink}" stroke-width="1.5"/>`;
-  if(f>=3&&plain)s+=`<path d="M${cx} ${top+16}l3 6 6.5 1-4.7 4.6 1.1 6.4-5.9-3.1-5.9 3.1 1.1-6.4-4.7-4.6 6.5-1z" fill="${f>=4?'#7fe3ff':'#f2c14e'}" stroke="${ink}" stroke-width="1.2"/>`;
+  if(f>=3&&plain&&!o.bv)s+=`<path d="M${cx} ${top+16}l3 6 6.5 1-4.7 4.6 1.1 6.4-5.9-3.1-5.9 3.1 1.1-6.4-4.7-4.6 6.5-1z" fill="${f>=4?'#7fe3ff':'#f2c14e'}" stroke="${ink}" stroke-width="1.2"/>`;
   if(f>=2&&(plain||['knight','samurai','phoenixsuit','space','dragonarmor'].includes(eq.outfit))){const pc=f>=4?'#f2c14e':'#c9d1d9';s+=`<ellipse cx="${cx-tw/2-3}" cy="${top+5}" rx="9" ry="6" fill="${pc}" stroke="${ink}" stroke-width="2"/><ellipse cx="${cx+tw/2+3}" cy="${top+5}" rx="9" ry="6" fill="${pc}" stroke="${ink}" stroke-width="2"/>`}
-  if((f===1||f===2)&&plain)s+=`<path d="M${cx-12} ${top-1}Q${cx} ${top+7} ${cx+12} ${top-1}L${cx+10} ${top+5}Q${cx+16} ${top+18} ${cx+11} ${top+24}L${cx+6} ${top+8}Q${cx} ${top+10} ${cx-10} ${top+5}Z" fill="${out.trim}" stroke="${ink}" stroke-width="2"/>`;
+  if((f===1||f===2)&&plain&&!o.bv)s+=`<path d="M${cx-12} ${top-1}Q${cx} ${top+7} ${cx+12} ${top-1}L${cx+10} ${top+5}Q${cx+16} ${top+18} ${cx+11} ${top+24}L${cx+6} ${top+8}Q${cx} ${top+10} ${cx-10} ${top+5}Z" fill="${out.trim}" stroke="${ink}" stroke-width="2"/>`;
   s+=`<circle cx="${hxL}" cy="${hyR+2}" r="5.5" fill="${skin}" stroke="${ink}" stroke-width="2"/>`;
+  if(o.bv)s+=bkS+hb;
   s+=`<circle cx="${cx}" cy="${hcy}" r="${hr}" fill="${skin}" stroke="${ink}" stroke-width="2.5"/>`+hf;
   const ex=hr*.38,ey=hcy+5,iris=girl?'#8a4fc8':'#3d7ad6',iris2=girl?'#c99bff':'#8fd0ff';
   defs+=`<linearGradient id="iris_${girl?'f':'m'}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1430"/><stop offset=".45" stop-color="${iris}"/><stop offset="1" stop-color="${iris2}"/></linearGradient>`;
@@ -2416,6 +2536,7 @@ function avatar(o){
   s+=`<path d="M${cx-3.6} ${ey+10.4}Q${cx} ${ey+13.6} ${cx+3.6} ${ey+10.4}" fill="${girl?'#e8708a':'none'}" stroke="#2a1d16" stroke-width="1.6" stroke-linecap="round"/>`;
   if(!eq.hat||['band','catears','headphones','halo'].includes(eq.hat))s+=`<path d="M${(cx-hr*.55).toFixed(1)} ${(hcy-hr*.62).toFixed(1)}Q${(cx-hr*.1).toFixed(1)} ${(hcy-hr*.95).toFixed(1)} ${(cx+hr*.45).toFixed(1)} ${(hcy-hr*.7).toFixed(1)}" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 4"/>`;
   if(f>=5&&!eq.hat)s+=`<path d="M${cx-hr+4} ${hcy-hr+12}Q${cx} ${hcy-hr+4} ${cx+hr-4} ${hcy-hr+12}" fill="none" stroke="#f2c14e" stroke-width="3.5"/><circle cx="${cx}" cy="${hcy-hr+7}" r="3.5" fill="#7fe3ff" stroke="${ink}" stroke-width="1.2"/>`;
+  if(o.bv){const hc=(COS[eq.hair||'base']||{}).col||(girl?'#5a2e1a':'#2d2018');s+=`<circle cx="${cx}" cy="${hcy}" r="${hr+1}" fill="${hc}" stroke="${ink}" stroke-width="2.5"/><path d="M${cx} ${hcy-hr+2}Q${cx-3} ${hcy} ${cx} ${hcy+hr-4}" stroke="#fff" stroke-opacity=".22" stroke-width="2" fill="none"/>`+[-1,1].map(k=>`<ellipse cx="${cx+k*(hr+1)}" cy="${hcy+6}" rx="4" ry="6" fill="${skin}" stroke="${ink}" stroke-width="2"/>`).join('')+`<path d="M${cx-hr+3} ${hcy+hr*.55}Q${cx} ${hcy+hr+4} ${cx+hr-3} ${hcy+hr*.55}" fill="${hc}" stroke="${ink}" stroke-width="2"/>`}
   const yT=hcy-hr;
   const H={
    cap:`<path d="M${cx-hr+1} ${yT+12}Q${cx} ${yT-16} ${cx+hr-1} ${yT+12}Z" fill="#e0453a" stroke="${ink}" stroke-width="2"/><path d="M${cx+hr-6} ${yT+12}Q${cx+hr+16} ${yT+10} ${cx+hr+18} ${yT+15}Q${cx+hr+4} ${yT+18} ${cx+hr-6} ${yT+15}Z" fill="#b8322a" stroke="${ink}" stroke-width="2"/>`,
@@ -2462,8 +2583,20 @@ function avatar(o){
    hamster:`<ellipse cx="30" cy="176" rx="18" ry="14" fill="#f2b56b" stroke="${ink}" stroke-width="2"/><ellipse cx="30" cy="180" rx="11" ry="8" fill="#fff1dc"/><circle cx="18" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="1.6"/><circle cx="42" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="1.6"/><circle cx="24" cy="171" r="2.2" fill="${ink}"/><circle cx="36" cy="171" r="2.2" fill="${ink}"/><circle cx="24.7" cy="170.3" r=".8" fill="#fff"/><circle cx="36.7" cy="170.3" r=".8" fill="#fff"/><ellipse cx="19" cy="176" rx="4" ry="3" fill="#ffb0a0"/><ellipse cx="41" cy="176" rx="4" ry="3" fill="#ffb0a0"/><path d="M28 175l2 2 2 -2" fill="none" stroke="${ink}" stroke-width="1.2"/>`,
   };
   if(eq.pet&&PT[eq.pet])s+=PT[eq.pet];else if(eq.pet&&typeof AVX!=='undefined'&&AVX.pet[eq.pet])s+=AVX.pet[eq.pet](ink);
-  return `<svg viewBox="0 0 160 200" class="av" aria-hidden="true"><defs>${defs}</defs>${s}</svg>`;
-}
+  return `<svg viewBox="0 0 160 200" class="av" aria-hidden="true"><defs>${defs}</defs>${o.bv?`<g transform="translate(160 0) scale(-1 1)">${s}</g>`:s}</svg>`;
+}function drawBack(back,{cx,top,hip,tw,G,ink,out,f}){let s='';
+  if(back==='evocape'||back==='cape'){const c=back==='cape'?'#d6453a':out.trim;s+=`<path d="M${cx-tw/2+2} ${top+4}L${cx+tw/2-2} ${top+4}L${cx+tw/2+14} ${hip+18}Q${cx} ${hip+28} ${cx-tw/2-14} ${hip+18}Z" fill="${c}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`}
+  if(back==='batwing'||back==='dragonwing')for(const k of[-1,1])s+=`<path d="M${cx+k*10} ${top+12}C${cx+k*40} ${top-24} ${cx+k*66} ${top-6} ${cx+k*72} ${top+18}C${cx+k*60} ${top+12} ${cx+k*56} ${top+22} ${cx+k*58} ${top+32}C${cx+k*48} ${top+24} ${cx+k*40} ${top+30} ${cx+k*40} ${top+40}C${cx+k*32} ${top+30} ${cx+k*22} ${top+30} ${cx+k*10} ${top+36}Z" fill="${back==='batwing'?'#3b2a4a':'#c33b2e'}" stroke="${ink}" stroke-width="2"/>`;
+  if(back==='angel')for(const k of[-1,1])s+=`<path d="M${cx+k*10} ${top+10}C${cx+k*44} ${top-30} ${cx+k*74} ${top-4} ${cx+k*68} ${top+26}C${cx+k*58} ${top+22} ${cx+k*58} ${top+34} ${cx+k*50} ${top+40}C${cx+k*40} ${top+34} ${cx+k*34} ${top+44} ${cx+k*12} ${top+34}Z" fill="#ffffff" stroke="#c9d6e6" stroke-width="2.5"/>`;
+  if(back==='jet'&&!BACKBEHIND.jet)for(const k of[-1,1])s+=`<rect x="${cx+k*(tw/2-2)-(k>0?0:14)}" y="${top+2}" width="14" height="${G.th}" rx="6" fill="#9aa9c4" stroke="${ink}" stroke-width="2"/><path d="M${cx+k*(tw/2+5)-4} ${top+G.th+2}L${cx+k*(tw/2+5)} ${top+G.th+20}L${cx+k*(tw/2+5)+4} ${top+G.th+2}Z" fill="#ffb347"/>`;
+  if(back==='fairy')for(const k of[-1,1])s+=`<path d="M${cx+k*8} ${top+12}C${cx+k*34} ${top-30} ${cx+k*60} ${top-14} ${cx+k*52} ${top+10}C${cx+k*46} ${top+20} ${cx+k*24} ${top+18} ${cx+k*8} ${top+14}Z" fill="#bfe8ff88" stroke="#7fd0ff" stroke-width="2"/><path d="M${cx+k*8} ${top+16}C${cx+k*40} ${top+16} ${cx+k*46} ${top+40} ${cx+k*30} ${top+44}C${cx+k*20} ${top+40} ${cx+k*12} ${top+28} ${cx+k*8} ${top+18}Z" fill="#ffd6f088" stroke="#ff9ad1" stroke-width="2"/>`;
+  if(back==='ribbonback'&&!BACKBEHIND.ribbonback)s+=`<path d="M${cx} ${top+14}c-18 -16 -30 -4 -22 8c-6 6 2 16 12 6zM${cx} ${top+14}c18 -16 30 -4 22 8c6 6 -2 16 -12 6z" fill="#ff8fb1" stroke="${ink}" stroke-width="2"/><path d="M${cx-4} ${top+16}l-10 ${G.th}M${cx+4} ${top+16}l10 ${G.th}" stroke="#ff8fb1" stroke-width="6" stroke-linecap="round"/>`;
+  if(BACKBEHIND[back])s+=BACKBEHIND[back]({cx,top,hip,tw,th:G.th,ink,G});else if(typeof AVX!=='undefined'&&AVX.back[back])s+=AVX.back[back]({cx,top,hip,tw,th:G.th,ink});
+  if(back==='bag'&&!BACKBEHIND.bag)s+=`<rect x="${cx-tw/2-6}" y="${top+6}" width="${tw+12}" height="${G.th*.75}" rx="8" fill="#2b5fa8" stroke="${ink}" stroke-width="2.5"/>`;
+  if(back==='guitar'&&!BACKBEHIND.guitar)s+=`<g transform="rotate(30 ${cx} ${top+G.th/2})"><ellipse cx="${cx+4}" cy="${top+G.th*.75}" rx="16" ry="19" fill="#c98a3a" stroke="${ink}" stroke-width="2"/><rect x="${cx+1}" y="${top-28}" width="6" height="${G.th*.6+28}" fill="#7a4a12" stroke="${ink}" stroke-width="1.5"/><circle cx="${cx+4}" cy="${top+G.th*.72}" r="5" fill="#3a2410"/></g>`;
+  if(back==='book')s+=`<g transform="translate(${cx+30} ${top-26}) rotate(12)"><path d="M0 0C-8 -4 -18 -4 -24 0V22C-18 18 -8 18 0 22Z" fill="#f3efe2" stroke="${ink}" stroke-width="2"/><path d="M0 0C8 -4 18 -4 24 0V22C18 18 8 18 0 22Z" fill="#e9e2cf" stroke="${ink}" stroke-width="2"/><circle cx="0" cy="10" r="16" fill="#ffe9a6" opacity=".3"/></g>`;
+  ;return s}
+
 
 /* ---------- items & chests ---------- */
 const ITEMS={
@@ -2488,6 +2621,28 @@ const STAR_P='<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-
 const HEART_P='<path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.6 4.5c2.1 0 3.4 1.2 4.4 2.6 1-1.4 2.3-2.6 4.4-2.6 3.6 0 5.7 3.9 4.2 7.3C19.5 16.4 12 21 12 21z"/>';
 const COIN='<svg viewBox="0 0 24 24" class="coin" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#f2c14e" stroke="#b98d2a" stroke-width="2"/><path d="M12 6.5l1.7 3.5 3.8.5-2.8 2.7.7 3.8L12 15.2 8.6 17l.7-3.8-2.8-2.7 3.8-.5z" fill="#fff6c2"/></svg>';
 const BULB='<svg viewBox="0 0 24 24" class="coin" aria-hidden="true"><path d="M12 2a7 7 0 0 0-4 12.7V18h8v-3.3A7 7 0 0 0 12 2z" fill="#ffe36b" stroke="#b98d2a" stroke-width="1.6"/><rect x="8.5" y="19" width="7" height="3" rx="1" fill="#c9d1d9"/></svg>';
+
+</script>
+<script>
+/* ---------- ของตกแต่งด้านหลัง: วาดใหม่ให้โผล่ให้เห็นจากด้านหน้า + สายคาดด้านหน้า ---------- */
+const BACKBEHIND={
+ bag:({cx,top,tw,th,ink})=>`<rect x="${cx-tw/2-15}" y="${top-2}" width="${tw+30}" height="${th*.84}" rx="10" fill="#2b5fa8" stroke="${ink}" stroke-width="2.5"/><rect x="${cx-tw/2-15}" y="${top+th*.22}" width="${tw+30}" height="6" fill="#f2c14e" stroke="${ink}" stroke-width="1.5"/>${[-1,1].map(k=>`<rect x="${k<0?cx-tw/2-19:cx+tw/2+9}" y="${top+th*.38}" width="10" height="${th*.36}" rx="4" fill="#3f78c8" stroke="${ink}" stroke-width="2"/>`).join('')}`,
+ guitar:({cx,top,hip,tw,ink})=>{const bx=cx+tw/2+8,by=hip-2,hx=cx-tw/2-14,hy=top-30,a=Math.atan2(hy-by,hx-bx)*180/Math.PI;
+  return `<path d="M${bx} ${by}L${hx} ${hy}" stroke="${ink}" stroke-width="9" stroke-linecap="round"/><path d="M${bx} ${by}L${hx} ${hy}" stroke="#7a4a12" stroke-width="5.5" stroke-linecap="round"/><g transform="translate(${hx} ${hy}) rotate(${a+90})"><rect x="-5" y="-12" width="10" height="13" rx="2" fill="#5a3410" stroke="${ink}" stroke-width="1.8"/>${[-8,-3].map(y=>`<circle cx="-7" cy="${y}" r="1.8" fill="#ddd" stroke="${ink}" stroke-width=".8"/><circle cx="7" cy="${y}" r="1.8" fill="#ddd" stroke="${ink}" stroke-width=".8"/>`).join('')}</g><g transform="rotate(${a+90} ${bx} ${by})"><path d="M${bx} ${by-22}c12 0 15 8 11 14c8 4 9 20 -11 22c-20 -2 -19 -18 -11 -22c-4 -6 -1 -14 11 -14z" fill="#d9963f" stroke="${ink}" stroke-width="2.2"/><circle cx="${bx}" cy="${by-4}" r="5" fill="#3a2410"/></g>`},
+ ribbonback:({cx,top,hip,tw,ink})=>[-1,1].map(k=>`<path d="M${cx+k*(tw/2-4)} ${top+12}C${cx+k*(tw/2+18)} ${top+30} ${cx+k*(tw/2+6)} ${hip-6} ${cx+k*(tw/2+24)} ${hip+16}L${cx+k*(tw/2+14)} ${hip+20}C${cx+k*(tw/2-2)} ${hip} ${cx+k*(tw/2+8)} ${top+34} ${cx+k*(tw/2-8)} ${top+18}Z" fill="#ff8fb1" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/><ellipse cx="${cx+k*(tw/2+9)}" cy="${top-3}" rx="15" ry="10" transform="rotate(${k*-28} ${cx+k*(tw/2+9)} ${top-3})" fill="#ff8fb1" stroke="${ink}" stroke-width="2.2"/><ellipse cx="${cx+k*(tw/2+9)}" cy="${top-3}" rx="7" ry="4" transform="rotate(${k*-28} ${cx+k*(tw/2+9)} ${top-3})" fill="#e8708a"/>`).join(''),
+ jet:({cx,top,tw,th,ink})=>`<defs><linearGradient id="jetfl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff59a"/><stop offset=".5" stop-color="#ff9f1c"/><stop offset="1" stop-color="#ff4b2b" stop-opacity="0"/></linearGradient></defs>`+[-1,1].map(k=>{const x=k<0?cx-tw/2-22:cx+tw/2+8;return `<path d="M${x+2} ${top+th+2}L${x+7} ${top+th+30}L${x+12} ${top+th+2}Z" fill="url(#jetfl)"/><rect x="${x}" y="${top-6}" width="14" height="${th+4}" rx="6" fill="#b8c4d8" stroke="${ink}" stroke-width="2.2"/><rect x="${x}" y="${top+th*.35}" width="14" height="5" fill="#e0455a"/><path d="M${x} ${top-4}Q${x+7} ${top-22} ${x+14} ${top-4}Z" fill="#e0455a" stroke="${ink}" stroke-width="2"/><rect x="${x+2}" y="${top+th-2}" width="10" height="6" rx="1" fill="#5a6070" stroke="${ink}" stroke-width="1.6"/>`}).join(''),
+ shell:({cx,top,tw,th,ink})=>{const cy=top+th*.46,rx=tw/2+18,ry=th*.74;return `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="#3f9a4a" stroke="${ink}" stroke-width="2.8"/><ellipse cx="${cx}" cy="${cy}" rx="${rx-6}" ry="${ry-6}" fill="#5fbf5a" stroke="#256a32" stroke-width="1.6"/>${[-150,-110,-70,-30,30,70,110,150,180,0].map(a=>{const r=a*Math.PI/180;return `<path d="M${(cx+Math.cos(r)*(rx-6)).toFixed(1)} ${(cy+Math.sin(r)*(ry-6)).toFixed(1)}L${(cx+Math.cos(r)*(rx-16)).toFixed(1)} ${(cy+Math.sin(r)*(ry-16)).toFixed(1)}" stroke="#256a32" stroke-width="2"/>`}).join('')}<ellipse cx="${cx}" cy="${cy}" rx="${rx-16}" ry="${ry-16}" fill="none" stroke="#256a32" stroke-width="1.6"/>`},
+ swords:({cx,top,hip,tw,ink})=>[-1,1].map(k=>{const x0=cx-k*(tw/2+16),y0=hip+18,x1=cx+k*(tw/2+12),y1=top-32,a=Math.atan2(y1-y0,x1-x0)*180/Math.PI;
+  return `<path d="M${x0} ${y0}L${x1} ${y1}" stroke="${ink}" stroke-width="8" stroke-linecap="round"/><path d="M${x0} ${y0}L${x1} ${y1}" stroke="#e3e8ee" stroke-width="4.5" stroke-linecap="round"/><g transform="translate(${x1} ${y1}) rotate(${a+90})"><rect x="-10" y="-2" width="20" height="5" rx="2" fill="#f2c14e" stroke="${ink}" stroke-width="1.6"/><rect x="-3" y="-15" width="6" height="13" fill="#6b3a1f" stroke="${ink}" stroke-width="1.4"/><circle cy="-17" r="4" fill="#f2c14e" stroke="${ink}" stroke-width="1.4"/></g>`}).join('')
+};
+const BACKFRONT={
+ bag:({cx,top,tw,th,ink})=>[-1,1].map(k=>`<path d="M${cx+k*(tw/2-6)} ${top+1}L${cx+k*(tw/2-5)} ${top+th*.72}" stroke="${ink}" stroke-width="6.5" stroke-linecap="round"/><path d="M${cx+k*(tw/2-6)} ${top+1}L${cx+k*(tw/2-5)} ${top+th*.72}" stroke="#3f78c8" stroke-width="4" stroke-linecap="round"/><rect x="${cx+k*(tw/2-5)-3.5}" y="${top+th*.4}" width="7" height="5" rx="1" fill="#f2c14e" stroke="${ink}" stroke-width="1.2"/>`).join(''),
+ guitar:({cx,top,hip,tw,ink})=>`<path d="M${cx-tw/2+3} ${top+2}L${cx+tw/2-2} ${hip-4}" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M${cx-tw/2+3} ${top+2}L${cx+tw/2-2} ${hip-4}" stroke="#c0392b" stroke-width="3.5" stroke-linecap="round"/><path d="M${cx-tw/2+3} ${top+2}L${cx+tw/2-2} ${hip-4}" stroke="#fff" stroke-width="1" stroke-dasharray="2 3" opacity=".7"/>`,
+ ribbonback:({cx,top,ink})=>`<path d="M${cx} ${top+5}l-9 -6v12zM${cx} ${top+5}l9 -6v12z" fill="#ff8fb1" stroke="${ink}" stroke-width="1.6" stroke-linejoin="round"/><circle cx="${cx}" cy="${top+5}" r="3" fill="#e8708a" stroke="${ink}" stroke-width="1.4"/>`,
+ jet:({cx,top,tw,th,ink})=>[-1,1].map(k=>`<path d="M${cx+k*(tw/2-6)} ${top+1}L${cx+k*(tw/2-5)} ${top+th*.7}" stroke="${ink}" stroke-width="5.5" stroke-linecap="round"/><path d="M${cx+k*(tw/2-6)} ${top+1}L${cx+k*(tw/2-5)} ${top+th*.7}" stroke="#8a94a8" stroke-width="3" stroke-linecap="round"/>`).join('')+`<path d="M${cx-tw/2+5} ${top+th*.42}H${cx+tw/2-5}" stroke="${ink}" stroke-width="5"/><path d="M${cx-tw/2+5} ${top+th*.42}H${cx+tw/2-5}" stroke="#8a94a8" stroke-width="2.6"/><circle cx="${cx}" cy="${top+th*.42}" r="4.5" fill="#f2c14e" stroke="${ink}" stroke-width="1.5"/>`,
+ shell:({cx,top,hip,tw,ink})=>[-1,1].map(k=>`<path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="#a8693a" stroke-width="3.6" stroke-linecap="round"/>`).join('')+`<circle cx="${cx}" cy="${(top+hip)/2-1}" r="5" fill="#4fae5a" stroke="${ink}" stroke-width="1.6"/>`,
+ swords:({cx,top,hip,tw,ink})=>[-1,1].map(k=>`<path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="#3a2a20" stroke-width="3.6" stroke-linecap="round"/>`).join('')+`<circle cx="${cx}" cy="${(top+hip)/2-1}" r="5" fill="#c9d1d9" stroke="${ink}" stroke-width="1.6"/>`
+};
 
 </script>
 <script>
@@ -2827,7 +2982,7 @@ function renderTitle(){
 const STORY=[
   {art:()=>avatar({g:'m',form:1,eq:{outfit:'school',hand:'pencil'}})+avatar({g:'f',form:1,eq:{outfit:'school',hair:'ponytail',hand:'ruler'}}),t:'หลังพาเกาะประถมกลับคืนมาได้ ผู้กล้ารุ่นแรกก็ขึ้นชั้นมัธยม แต่ปีศาจข้อสอบยังไม่ยอมแพ้'},
   {art:()=>monSVG('tome',PALS[1])+monSVG('cube',PALS[2])+monSVG('ghost',PALS[3]),trio:1,t:'พวกมันหนีขึ้นไปยึดเกาะ ม.1 ม.2 และ ม.3 คราวนี้โจทย์ยาวขึ้นและมีหลายขั้นตอน'},
-  {art:()=>`<span style="height:160px;display:flex;align-items:flex-end">${OWL.replace('<svg ','<svg style="width:150px;height:150px" ')}</span>`,t:'ไม่ต้องรีบนะ ศึกนี้ไม่จับเวลา คิดให้รอบคอบก่อนตอบ เพราะตอบผิดจะเสียหัวใจ แต่ครูฮูกพร้อมช่วยบอกวิธีคิดทุกเมื่อ'},
+  {art:()=>`<span style="height:160px;display:flex;align-items:flex-end">${OWL.replace('<svg ','<svg style="width:150px;height:150px" ')}</span>`,t:'ไม่ต้องรีบนะ โหมด Classic ไม่จับเวลา คิดให้รอบคอบก่อนตอบ เพราะตอบผิดจะเสียหัวใจ แต่ครูฮูกพร้อมช่วยบอกวิธีคิดทุกเมื่อ'},
   {art:()=>monSVG('overlord',OVERLORD_PH[0]),t:'เมื่อชนะทั้งสามเกาะ จอมมารสอบเข้า ม.4 จะปรากฏตัว ผ่านมันไปได้ เธอก็พร้อมสำหรับสนามสอบจริงแล้ว'}
 ];
 let sp=0;
@@ -2910,10 +3065,10 @@ function renderPrep(){
   const s=curStage,D=DIFFS[selDiff];curQueue=buildQueue(s,D);
   $('#pName').textContent=s.name;$('#pDesc').textContent=s.practice||s.grand?s.desc:`${s.isl.name} · ${s.desc}`;
   $('#pLine').innerHTML=curQueue.slice(0,6).map(m=>monSVG(m.type,m.pal,m.crown).replace('<svg ',`<svg class="${m.final?'bs':''}" `)).join('');
-  $('#pLineTxt').textContent=s.grand?`ผู้คุมสอบ 3 ตน (HP ${D.boss}) และจอมมาร 3 ร่าง (ร่างละ HP ${D.fin}) · ระหว่างร่างได้หัวใจและแสงปัญญาคืน`:`ปีศาจ ${curQueue.filter(m=>!m.boss).length} ตัว (HP ${D.hp}) และบอส ${curQueue.find(m=>m.boss).name} (HP ${curQueue.find(m=>m.boss).hp})${curQueue.some(m=>m.gold)?' · มีปีศาจทองคำ!':''}`;
+  $('#pLineTxt').textContent=s.grand?`ผู้คุมสอบ 3 ตน (HP ${D.boss*HPXf()}) และจอมมาร 3 ร่าง (ร่างละ HP ${D.fin*HPXf()}) · ระหว่างร่างได้หัวใจและแสงปัญญาคืน`:`ปีศาจ ${curQueue.filter(m=>!m.boss).length} ตัว (HP ${D.hp*HPXf()}) และบอส ${curQueue.find(m=>m.boss).name} (HP ${curQueue.find(m=>m.boss).hp*HPXf()})${curQueue.some(m=>m.gold)?' · มีปีศาจทองคำ!':''}`;
   const pr=S.prog[s.id]||[0,0,0,0];
-  $('#pDiffs').innerHTML=DIFFS.map(d=>`<button class="dbtn" style="color:${d.col}" aria-pressed="${d.id===selDiff}" data-d="${d.id}"><b>${d.name}</b><span>${d.note}</span><em>รางวัล ×${d.mult}${pr[d.id]?` · ผ่านแล้ว ${'★'.repeat(pr[d.id])}`:''}</em></button>`).join('');
-  $$('#pDiffs .dbtn').forEach(b=>b.onclick=()=>{selDiff=+b.dataset.d;renderPrep()});
+  $('#pDiffs').innerHTML=DIFFS.map(d=>`<button class="dbtn" style="color:${d.col}" aria-pressed="${d.id===selDiff}" data-d="${d.id}"><b>${d.name}</b><span>${d.note}</span><em>รางวัล ×${+(d.mult*(ISADV()?1.5:1)).toFixed(2)}${pr[d.id]?` · ผ่านแล้ว ${'★'.repeat(pr[d.id])}`:''}</em></button>`).join('');
+  $$('#pDiffs .dbtn').forEach(b=>b.onclick=()=>{selDiff=+b.dataset.d;renderPrep()});renderModes();
   const topics=s.practice||s.grand?ALLTOPICS:s.final?s.isl.stages.map(x=>x.topic):[s.topic];let c=0,t=0;topics.forEach(k=>{const m=S.mast[k];if(m){c+=m.c;t+=m.t}});
   $('#pAcc').textContent=t?`สถิติ: ตอบถูก ${c} จาก ${t} ขั้น (${Math.round(c/t*100)}%)`:'ยังไม่เคยฝึกหัวข้อนี้ ลองระดับง่ายหรือปานกลางก่อนก็ได้';
 }
@@ -2921,8 +3076,8 @@ $('#pGo').onclick=()=>{const id=curStage.id,first=!(S.seen||(S.seen={}))[id+':in
 
 /* ---------- battle ---------- */
 function startBattle(){
-  const D=DIFFS[selDiff];S.lastDiff=selDiff;
-  st={stage:curStage,D,queue:curQueue||buildQueue(curStage,D),idx:0,hearts:5,combo:0,focus:0,xp:0,pts:0,stats:{},retry:null,locked:true,shield:false,power:false,cutUsed:false,drops:{},revived:false,hints:3+Math.floor(formOf(S.lv)/2)};
+  const D=DIFFS[selDiff];S.lastDiff=selDiff;if(!S.mode)S.mode='classic';
+  st={stage:curStage,D,queue:curQueue||buildQueue(curStage,D),idx:0,hearts:5,combo:0,focus:0,xp:0,pts:0,stats:{},retry:null,locked:true,shield:false,power:false,cutUsed:false,drops:{},revived:false,hints:3+Math.floor(formOf(S.lv)/2),adv:S.mode==='adv'};modeBadge();
   curQueue=null;TH.start&&TH.start();
   $('#app').style.setProperty('--isle',curStage.isl.tint);
   $('#bLv').textContent='Lv.'+S.lv;$('#bStage').textContent=`${curStage.name} · ${D.name}`;
@@ -2937,7 +3092,7 @@ function renderTray(){$('#tray').innerHTML=Object.keys(ITEMS).map(k=>{const n=S.
 function renderDots(){$('#dots').innerHTML=st.queue.map((m,i)=>`<span class="dot${m.boss?' boss':''}${i<st.idx?' done':i===st.idx?' now':''}"></span>`).join('')}
 function updHp(){$('#hp').style.width=(st.mon.hp/st.mon.max*100)+'%'}
 function spawn(i){
-  const m=st.queue[i];bgm(m.final?'boss':'battle');st.idx=i;st.mon={...m,max:m.hp};
+  const m=st.queue[i];bgm(m.final?'boss':'battle');st.idx=i;st.mon={...m,hp:m.hp*HPXf(),max:m.hp*HPXf()};
   if(m.phase>0){st.hearts=Math.min(5,st.hearts+1);st.hints+=1;renderHearts();renderHints()}
   const el=$('#mon');el.className='mon'+(m.gold?' goldm':'');el.innerHTML=monSVG(m.type,m.pal,m.crown);
   $('#monwrap').classList.toggle('big',!!m.boss);
@@ -2974,7 +3129,7 @@ function renderPart(){
   $('#qAsk').innerHTML=p.ask;
   const box=$('#choices');box.className='choices n'+p.choices.length;
   box.innerHTML=p.choices.map((h,i)=>`<button class="ch" data-i="${i}">${h}</button>`).join('');
-  st.tries=0;st.cutUsed=false;st.locked=false;st.revealed=false;
+  st.tries=0;st.cutUsed=false;st.locked=false;st.revealed=false;spdStart();
   if(st.hintLv>=3)showOwl(3);
 }
 function showOwl(lv,extra){
@@ -2989,7 +3144,7 @@ $('#bOwl').onclick=()=>{
   st.hints--;st.hintLv++;st.perfect=false;renderHints();showOwl(st.hintLv);sfx.hint();
 };
 function floatText(t,cls){const s=document.createElement('div');s.className='float'+(cls?' '+cls:'');s.textContent=t;$('#monwrap').appendChild(s);setTimeout(()=>s.remove(),1100)}
-$('#mon').addEventListener('animationend',e=>e.currentTarget.classList.remove('hit','atk'));
+$('#mon').addEventListener('animationend',e=>e.currentTarget.classList.remove('hit','hit2','atk'));
 function dropItem(){const k=pick(Object.keys(ITEMS));S.items[k]=(S.items[k]||0)+1;st.drops[k]=(st.drops[k]||0)+1;renderTray();setTimeout(()=>floatText(`ได้${ITEMS[k].n}!`,'good'),250)}
 $('#choices').addEventListener('click',e=>{
   const btn=e.target.closest('.ch');if(!btn||st.locked||btn.classList.contains('gone')||btn.classList.contains('tried'))return;
@@ -2998,12 +3153,12 @@ $('#choices').addEventListener('click',e=>{
   if(ok){
     st.locked=true;s.t++;s.c++;const firstTry=st.tries===0&&!st.revealed;if(!firstTry)st.perfect=false;
     st.combo++;if(firstTry&&st.hintLv===0)st.focus++;else st.focus=0;TH.ok&&TH.ok();
-    let dmg=1;if(last&&st.perfect)dmg++;if(st.power){dmg*=2;st.power=false;renderBuffs();renderTray()}
+    const tier=st.adv?(firstTry?spdTier():0):Math.floor(Math.random()*4);let dmg=st.adv?SPD_T[tier].dmg:1;if(last&&st.perfect)dmg++;if(st.power){dmg*=2;st.power=false;renderBuffs();renderTray()}
     const bon=q.bonus?2:1;
-    st.xp+=Math.round((12+(firstTry?6:0)+Math.min(st.focus,5)*2)*D.mult*bon);
-    st.pts+=Math.round((6+(firstTry?3:0))*D.mult*bon*(st.mon.gold?3:1));
-    btn.classList.add('right');st.mon.hp=Math.max(0,st.mon.hp-dmg);updHp();sfx.ok();setTimeout(sfx.hit,120);
-    anim($('#mon'),'hit');anim($('#slash'),'go');floatText((last&&st.perfect?'สมบูรณ์แบบ! ':'')+'−'+dmg);upRun();showCombo();
+    st.xp+=Math.round((12+(firstTry?6:0)+Math.min(st.focus,5)*2)*D.mult*RM()*bon);
+    st.pts+=Math.round((6+(firstTry?3:0))*D.mult*RM()*bon*(st.mon.gold?3:1));
+    btn.classList.add('right');st.mon.hp=Math.max(0,st.mon.hp-dmg);updHp();sfx.ok();setTimeout(sfx.hit,120);spdStop();hitFx(tier,dmg);
+    anim($('#mon'),tier>=2?'hit2':'hit');if(tier<=1)anim($('#slash'),'go');floatText((st.adv?SPD_T[tier].ic+' ':'')+(last&&st.perfect?'สมบูรณ์แบบ! ':'')+'−'+dmg,st.adv?'t'+tier:'');upRun();showCombo();
     if(q.bonus&&last&&Math.random()<.4)dropItem();
     setTimeout(()=>{if(st.mon.hp<=0)defeat();else if(last)nextQ();else{st.pi++;renderPart()}},950);
   }else{
@@ -3031,7 +3186,7 @@ $('#tray').addEventListener('click',e=>{
   if(k==='skip'){st.locked=true;nextQ()}
   renderTray();renderBuffs();persist();
 });
-$('#bPause').onclick=()=>{if(!st)return;openModal(`<h2>หยุดพัก</h2><p class="dim" style="line-height:1.6">พักได้นานเท่าที่ต้องการ ศึกนี้ไม่จับเวลา ถ้าออกจากด่านตอนนี้จะไม่ได้รับ EXP และแต้มของรอบนี้</p><div class="row"><button class="btn sm ghost" data-act="sfx">${SND.on?'ปิด':'เปิด'}เสียงประกอบ</button><button class="btn sm ghost" data-act="mus">${SND.music?'ปิด':'เปิด'}เพลง</button></div><button class="btn" data-act="res">สู้ต่อ</button><button class="btn ghost" data-act="quit">ออกจากด่าน</button>`,{sfx:()=>{toggleSnd('on');$('#bPause').click();return false},mus:()=>{toggleSnd('music');$('#bPause').click();return false},quit:()=>{st=null;go('map')}})};
+$('#bPause').onclick=()=>{if(!st)return;openModal(`<h2>หยุดพัก</h2><p class="dim" style="line-height:1.6">พักได้นานเท่าที่ต้องการ ${st.adv?'(โหมด Advance หยุดนับพลังระหว่างพัก)':'โหมด Classic ไม่จับเวลา'} ถ้าออกจากด่านตอนนี้จะไม่ได้รับ EXP และแต้มของรอบนี้</p><div class="row"><button class="btn sm ghost" data-act="sfx">${SND.on?'ปิด':'เปิด'}เสียงประกอบ</button><button class="btn sm ghost" data-act="mus">${SND.music?'ปิด':'เปิด'}เพลง</button></div><button class="btn" data-act="res">สู้ต่อ</button><button class="btn ghost" data-act="quit">ออกจากด่าน</button>`,{sfx:()=>{toggleSnd('on');$('#bPause').click();return false},mus:()=>{toggleSnd('music');$('#bPause').click();return false},quit:()=>{st=null;go('map')}})};
 function openSheet(p){
   $('#shAns').innerHTML=p.choices[p.answer];$('#shEx').innerHTML=p.explain;
   const dead=st.hearts<=0&&!(S.items.feather>0&&!st.revived);
@@ -3043,7 +3198,7 @@ $('#shGo').onclick=()=>{$('#sheet').classList.remove('on');setTimeout(()=>{
   if(st.pi<st.q.parts.length-1){st.pi++;renderPart()}else nextQ()},250)};
 function defeat(){
   const m=st.mon,D=st.D;$('#mon').classList.add('dead');
-  const bx=Math.round((m.final?120:m.boss?50:20)*D.mult),bp=Math.round((m.final?120:m.boss?50:15)*D.mult*(m.gold?3:1));
+  const bx=Math.round((m.final?120:m.boss?50:20)*D.mult*RM()),bp=Math.round((m.final?120:m.boss?50:15)*D.mult*RM()*(m.gold?3:1));
   st.xp+=bx;st.pts+=bp;upRun();floatText(`ปราบได้! +${bx} EXP`);
   sfx.defeat();if(Math.random()<(m.boss?.6:.25))setTimeout(dropItem,350);
   setTimeout(()=>{st.idx>=st.queue.length-1?endRun(true):spawn(st.idx+1)},1150);
@@ -3086,7 +3241,7 @@ function endRun(win){
     const firstAny=!pr.some(x=>x>0);
     if(firstAny&&stg.final){S.tickets.gold++;special.push('ตั๋วหีบทองคำ')}
     if(firstAny&&stg.grand){S.tickets.star++;special.push('ตั๋วหีบดวงดาว');if(!S.owned.includes('t9')){S.owned.push('t9');special.push('ฉายา "ผู้พร้อมสอบเข้า ม.4"')}}
-    if(!pr[D.id]){first=true;st.pts+=Math.round(60*D.mult)}pr[D.id]=Math.max(pr[D.id],stars)}
+    if(!pr[D.id]){first=true;st.pts+=Math.round(60*D.mult*RM())}pr[D.id]=Math.max(pr[D.id],stars)}
   if(win&&stg.practice)stars=st.hearts>=5?3:st.hearts>=3?2:1;
   for(const k in st.stats){const a=S.mast[k]||(S.mast[k]={c:0,t:0});a.c+=st.stats[k].c;a.t+=st.stats[k].t}
   S.pts+=st.pts;const n=addXp(st.xp),got=levelRewards(n);S.runs++;persist();
@@ -3283,6 +3438,174 @@ function attackFx(){const kinds=['claw','bite','burst'],k=kinds[Math.floor(Math.
   else d.innerHTML=`<svg viewBox="0 0 200 200"><path class="bst" d="M100 8L118 70L182 50L136 98L192 140L124 132L114 194L92 136L28 168L68 112L10 74L78 74Z" fill="#ffe36b" stroke="#e0453a" stroke-width="7" stroke-linejoin="round"/><text x="100" y="118" text-anchor="middle" style="font-family:var(--display);font-size:40px;font-weight:700;fill:#e0453a">ผิด!</text></svg>`;
   document.body.appendChild(d);setTimeout(()=>d.remove(),700)}
 
+/* ---------- พลังโจมตีตามความเร็วในการตอบ ----------
+   เวลามาตรฐานของแต่ละขั้น คิดจาก ระดับความยาก + ความยาวโจทย์ + มีรูปประกอบ + เป็นขั้นแรกหรือขั้นต่อไป + บอส
+   ตอบเร็วกว่า 40% ของเวลามาตรฐาน = สายฟ้า (4) · 40–70% = ฟันแรง (3) · 70–100% = โจมตี (2) · ช้ากว่านั้น/ตอบผิดก่อน = ตีเบา (1) */
+const ISADV=()=>!!(S&&S.mode==='adv');const HPXf=()=>ISADV()?3:1;const RM=()=>st&&st.adv?1.5:1;
+const SPD_T=[{ic:'🗡️',n:'ตีเบา',dmg:1,c:'#9aa9b4'},{ic:'⚔️',n:'โจมตี',dmg:2,c:'#5fb3f0'},{ic:'💥',n:'ฟันแรง',dmg:3,c:'#ff9f1c'},{ic:'⚡',n:'สายฟ้าฟาด',dmg:4,c:'#ffe36b'}];
+const SPD_CUT=[1,.7,.4];
+function spdBudget(){const q=st.q,first=st.pi===0,D=st.D.id;let b=[15,21,30,40][D]||21;
+  const txt=((first?(q.prompt||'')+(q.expr||''):'')+(q.parts[st.pi].ask||'')).replace(/<[^>]+>/g,'').length;
+  b+=Math.min(18,txt/9);if(first&&q.vis)b+=6;if(!first)b*=.75;if(st.mon&&st.mon.boss)b*=1.2;if(q.parts.length>1)b+=3;return Math.round(b*.8)}
+function spdStart(){st.spdB=spdBudget();st.spdT=0;st.spdOn=!!st.adv;st.spdLast=3;spdDraw()}
+function spdStop(){st.spdOn=false}
+function spdTier(){const f=st.spdT/st.spdB;return f<=.4?3:f<=.7?2:f<=1?1:0}
+const RING_C=['#1b1b1f','#ff4b4b','#ffcc33','#38d46a'];
+function spdDraw(){const el=$('#spd');if(!el||!st)return;el.hidden=!st.adv;if(!st.adv)return;
+  const t=(st.tries||st.revealed)?0:spdTier(),T=SPD_T[t];
+  if(t!==+el.dataset.t){el.dataset.t=t;el.style.setProperty('--rc',RING_C[t]);el.querySelector('b').textContent=T.ic;el.setAttribute('aria-label','พลังโจมตี: '+T.n);
+    if(st.spdOn&&st.spdT>0){anim(el,'pulse');try{tone(t?[0,520,660,880][t]:220,.09,{type:'triangle',vol:.05})}catch(e){}}}}
+setInterval(()=>{if(typeof st==='undefined'||!st||!st.spdOn||st.locked||document.hidden)return;if(document.querySelector('.modal.on'))return;st.spdT+=.1;spdDraw()},100);
+function hitFx(tier,dmg){const w=$('#monwrap');if(!w)return;const d=document.createElement('div');d.className='hitfx h'+tier;d.setAttribute('aria-hidden','true');
+  if(tier===0)d.innerHTML=`<svg viewBox="0 0 200 200"><path class="hs" d="M70 130L130 70" stroke="#fff" stroke-width="8" stroke-linecap="round"/></svg>`;
+  else if(tier===1)d.innerHTML=`<svg viewBox="0 0 200 200"><path class="hs" d="M30 170L170 30" stroke="#fff" stroke-width="12" stroke-linecap="round"/><path class="hs" d="M30 170L170 30" stroke="#7fd0ff" stroke-width="24" stroke-linecap="round" opacity=".45"/></svg>`;
+  else if(tier===2)d.innerHTML=`<svg viewBox="0 0 200 200"><path class="hs" d="M20 180L180 20" stroke="#fff" stroke-width="14" stroke-linecap="round"/><path class="hs b" d="M20 20L180 180" stroke="#fff" stroke-width="14" stroke-linecap="round"/><path class="hs" d="M20 180L180 20" stroke="#ff9f1c" stroke-width="30" stroke-linecap="round" opacity=".5"/><path class="hs b" d="M20 20L180 180" stroke="#ff9f1c" stroke-width="30" stroke-linecap="round" opacity=".5"/>${[...Array(10)].map((_,i)=>{const a=i*36*Math.PI/180;return `<circle class="sp" cx="100" cy="100" r="5" fill="#ffe36b" style="--x:${(Math.cos(a)*90).toFixed(0)}px;--y:${(Math.sin(a)*90).toFixed(0)}px"/>`}).join('')}</svg>`;
+  else d.innerHTML=`<svg viewBox="0 0 200 260" class="bolt"><path d="M118 0L60 120h40L70 260L150 100h-44L136 0z" fill="#fff59a" stroke="#fff" stroke-width="6" stroke-linejoin="round"/></svg><svg viewBox="0 0 200 200" class="ring"><circle cx="100" cy="100" r="60" fill="none" stroke="#ffe36b" stroke-width="10"/>${[...Array(14)].map((_,i)=>{const a=i*(360/14)*Math.PI/180;return `<circle class="sp" cx="100" cy="100" r="6" fill="${i%2?'#fff':'#ffe36b'}" style="--x:${(Math.cos(a)*120).toFixed(0)}px;--y:${(Math.sin(a)*120).toFixed(0)}px"/>`}).join('')}</svg><div class="hcrit">CRITICAL!</div>`;
+  w.appendChild(d);setTimeout(()=>d.remove(),900);
+  if(tier>=2){anim($('#app'),'shake')}
+  if(tier===3){let fw=$('#flashw');if(!fw){fw=document.createElement('div');fw.id='flashw';fw.className='flashw';fw.setAttribute('aria-hidden','true');document.body.appendChild(fw)}anim(fw,'on');try{sfx.thunder?sfx.thunder():(sfx.hit(),setTimeout(sfx.hit,90))}catch(e){}}
+  else if(tier===2){try{setTimeout(sfx.hit,80)}catch(e){}}}
+
+/* ---------- โหมด Classic / Advance ---------- */
+function renderModes(){const box=$('#pModes');if(!box)return;const m=S.mode==='adv'?'adv':'classic';
+  box.innerHTML=`<button class="mdcard cl" data-m="classic" aria-pressed="${m==='classic'}"><i>🛡️</i><b>Classic</b><span>เล่นสบาย ไม่จับเวลา<br>เลือดปีศาจปกติ</span></button><button class="mdcard ad" data-m="adv" aria-pressed="${m==='adv'}"><i>⚡</i><b>Advance</b><span>ยิ่งตอบไว ยิ่งตีแรง<br>ปีศาจ HP ×3 · รางวัล ×1.5</span></button>`;
+  $$('#pModes .mdcard').forEach(b=>b.onclick=()=>{if(S.mode===b.dataset.m)return;S.mode=b.dataset.m;persist();try{sfx.tap()}catch(e){}renderPrep()})}
+function modeBadge(){const b=$('#modeB');if(!b)return;b.className='modeb '+(st.adv?'ad':'cl');b.textContent=st.adv?'⚡ Advance':'🛡️ Classic'}
+
+</script>
+<script>
+/* ---------- รูปร่างเกาะเฉพาะตัว (KruBoy) ----------
+   แต่ละเกาะ: H = ความสูงแผนที่, land = ชิ้นส่วนแผ่นดิน, cut = ส่วนที่เป็นน้ำตัดออก, nodes = ตำแหน่งด่าน, fin = ปราสาทบอส,
+   under = ภาพใต้แผ่นดิน (หินลอยฟ้า), over = ภาพบนแผ่นดิน (ภูเขาไฟ ครีมเค้ก ฯลฯ) */
+const ISX=(()=>{
+const P=a=>({t:'p',a}),C=(x,y,r)=>({t:'c',x,y,r}),E=(x,y,rx,ry,rot=0)=>({t:'e',x,y,rx,ry,rot});
+const lens=(x0,y0,x1,y1,w,n=14)=>{const L=Math.hypot(x1-x0,y1-y0),ux=(x1-x0)/L,uy=(y1-y0)/L,px=-uy,py=ux,pt=[];
+  for(let i=0;i<=n;i++){const t=i/n,h=w*Math.sin(Math.PI*t)**.8;pt.push([x0+ux*L*t+px*h,y0+uy*L*t+py*h])}
+  for(let i=n-1;i>0;i--){const t=i/n,h=w*Math.sin(Math.PI*t)**.8;pt.push([x0+ux*L*t-px*h,y0+uy*L*t-py*h])}return pt};
+const jag=(cx,cy,rx,ry,n,amp,seed=3)=>Array.from({length:n},(_,i)=>{const a=i/n*Math.PI*2,k=1+amp*Math.sin(i*seed*1.7+seed)*(i%2?1:-.6);return [cx+Math.cos(a)*rx*k,cy+Math.sin(a)*ry*k]});
+const shp=(o,extra='')=>o.t==='c'?`<circle cx="${o.x}" cy="${o.y}" r="${o.r}" ${extra}/>`:o.t==='e'?`<ellipse cx="${o.x}" cy="${o.y}" rx="${o.rx}" ry="${o.ry}" transform="rotate(${o.rot} ${o.x} ${o.y})" ${extra}/>`:`<polygon points="${o.a.map(p=>p.map(v=>v.toFixed(1)).join(',')).join(' ')}" stroke-linejoin="round" ${extra}/>`;
+const inside=(o,x,y)=>{if(o.t==='c')return Math.hypot(x-o.x,y-o.y)<=o.r;if(o.t==='e'){const r=-o.rot*Math.PI/180,dx=x-o.x,dy=y-o.y,X=dx*Math.cos(r)-dy*Math.sin(r),Y=dx*Math.sin(r)+dy*Math.cos(r);return (X/o.rx)**2+(Y/o.ry)**2<=1}
+  let c=false;const a=o.a;for(let i=0,j=a.length-1;i<a.length;j=i++){const [xi,yi]=a[i],[xj,yj]=a[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c};
+const cloud=(x,y,s=1,o=.85)=>`<g fill="#fff" opacity="${o}" transform="translate(${x} ${y}) scale(${s})"><ellipse rx="34" ry="13"/><ellipse cx="-14" cy="-8" rx="16" ry="12"/><ellipse cx="12" cy="-12" rx="20" ry="15"/></g>`;
+const rockUnder=(pts,col='#8a6a52',dk='#5a4232')=>`<polygon points="${pts.map(p=>p.join(',')).join(' ')}" fill="${col}" stroke="${dk}" stroke-width="3" stroke-linejoin="round"/>`;
+
+/* ---------------- ภาค 1 : ป.1–ป.6 ---------------- */
+const P1=[
+ // ป.1 เกาะดอกไม้ (กลีบ 6 กลีบ + ก้าน + ใบ) ปราสาทอยู่กลางดอก
+ {H:600,land:[C(180,290,92),...[-90,-30,30,90,150,210].map(a=>C(+(180+122*Math.cos(a*Math.PI/180)).toFixed(1),+(290+122*Math.sin(a*Math.PI/180)).toFixed(1),62)),P([[168,400],[192,400],[198,585],[162,585]]),E(112,520,52,21,-28),E(250,548,52,21,25)],
+  nodes:[[108,520],[180,425],[72,378],[78,228],[180,170],[282,228],[288,378]],fin:[180,300],
+  over:`<g opacity=".55">${[-90,-30,30,90,150,210].map(a=>{const x=180+122*Math.cos(a*Math.PI/180),y=290+122*Math.sin(a*Math.PI/180);return `<path d="M${(180+(x-180)*.55).toFixed(0)} ${(290+(y-290)*.55).toFixed(0)}L${(180+(x-180)*1.25).toFixed(0)} ${(290+(y-290)*1.25).toFixed(0)}" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 8"/>`}).join('')}</g><path d="M180 410V580" stroke="#5fa04a" stroke-width="5" opacity=".5"/>`},
+ // ป.2 เกาะเค้ก 3 ชั้น ครีมเยิ้ม
+ {H:680,land:[E(180,640,176,26),P([[22,470],[338,470],[338,626],[22,626]]),P([[58,330],[302,330],[302,478],[58,478]]),P([[104,190],[256,190],[256,338],[104,338]])],
+  nodes:[[80,585],[280,585],[180,530],[90,455],[270,455],[180,405],[80,360],[280,360]],fin:[180,245],
+  over:[[22,338,470],[58,302,330],[104,256,190]].map(([a,b,y])=>{let d=`M${a-6} ${y-4}H${b+6}V${y+8}`;for(let x=b;x>a;x-=22){const k=(x*7)%3;d+=`Q${x-5} ${y+14+k*7} ${x-11} ${y+8}Q${x-17} ${y+4} ${x-22} ${y+8}`}d+=`H${a-6}Z`;return `<path d="${d}" fill="#fff" stroke="#f3c7d8" stroke-width="2"/>`}).join('')+[[60,490],[120,500],[240,496],[300,490],[90,346],[270,346]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="5" fill="${['#ff6fa8','#ffd84a','#7fd3e8'][i%3]}"/>`).join('')+`<circle cx="180" cy="168" r="16" fill="#e8344a" stroke="#8a1a2a" stroke-width="2"/><path d="M180 152q4-16 18-18" stroke="#3f8a3a" stroke-width="3" fill="none"/>`},
+ // ป.3 เกาะหินขรุขระ ปากถ้ำ ราง
+ {H:620,land:[P(jag(180,330,168,270,26,.12,5))],
+  nodes:[[92,530],[214,505],[300,465],[196,430],[74,395],[160,355],[284,320],[206,282],[86,245],[250,215]],fin:[180,120],
+  over:`<path d="M30 300L70 250L95 290L120 240L150 300Z" fill="#9a8a72" stroke="#5a4a36" stroke-width="2" opacity=".9"/><path d="M220 560a40 34 0 0 1 80 0Z" fill="#3a2a1e" stroke="#5a4a36" stroke-width="4"/><path d="M226 574H300M236 566l-6 16M256 566v16M276 566v16M296 566l6 16" stroke="#7a5a3a" stroke-width="3"/>`},
+ // ป.4 เกาะใบไม้ แนวทแยง มีเส้นใบเป็นลำธาร
+ {H:620,land:[P(lens(48,590,318,70,128,16))],
+  nodes:[[70,540],[190,540],[110,455],[236,440],[150,365],[272,330],[160,285],[230,220]],fin:[284,128],
+  over:`<path d="M60 578Q160 340 300 92" stroke="#7fd3e8" stroke-width="9" fill="none" stroke-linecap="round" opacity=".75"/>${[[100,500,-1],[140,420,1],[180,350,-1],[220,270,1],[255,200,-1]].map(([x,y,s])=>`<path d="M${x} ${y}q${s*30} ${-6} ${s*58} ${-30}" stroke="#5fa04a" stroke-width="3" fill="none" opacity=".6"/>`).join('')}`},
+ // ป.5 เกาะวงแหวนปะการัง มีทะเลสาบกลาง ปราสาทบนเกาะเล็กกลางทะเลสาบ
+ {H:620,land:[E(180,320,168,262)],cut:[E(180,325,82,160)],island:[E(180,320,52,34)],
+  nodes:[[66,505],[62,405],[62,300],[70,200],[290,200],[298,300],[298,405],[294,505]],fin:[180,322],
+  over:`${[[180,80],[150,575],[214,572]].map(([x,y],i)=>`<g transform="translate(${x} ${y})"><path d="M0 0q-6-12 0-22M0 0q6-14 14-16M0 0q-10-6-16-16" stroke="${['#ff7f8a','#ffb36b','#c86bd8'][i]}" stroke-width="4" fill="none" stroke-linecap="round"/></g>`).join('')}`},
+ // ป.6 เกาะลอยฟ้า มีหินห้อยด้านล่างและเมฆ
+ {H:720,land:[E(180,320,170,235),P([[30,350],[330,350],[318,500],[42,500]])],
+  nodes:[[92,490],[214,490],[296,445],[196,420],[74,395],[160,360],[288,330],[206,300],[86,272],[262,236],[96,212]],fin:[190,112],
+  under:rockUnder([[40,490],[320,490],[290,570],[240,590],[220,650],[188,712],[160,640],[120,610],[70,560]])+rockUnder([[16,600],[54,596],[44,640],[30,646]])+rockUnder([[306,620],[346,624],[330,670]]),
+  over:''}
+];
+/* ---------------- ภาค 2 : ม.1–ม.3 ---------------- */
+const P2=[
+ // ม.1 เกาะอ่าวเกือกม้า เปิดออกทางขวา มีเรือในอ่าว
+ {H:620,land:[E(180,320,170,272)],cut:[E(330,350,128,108)],
+  nodes:[[100,540],[214,548],[56,452],[150,420],[56,370],[146,320],[60,262],[170,236],[290,200]],fin:[170,120],
+  over:`<g transform="translate(296 350)"><path d="M-18 0h36l-6 10h-24z" fill="#a8693a" stroke="#5a3418" stroke-width="2"/><path d="M0 0v-24l14 18z" fill="#fff" stroke="#5a3418" stroke-width="1.5"/></g>`},
+ // ม.2 เกาะสามเหลี่ยมมีภูเขาไฟกลางเกาะ
+ {H:620,land:[P([[180,60],[340,560],[20,560]])],
+  nodes:[[180,565],[60,540],[110,465],[100,390],[124,312],[236,312],[260,390],[250,465],[300,540]],fin:[180,178],nd:[[130,380,230,520]],
+  over:`<path d="M150 505L172 455H188L210 505Z" fill="#8a5a3a" stroke="#4a2a18" stroke-width="2.5" stroke-linejoin="round"/><path d="M172 455q8 7 16 0" stroke="#ff6a2a" stroke-width="5" fill="none"/><path d="M174 457L166 482M186 457L193 476" stroke="#ff8a3a" stroke-width="4" stroke-linecap="round"/><g fill="#9a9aa8" opacity=".7"><circle cx="184" cy="440" r="6"/><circle cx="192" cy="428" r="8"/><circle cx="182" cy="413" r="9"/></g>`},
+ // ม.3 เกาะพระจันทร์เสี้ยวลอยฟ้า มีเกาะเล็กลอยข้าง ๆ
+ {H:720,land:[E(170,360,165,320)],cut:[E(318,350,150,250)],extra:[C(306,600,34)],
+  nodes:[[250,620],[150,640],[70,570],[150,510],[54,445],[140,390],[54,330],[140,268],[70,200],[175,130]],fin:[268,92],
+  under:rockUnder([[278,622],[334,622],[318,660],[306,690],[292,656]],'#7a6aa8','#4a3a78'),
+  over:`<path d="M306 576l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff6c2" stroke="#b98d2a"/>`}
+];
+function spec(ii){return (ISLANDS.length>3?P1:P2)[ii]}
+function land(ii,T,sea){const sp=spec(ii),L=[...sp.land,...(sp.extra||[])],P1g=ISLANDS.length>3;
+  const all=e=>L.map(o=>shp(o,e)).join('');let s=sp.under||'';
+  if(P1g){s+=`<g>${all('fill="#fff4c9" stroke="#fff" stroke-width="30" opacity=".9"')}</g><g>${all('fill="#ffe7a8" stroke="#f2cf7a" stroke-width="18"')}</g><g>${all('fill="#ffe7a8" stroke="#ffe7a8" stroke-width="12"')}</g><g>${all(`fill="${T.land}"`)}</g>`}
+  else{const dk=`color-mix(in srgb,${T.land2} 60%,#000)`;s+=`<g>${all(`fill="${dk}" stroke="${dk}" stroke-width="20"`)}</g><g>${all(`fill="${T.land2}" stroke="${T.land2}" stroke-width="14"`)}</g><g>${all(`fill="${T.land}"`)}</g>`}
+  if(sp.cut){const c=sp.cut.map(o=>shp(o,`fill="url(#psea${ii}u)"`)).join(''),rim=sp.cut.map(o=>shp(o,P1g?'fill="none" stroke="#ffe7a8" stroke-width="14"':`fill="none" stroke="${T.land2}" stroke-width="12"`)).join('');s+=rim+c+sp.cut.map(o=>shp(o,'fill="#fff" opacity=".12"')).join('')}
+  if(sp.island)s+=sp.island.map(o=>shp(o,P1g?`fill="${T.land}" stroke="#ffe7a8" stroke-width="10"`:`fill="${T.land}" stroke="${T.land2}" stroke-width="8"`)).join('');
+  return s+(sp.over||'')}
+function onLand(ii,x,y){const sp=spec(ii);if((sp.cut||[]).some(o=>inside(o,x,y)))return (sp.island||[]).some(o=>inside(o,x,y));return [...sp.land,...(sp.extra||[])].some(o=>inside(o,x,y))}
+function deco(ii){const sp=spec(ii),out=[];for(let k=0;k<400&&out.length<11;k++){const x=20+(k*97)%320,y=40+(k*151)%(sp.H-80);
+  if(!onLand(ii,x,y)||!onLand(ii,x+14,y)||!onLand(ii,x-14,y))continue;if((sp.nd||[]).some(([a,b,c,e])=>x>a-14&&x<c+14&&y>b-20&&y<e+10))continue;if([...sp.nodes,sp.fin].some(([a,b])=>Math.abs(a-x)<62&&y-b>-36&&y-b<72))continue;if(Math.abs(sp.fin[0]-x)<70&&y-sp.fin[1]>-70&&y-sp.fin[1]<90)continue;if(out.some(([a,b])=>Math.hypot(a-x,b-y)<40))continue;out.push([x,y])}return out}
+return {spec,land,deco,onLand,cloud,H:ii=>spec(ii).H,pts:(ii,n)=>{const a=spec(ii).nodes;return Array.from({length:n},(_,i)=>a[i]||[180,500-i*30])},fin:ii=>spec(ii).fin}
+})();
+
+/* ---------- ไอคอนด่าน: สิ่งปลูกสร้างตามชื่อด่าน + ป้ายสัญลักษณ์เนื้อหา ---------- */
+const STG_ICON=(()=>{
+const O='#33261d',sw='stroke="'+O+'" stroke-width="2" stroke-linejoin="round"';
+const KIND=[[/สะพาน/,'bridge'],[/ประภาคาร/,'light'],[/หอดูดาว/,'obs'],[/นาฬิกา/,'clock'],[/หอ/,'tower'],[/โรงงาน|โรงชั่ง/,'factory'],[/ร้าน|ตลาด/,'shop'],[/โต๊ะ/,'table'],[/ตาชั่ง/,'scale'],[/เหมือง/,'mine'],[/ถ้ำ/,'cave'],[/ป้อม|ปราการ/,'fort'],[/ปิรามิด/,'pyramid'],[/ภูเขา|หุบเขา|ช่องเขา|ผา/,'mount'],[/หมู่บ้าน|เมือง/,'village'],[/ห้องกระจก/,'mirror'],[/วังวน/,'whirl'],[/งานวัด/,'fair'],[/ราง/,'rail'],[/ทางเดิน|บันได|ทางแยก/,'stairs'],[/ลำธาร|บึง|ทะเลสาบ|ทะเล|อ่าว|แนวปะการัง|ตลาดน้ำ/,'water'],[/เกาะ/,'isle'],[/ทุ่ง|สวน|ไร่|ฟาร์ม|ลาน|ป่า/,'garden']];
+const kindOf=n=>{for(const [r,k] of KIND)if(r.test(n))return k;return 'tower'};
+const LM={
+ bridge:c=>`<path d="M-26 10H26V16H-26Z" fill="#7fc8f0" ${sw}/><path d="M-24 6Q0 -22 24 6V10H-24Z" fill="${c}" ${sw}/><path d="M-12 10Q0 -6 12 10" fill="#7fc8f0" ${sw}/><path d="M-24 -2H24" stroke="${O}" stroke-width="2"/>${[-18,-6,6,18].map(x=>`<path d="M${x} -2V${x*x>100?3:-8}" stroke="${O}" stroke-width="1.5"/>`).join('')}`,
+ light:c=>`<path d="M-10 14L-6 -18H6L10 14Z" fill="#fff" ${sw}/><path d="M-8.4 0H8.4L9.4 8H-9.4Z" fill="${c}"/><path d="M-7 -10H7L7.6 -5H-7.6Z" fill="${c}"/><rect x="-8" y="-26" width="16" height="9" fill="#ffe36b" ${sw}/><path d="M-10 -26L0 -34L10 -26Z" fill="${c}" ${sw}/><path d="M10 -22L24 -28V-16Z" fill="#fff59a" opacity=".8"/>`,
+ obs:c=>`<rect x="-18" y="-2" width="36" height="16" fill="#e9e2f7" ${sw}/><path d="M-18 -2A18 18 0 0 1 18 -2Z" fill="${c}" ${sw}/><path d="M2 -12L18 -26" stroke="${O}" stroke-width="5" stroke-linecap="round"/><path d="M2 -12L18 -26" stroke="#ddd" stroke-width="2.5" stroke-linecap="round"/><circle cx="-12" cy="-26" r="2" fill="#ffe36b"/><circle cx="-4" cy="-30" r="1.5" fill="#ffe36b"/>`,
+ clock:c=>`<rect x="-11" y="-16" width="22" height="30" fill="${c}" ${sw}/><path d="M-13 -16L0 -30L13 -16Z" fill="#e8a14a" ${sw}/><circle cy="-4" r="8" fill="#fff" ${sw}/><path d="M0 -4V-9M0 -4H4" stroke="${O}" stroke-width="1.8" stroke-linecap="round"/><rect x="-4" y="6" width="8" height="8" fill="#5a3a24"/>`,
+ tower:c=>`<rect x="-10" y="-18" width="20" height="32" fill="#efe4cf" ${sw}/><rect x="-13" y="-24" width="26" height="8" fill="${c}" ${sw}/>${[-10,-2,6].map(x=>`<rect x="${x}" y="-29" width="4" height="5" fill="${c}" ${sw}/>`).join('')}<rect x="-3.5" y="-10" width="7" height="9" rx="3.5" fill="#3a5a8a"/><path d="M0 -29V-38" stroke="${O}" stroke-width="1.5"/><path d="M0 -38L9 -35L0 -32Z" fill="#e0455a"/>`,
+ factory:c=>`<path d="M-22 14V-4L-12 -12V-4L-2 -12V-4L8 -12V14Z" fill="#e8dcc8" ${sw}/><rect x="10" y="-22" width="8" height="36" fill="${c}" ${sw}/><circle cx="18" cy="-28" r="4" fill="#ccc" opacity=".8"/><circle cx="24" cy="-33" r="5" fill="#ccc" opacity=".6"/><rect x="-18" y="2" width="6" height="6" fill="#7fc8f0" ${sw}/><rect x="-6" y="2" width="6" height="6" fill="#7fc8f0" ${sw}/>`,
+ shop:c=>`<rect x="-18" y="-4" width="36" height="18" fill="#fff6dc" ${sw}/><path d="M-22 -4L-18 -18H18L22 -4Z" fill="#fff" ${sw}/>${[-18,-6,6].map(x=>`<path d="M${x} -18L${x-2} -4H${x+4}L${x+6} -18Z" fill="${c}"/>`).join('')}<rect x="-14" y="2" width="28" height="5" fill="#e8a14a" ${sw}/><circle cx="-8" cy="0" r="3" fill="#e0455a"/><circle cx="1" cy="0" r="3" fill="#ffd84a"/><circle cx="10" cy="0" r="3" fill="#6fbf6a"/>`,
+ table:c=>`<path d="M-22 -2H22L18 4H-18Z" fill="#c9884a" ${sw}/><path d="M-16 4V14M16 4V14" stroke="${O}" stroke-width="3"/><ellipse cy="-6" rx="13" ry="4" fill="#fff" ${sw}/><circle cx="-5" cy="-10" r="4" fill="${c}" ${sw}/><circle cx="5" cy="-10" r="4" fill="#ffd84a" ${sw}/><circle cy="-15" r="4" fill="#e0455a" ${sw}/>`,
+ scale:c=>`<path d="M0 -20V12M-10 14H10" stroke="${O}" stroke-width="3" stroke-linecap="round"/><path d="M-20 -14H20" stroke="${O}" stroke-width="3" stroke-linecap="round"/><path d="M-20 -14L-26 0H-14Z M20 -14L14 0H26Z" fill="none" stroke="${O}" stroke-width="1.2"/><path d="M-27 0A7 4 0 0 0 -13 0Z" fill="${c}" ${sw}/><path d="M13 0A7 4 0 0 0 27 0Z" fill="${c}" ${sw}/><circle cy="-21" r="3" fill="#ffd84a" ${sw}/>`,
+ mine:c=>`<path d="M-24 14Q-22 -22 0 -24Q22 -22 24 14Z" fill="#9a8a72" ${sw}/><path d="M-11 14V0Q0 -12 11 0V14Z" fill="#2a1e14" ${sw}/><path d="M-11 0H11" stroke="#a8693a" stroke-width="3"/><rect x="-8" y="6" width="16" height="7" fill="${c}" ${sw}/><path d="M-8 6L-5 2H5L8 6" fill="#9be0ff" ${sw}/>`,
+ cave:c=>`<path d="M-24 14Q-24 -18 -6 -22Q8 -26 18 -12Q26 -2 24 14Z" fill="#a8977a" ${sw}/><path d="M-10 14Q-10 -4 0 -6Q10 -4 10 14Z" fill="#2a1e14"/><path d="M-18 -8L-12 -12M14 -14L18 -6" stroke="${c}" stroke-width="3" stroke-linecap="round"/><path d="M-4 -10l2 -6 2 6z" fill="${c}"/>`,
+ fort:c=>`<path d="M-22 14V-10H-16V-16H-10V-10H-4V-16H4V-10H10V-16H16V-10H22V14Z" fill="#d9cfbf" ${sw}/><path d="M-6 14V2Q0 -4 6 2V14Z" fill="#5a3a24"/><path d="M-22 -2H22" stroke="${c}" stroke-width="4"/>`,
+ pyramid:c=>`<path d="M-24 14L0 -24L24 14Z" fill="#f2d59a" ${sw}/><path d="M0 -24L8 14H24Z" fill="${c}" opacity=".7"/><path d="M-16 1H16M-8 -12H8" stroke="${O}" stroke-width="1" opacity=".5"/>`,
+ mount:c=>`<path d="M-26 14L-8 -20L4 -4L12 -14L26 14Z" fill="#8a7a62" ${sw}/><path d="M-14 -9L-8 -20L-2 -9L-5 -11L-8 -8L-11 -11Z" fill="#fff"/><path d="M12 -14L18 -2L12 -6L8 -4Z" fill="#fff"/><path d="M-26 14Q0 4 26 14" fill="${c}" opacity=".7"/>`,
+ village:c=>`<rect x="-22" y="-2" width="18" height="16" fill="#fff6dc" ${sw}/><path d="M-25 -2L-13 -14L-1 -2Z" fill="${c}" ${sw}/><rect x="2" y="-10" width="20" height="24" fill="#efe4cf" ${sw}/><path d="M-1 -10L12 -24L25 -10Z" fill="#e0455a" ${sw}/><rect x="-16" y="4" width="6" height="10" fill="#5a3a24"/><rect x="8" y="-4" width="7" height="7" fill="#7fc8f0" ${sw}/>`,
+ mirror:c=>`<rect x="-14" y="-24" width="28" height="36" rx="14" fill="${c}" ${sw}/><rect x="-9" y="-19" width="18" height="26" rx="9" fill="#cfefff" ${sw}/><path d="M-5 -12L3 -18M-5 -4L6 -12" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M-10 12L-14 16H14L10 12" fill="#c9884a" ${sw}/>`,
+ whirl:c=>`<ellipse cy="4" rx="25" ry="11" fill="#5fb3f0" ${sw}/><path d="M0 4m-18 0a18 8 0 1 0 36 0a13 6 0 1 0 -26 0a8 3.5 0 1 0 16 0" fill="none" stroke="#fff" stroke-width="2.2"/><circle cy="4" r="2.5" fill="${c}"/>`,
+ fair:c=>`<path d="M-10 14L0 -6L10 14" stroke="${O}" stroke-width="2.5" fill="none"/><circle cy="-8" r="18" fill="none" stroke="${c}" stroke-width="3"/>${[0,60,120,180,240,300].map(a=>{const x=(18*Math.cos(a*Math.PI/180)).toFixed(1),y=(-8+18*Math.sin(a*Math.PI/180)).toFixed(1);return `<path d="M0 -8L${x} ${y}" stroke="${O}" stroke-width="1"/><rect x="${x-3.5}" y="${y-2}" width="7" height="6" rx="2" fill="${['#e0455a','#ffd84a','#5fb3f0'][a/60%3]}" ${sw}/>`}).join('')}`,
+ rail:c=>`<path d="M-26 12L-14 -16M26 12L14 -16" stroke="${O}" stroke-width="2.5"/>${[-12,-4,4,11].map((y,i)=>`<path d="M${-24+i*3} ${-y+0}H${24-i*3}" stroke="#a8693a" stroke-width="3"/>`).join('')}<rect x="-9" y="-22" width="18" height="12" rx="2" fill="${c}" ${sw}/><circle cx="-5" cy="-9" r="2.5" fill="${O}"/><circle cx="5" cy="-9" r="2.5" fill="${O}"/>`,
+ stairs:c=>`<path d="M-24 14V6H-12V-2H0V-10H12V-18H24V14Z" fill="${c}" ${sw}/><path d="M-24 6H-12M-12 -2H0M0 -10H12M12 -18H24" stroke="#fff" stroke-width="2" opacity=".6"/>`,
+ water:c=>`<ellipse cy="6" rx="25" ry="10" fill="#5fb3f0" ${sw}/><path d="M-16 4q4 -4 8 0t8 0M2 9q4 -4 8 0t8 0" stroke="#fff" stroke-width="2" fill="none"/><path d="M-20 0V-16M-16 1V-12" stroke="#4f9a4a" stroke-width="2.5"/><ellipse cx="-20" cy="-17" rx="2.5" ry="5" fill="#8a5a30"/><path d="M14 -4l6 -10 4 10z" fill="${c}" ${sw}/>`,
+ isle:c=>`<ellipse cy="8" rx="24" ry="8" fill="#5fb3f0" ${sw}/><ellipse cy="5" rx="16" ry="6" fill="#f2d59a" ${sw}/><path d="M0 4Q2 -12 6 -20" stroke="#8a5a30" stroke-width="3" fill="none"/>${[-40,0,40,90].map(a=>`<path d="M6 -20q${(12*Math.cos(a*Math.PI/180)).toFixed(1)} ${(-6+8*Math.sin(a*Math.PI/180)).toFixed(1)} ${(18*Math.cos(a*Math.PI/180)).toFixed(1)} ${(4+10*Math.sin(a*Math.PI/180)).toFixed(1)}" stroke="${c}" stroke-width="3" fill="none"/>`).join('')}`,
+ garden:c=>`<ellipse cy="10" rx="25" ry="7" fill="#6fbf6a" ${sw}/><rect x="-14" y="-4" width="4" height="12" fill="#8a5a30"/><circle cx="-12" cy="-10" r="10" fill="#4fa95a" ${sw}/><rect x="10" y="0" width="3" height="9" fill="#8a5a30"/><circle cx="11.5" cy="-5" r="7" fill="#5fbf6a" ${sw}/>${[[-4,6],[4,8],[20,8]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="${c}" stroke="#fff" stroke-width="1"/>`).join('')}`
+};
+const SYM={num1:'123',add1:'+',sub1:'−',pat1:'◆◇',len1:'@ruler',shape1:'△□',pict1:'@bars',num2:'1000',addsub2:'+−',mul2:'×',div2:'÷',time2:'@clock',money2:'฿',meas2:'@scale',shape2:'@poly',
+ num3:'แสน',addsub3:'+−',mul3:'×',div3:'÷',frac3:'½',money3:'฿',time3:'@clock',meas3:'@scale',sym3:'@sym',chart3:'@bars',big:'ล้าน',ops:'+×',frac4:'¾',dec4:'0.5',time:'@clock',angle:'@angle',rect:'@rect',chart4:'@bars',
+ frac5:'2/3',dec5:'0.25',pct5:'%',unit5:'฿/ชิ้น',para5:'∥',quad5:'@rect',vol5:'@cube',line5:'@line',gcd6:'ห.ร.ม.',frac6:'1/2',dec6:'0.1',ratio6:'2:3',pct6:'%',pattern6:'1,3,5',tri6:'@tri',poly6:'@poly',circle6:'@circle',solid6:'@cube',pie6:'@pie',
+ int1:'−3',pow1:'2³',dec1:'0.33…',lin1:'x=?',ratio1:'a:b',graph1:'@graph',geo1:'@angle',cube1:'@cube',stat1:'@bars',pyth2:'@tri',real2:'√',poly2:'x²+x',fact2:'( )( )',prism2:'@cube',trans2:'@sym',para2:'∥',tri2:'@tri',stat2:'@bars',
+ ineq3:'<',quad3:'x²',sim3:'∼',parab3:'@parab',sys3:'{ }',circ3:'@circle',solid3:'@cone',prob3:'@dice',trig3:'sin',stat3:'Q1'};
+const G={ruler:`<rect x="-10" y="-4" width="20" height="8" fill="#ffd84a" stroke="${O}" stroke-width="1.2"/><path d="M-6 -4v3M-2 -4v4M2 -4v3M6 -4v4" stroke="${O}" stroke-width="1"/>`,
+ bars:`<path d="M-8 5V0M-3 5V-5M2 5V-2M7 5V-7" stroke="#e0455a" stroke-width="3.2"/><path d="M-10 5.5H10" stroke="${O}" stroke-width="1"/>`,
+ clock:`<circle r="6.5" fill="#fff" stroke="${O}" stroke-width="1.5"/><path d="M0 0V-4M0 0H3" stroke="${O}" stroke-width="1.4" stroke-linecap="round"/>`,
+ scale:`<path d="M0 -6V5M-8 -4H8" stroke="${O}" stroke-width="1.6"/><path d="M-11 1a3 2 0 0 0 6 0ZM5 1a3 2 0 0 0 6 0Z" fill="#e8a14a" stroke="${O}" stroke-width="1"/>`,
+ poly:`<path d="M0 -7L7 -2L4.5 6H-4.5L-7 -2Z" fill="#7fd3e8" stroke="${O}" stroke-width="1.4"/>`,
+ sym:`<path d="M0 -7V7" stroke="${O}" stroke-width="1" stroke-dasharray="2 1.5"/><path d="M-1.5 -5L-8 0L-1.5 5Z" fill="#ff8fb8" stroke="${O}" stroke-width="1"/><path d="M1.5 -5L8 0L1.5 5Z" fill="#ff8fb8" stroke="${O}" stroke-width="1"/>`,
+ angle:`<path d="M-8 5H8M-8 5L5 -6" stroke="${O}" stroke-width="1.6" fill="none"/><path d="M-2 5A6 6 0 0 0 -3.4 1.2" stroke="#e0455a" stroke-width="1.6" fill="none"/>`,
+ rect:`<rect x="-8" y="-5" width="16" height="10" fill="#9be0a0" stroke="${O}" stroke-width="1.4"/>`,
+ cube:`<path d="M-6 -2L0 -6L7 -2V5L0 9L-6 5Z" fill="#ffd84a" stroke="${O}" stroke-width="1.2" transform="translate(0 -1)"/><path d="M-6 -3L1 1L7 -3M1 1V8" stroke="${O}" stroke-width="1.2" fill="none"/>`,
+ line:`<path d="M-9 5L-4 -1L1 2L8 -6" stroke="#e0455a" stroke-width="1.8" fill="none"/><path d="M-10 6H10M-10 6V-7" stroke="${O}" stroke-width="1"/>`,
+ tri:`<path d="M-8 6H8V-6Z" fill="#ffb36b" stroke="${O}" stroke-width="1.4"/><path d="M4 6V2H8" stroke="${O}" stroke-width="1" fill="none"/>`,
+ circle:`<circle r="6.5" fill="#7fd3e8" stroke="${O}" stroke-width="1.4"/><path d="M0 0H6.5" stroke="${O}" stroke-width="1.2"/><circle r="1.2" fill="${O}"/>`,
+ pie:`<circle r="6.5" fill="#ffd84a" stroke="${O}" stroke-width="1.2"/><path d="M0 0V-6.5A6.5 6.5 0 0 1 6.2 2Z" fill="#e0455a" stroke="${O}" stroke-width="1"/>`,
+ graph:`<path d="M-9 0H9M0 -7V7" stroke="${O}" stroke-width="1.2"/><circle cx="4" cy="-3.5" r="2" fill="#e0455a"/>`,
+ parab:`<path d="M-9 -6Q0 16 9 -6" stroke="#e0455a" stroke-width="1.8" fill="none"/><path d="M-10 4H10" stroke="${O}" stroke-width="1"/>`,
+ cone:`<path d="M0 -7L7 5H-7Z" fill="#b6a0ff" stroke="${O}" stroke-width="1.2"/><ellipse cy="5" rx="7" ry="2.2" fill="#9a84f0" stroke="${O}" stroke-width="1.2"/>`,
+ dice:`<rect x="-6.5" y="-6.5" width="13" height="13" rx="3" fill="#fff" stroke="${O}" stroke-width="1.3"/>${[[-3,-3],[3,3],[0,0]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.4" fill="${O}"/>`).join('')}`};
+function sign(t){const s=SYM[t]||'?';const w=s[0]==='@'?26:Math.max(22,s.length*(/[ก-๙]/.test(s)?6.2:7.4)+8);
+  const inner=s[0]==='@'?(G[s.slice(1)]||''):`<text y="4.3" text-anchor="middle" style="font-family:var(--display);font-size:${s.length>4?10:12.5}px;font-weight:700;fill:${O}">${s}</text>`;
+  return `<g transform="translate(0 15)"><rect x="${-w/2}" y="-9" width="${w}" height="18" rx="6" fill="#fffdf5" stroke="${O}" stroke-width="2"/>${inner}</g>`}
+return function(st0,i,c,is,P1){const k=kindOf(st0.name),col=c?'#4fbf6f':is.tint;
+  return `<g class="bb"><ellipse cy="16" rx="27" ry="9" fill="${c?'#9be0a0':'#fff6dc'}" stroke="${O}" stroke-width="2.5"/><g transform="translate(0 -8)">${LM[k](col)}</g>${sign(st0.topic)}<g transform="translate(-24 4)"><circle r="9.5" fill="${col}" stroke="${O}" stroke-width="2.2"/><text y="4.2" text-anchor="middle" style="font-family:var(--display);font-size:12px;font-weight:700;fill:#fff;paint-order:stroke;stroke:${O};stroke-width:2.5px">${i+1}</text></g></g>`}
+})();
+
 </script>
 <script>
 /* ===== ปีศาจข้อสอบ ภาค 2 : เมือง แผนที่สถานที่ อีเวนต์ เควส ร้านค้า มินิเกม โรงเรียน ถ้วยรางวัล ===== */
@@ -3411,20 +3734,20 @@ const ISLE_THEME=[
  {land:'#f2d59a',land2:'#e8c07a',sea:'#2b7fc0',deco:'sea'},
  {land:'#c9b6ff',land2:'#a990f0',sea:'#3b2f7a',deco:'sky'}];
 function placeMapSVG(ii){
-  const is=ISLANDS[ii],T=ISLE_THEME[ii],W=360,H=580,list=is.stages;let s='';
-  s+=`<defs><linearGradient id="psea${ii}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="color-mix(in srgb,${T.sea} 60%,#000)"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#psea${ii})"/>`;
+  const is=ISLANDS[ii],T=ISLE_THEME[ii],W=360,H=ISX.H(ii),list=is.stages;let s='';
+  s+=`<defs><linearGradient id="psea${ii}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="color-mix(in srgb,${T.sea} 60%,#000)"/></linearGradient><linearGradient id="psea${ii}u" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="color-mix(in srgb,${T.sea} 60%,#000)"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#psea${ii}u)"/>`;
   if(T.deco==='sky')s+=[[40,80],[300,140],[60,420],[320,520],[200,560]].map(([x,y])=>`<g fill="#fff" opacity=".25"><ellipse cx="${x}" cy="${y}" rx="36" ry="12"/><ellipse cx="${x+18}" cy="${y-8}" rx="20" ry="12"/></g>`).join('');
   else s+=[...Array(14)].map((_,i)=>{const x=(i*97)%340+10,y=(i*151)%560+10;return `<path d="M${x} ${y}q6 -5 12 0t12 0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>`}).join('');
-  s+=`<g ${ii===1?'transform="translate(360 0) scale(-1 1)"':ii===2?'transform="translate(180 300) scale(1.04 .96) translate(-180 -300)"':''}><path d="M60 560C10 520 20 430 40 380C10 320 30 240 60 180C70 110 130 40 200 36C280 30 340 90 330 170C350 240 320 300 340 360C350 440 340 520 290 560Z" fill="${T.land2}" stroke="color-mix(in srgb,${T.land2} 60%,#000)" stroke-width="3"/><path d="M70 548C26 512 34 430 54 384C26 324 46 246 74 188C86 120 140 52 202 50C274 46 326 100 316 172C334 240 306 302 326 362C334 438 326 512 282 548Z" fill="${T.land}"/></g>`;
-  const pts=nodePos(list.length),fin=[180,108];const L=pts.length-1;
+  s+=ISX.land(ii,T);
+  const pts=ISX.pts(ii,list.length),fin=ISX.fin(ii);const L=pts.length-1;
   let d=`M${pts[0][0]} ${pts[0][1]}`;for(let i=1;i<pts.length;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i];d+=`Q${(x0+x1)/2+(i%2?30:-30)} ${(y0+y1)/2} ${x1} ${y1}`}d+=`Q${(pts[L][0]+fin[0])/2-20} ${(pts[L][1]+fin[1])/2} ${fin[0]} ${fin[1]}`;
   s+=`<path d="${d}" fill="none" stroke="#fff6dc" stroke-width="10" stroke-linecap="round" opacity=".85"/><path d="${d}" fill="none" stroke="#c9a66b" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>`;
   const deco={village:(x,y)=>`<g><rect x="${x-2}" y="${y}" width="4" height="9" fill="#8a5a30"/><circle cx="${x}" cy="${y-4}" r="9" fill="#4fa95a" stroke="#2f6a3a" stroke-width="1.5"/></g>`,sea:(x,y)=>`<g><path d="M${x} ${y+8}Q${x+2} ${y-8} ${x+8} ${y-16}" fill="none" stroke="#8a5a30" stroke-width="3"/>${[-30,10,50,90].map(a=>`<path d="M${x+8} ${y-16}q${12*Math.cos(a*Math.PI/180)} ${-6+10*Math.sin(a*Math.PI/180)} ${18*Math.cos(a*Math.PI/180)} ${4+12*Math.sin(a*Math.PI/180)}" fill="none" stroke="#3f9a4a" stroke-width="3"/>`).join('')}</g>`,sky:(x,y)=>`<g><path d="M${x} ${y-12}l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#fff6c2" stroke="#b98d2a" stroke-width="1"/></g>`}[T.deco];
-  s+=[[40,470],[320,480],[50,260],[310,350],[130,140],[260,140],[150,450],[260,560],[110,560]].map(([x,y])=>deco(x,y)).join('');
+  s+=ISX.deco(ii).map(([x,y])=>deco(x,y)).join('');
   const allClr=list.every(x=>cleared(x.id));
   list.forEach((st0,i)=>{const [x,y]=pts[i],c=cleared(st0.id),bs=bestStars(st0.id),ev=evOn('gold')&&S.ev.stage===st0.id,a=acc(st0.topic);
     s+=`<g class="bld" data-id="${st0.id}" tabindex="0" role="button" aria-label="${st0.name}${c?' ผ่านแล้ว':''}" transform="translate(${x} ${y})">`;
-    s+=`<ellipse cx="0" cy="18" rx="24" ry="6" fill="#000" opacity=".2"/><g class="bb"><circle r="22" fill="${c?'#79d18b':'#fff6dc'}" stroke="#33261d" stroke-width="3"/><circle r="16" fill="${c?'#4f9c5f':is.tint}"/><text y="7" text-anchor="middle" style="font-family:var(--display);font-size:19px;fill:#fff">${i+1}</text></g>`;
+    s+=`<ellipse cx="0" cy="18" rx="24" ry="6" fill="#000" opacity=".2"/>${STG_ICON(st0,i,c,is)}`;
     if(c)s+=`<path d="M10 -30v20" stroke="#33261d" stroke-width="2"/><path d="M10 -30l14 5-14 5z" fill="#e0455a" stroke="#33261d" stroke-width="1.5"/>`;
     if(ev)s+=`<circle cx="-20" cy="-18" r="10" fill="#f5cf55" stroke="#7a5a10" stroke-width="2"/><text x="-20" y="-14" text-anchor="middle" style="font-family:var(--display);font-size:12px;fill:#7a5a10">$</text>`;
     s+=halo(0,40,st0.name,'','middle',12.5);
@@ -3687,6 +4010,22 @@ fixDiv(document.body);
 new MutationObserver(ms=>{for(const m of ms){if(m.type==='characterData'){if(m.target.nodeValue&&m.target.nodeValue.indexOf('÷')>=0&&m.target.parentElement)fixDiv(m.target.parentElement)}else for(const n of m.addedNodes){if(n.nodeType===1)fixDiv(n);else if(n.nodeType===3&&n.nodeValue.indexOf('÷')>=0&&n.parentElement)fixDiv(n.parentElement)}}}).observe(document.body,{childList:true,subtree:true,characterData:true});
 
 </script>
+<script>
+/* ---------- ปุ่มหมุนตัวละครดูด้านหลัง (หน้าหลัก + ตู้เสื้อผ้า) ---------- */
+const myAvBack=eq=>avatar({g:S.g,form:formOf(S.lv),eq:eq||S.eq,bv:1});
+function addRot(sel){const el=document.querySelector(sel);if(!el)return;const host=el.parentElement;if(getComputedStyle(host).position==='static')host.style.position='relative';
+  el.dataset.bv='';let b=host.querySelector(':scope>.avrot');
+  if(!b){b=document.createElement('button');b.className='avrot';b.type='button';b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v5h-5"/></svg><span>หมุน</span>';host.appendChild(b)}
+  b.setAttribute('aria-label','หมุนตัวละครดูด้านหลัง');
+  b.onclick=e=>{e.stopPropagation();const bv=!el.dataset.bv;el.classList.remove('avturn');void el.offsetWidth;el.classList.add('avturn');try{sfx.tap&&sfx.tap()}catch(_){}
+    setTimeout(()=>{el.innerHTML=bv?myAvBack():myAv();el.dataset.bv=bv?'1':'';b.setAttribute('aria-label',bv?'หมุนกลับด้านหน้า':'หมุนตัวละครดูด้านหลัง')},170)}}
+const _rhB=renderHub;renderHub=function(){_rhB.apply(this,arguments);addRot('#hAv')};
+const _rwB=renderWard;renderWard=function(){_rwB.apply(this,arguments);addRot('#wAv')};
+/* ดูตัวอย่างของด้านหลัง: แสดงทั้งด้านหน้าและด้านหลัง */
+if(typeof prevItem==='function'){const _pv=prevItem;prevItem=function(k,big){const it=COS[k];if(!it||it.slot!=='back')return _pv.apply(this,arguments);const eq={...S.eq,back:k};
+  return `<div class="${big?'avbig':''} avpair"><div>${myAv(eq)}<small>ด้านหน้า</small></div><div>${myAvBack(eq)}<small>ด้านหลัง</small></div></div>`}}
+
+</script>
 </body>
 </html>
-<!-- KruBoy ภาค2 v2.6 : END OF FILE -->
+<!-- KruBoy ภาค2 v2.9 : END OF FILE -->
