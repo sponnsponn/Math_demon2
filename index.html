@@ -170,8 +170,8 @@ input.txtin{font:inherit;font-size:18px;padding:12px 14px;border-radius:12px;bor
 .mon-name{font-family:var(--display);font-size:17px;line-height:1.3}
 .hpbar{height:10px;border-radius:6px;background:#0f201c;border:1.5px solid var(--line);overflow:hidden;margin-top:4px}
 .hpfill{height:100%;background:var(--hit);transition:width .35s}
-.monwrap{position:relative;height:min(16vh,130px);aspect-ratio:1;margin-top:2px}
-.monwrap.big{height:min(20vh,160px)}
+.monwrap{position:relative;height:min(16vh,130px);width:min(16vh,130px);aspect-ratio:1;margin-top:2px}
+.monwrap.big{height:min(20vh,160px);width:min(20vh,160px)}
 .mon{width:100%;height:100%;animation:bob 2.4s ease-in-out infinite}
 .mon svg{width:100%;height:100%;display:block}
 .mon.goldm{filter:drop-shadow(0 0 12px rgba(245,207,85,.8))}
@@ -266,7 +266,7 @@ text.halo{paint-order:stroke;stroke:var(--board-2);stroke-width:5px;stroke-linej
 .vis .sector{stroke:var(--board);stroke-width:2}
 
 /* sheets & modals */
-.flash{position:fixed;inset:0;background:radial-gradient(transparent 45%,rgba(238,107,77,.55));opacity:0;pointer-events:none;z-index:4}
+.flash{position:fixed;top:0;right:0;bottom:0;left:0;background:radial-gradient(transparent 45%,rgba(238,107,77,.55));opacity:0;pointer-events:none;z-index:4}
 .flash.on{animation:flash .55s}
 @keyframes flash{30%{opacity:1}}
 #app.shake{animation:shake .4s}
@@ -280,7 +280,7 @@ text.halo{paint-order:stroke;stroke:var(--board-2);stroke-width:5px;stroke-linej
 .sheet .ex .fr{font-family:var(--display);font-size:1.05em}
 .sheet .btn{margin-top:14px}
 .warn{color:#a8442f;font-weight:700}
-.modal{position:fixed;inset:0;background:rgba(5,12,10,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:8}
+.modal{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(5,12,10,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:8}
 .modal.on{display:flex}
 .mbox{background:var(--board-2);border:2px solid var(--line);border-radius:22px;padding:20px;width:100%;max-width:400px;text-align:center;display:grid;gap:12px;max-height:92%;overflow:auto;animation:pop .3s}
 @keyframes pop{from{transform:scale(.85);opacity:0}}
@@ -389,7 +389,7 @@ sup{font-size:.62em}
 .vis .ln.thin2{stroke-width:1.8;opacity:.85}
 .sheet .ex sup{font-size:.7em}
 /* scratch pad */
-.pad{position:fixed;inset:0;z-index:7;display:none;flex-direction:column;background:#16302a}
+.pad{position:fixed;top:0;right:0;bottom:0;left:0;z-index:7;display:none;flex-direction:column;background:#16302a}
 .pad.on{display:flex}
 .padtop{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--board-2);border-bottom:1.5px solid var(--line);flex:none;flex-wrap:wrap}
 .padq{font-size:14px;line-height:1.5;max-height:28vh;overflow:auto;padding:8px 14px;background:rgba(0,0,0,.2);flex:none}
@@ -415,15 +415,15 @@ sup{font-size:.62em}
 .pity{font-size:13px;color:var(--accent);text-align:center}
 .stg{position:relative;overflow:hidden;isolation:isolate}
 .stg>*{position:relative;z-index:1}
-.stg>.bgart{position:absolute;z-index:0;inset:0;width:100%;height:100%;color:var(--chalk);opacity:.2}
+.stg>.bgart{position:absolute;z-index:0;top:0;right:0;bottom:0;left:0;width:100%;height:100%;color:var(--chalk);opacity:.2}
 .stg.clr>.bgart{color:#bfe8c8;opacity:.24}
 .stg.final>.bgart{color:#ffe9a6;opacity:.26}
-.stg::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,var(--board-2) 28%,rgba(37,68,61,.55) 62%,transparent);pointer-events:none}
+.stg::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;z-index:0;background:linear-gradient(90deg,var(--board-2) 28%,rgba(37,68,61,.55) 62%,transparent);pointer-events:none}
 .stg.final::after{background:linear-gradient(90deg,#3a3420 28%,rgba(58,52,32,.5) 62%,transparent)}
 .stg .si b{text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .stp{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#2a2410;font-size:12px;font-weight:700;margin-right:6px;font-family:var(--body)}
 .hubhead .iconbtn{width:38px;height:38px}
-.scene{position:fixed;inset:0;z-index:7;display:none;flex-direction:column;justify-content:flex-end;background:radial-gradient(ellipse at 50% 30%,color-mix(in srgb,var(--isle) 80%,transparent),transparent 70%),rgba(8,18,15,.96);padding:16px 16px calc(18px + env(safe-area-inset-bottom))}
+.scene{position:fixed;top:0;right:0;bottom:0;left:0;z-index:7;display:none;flex-direction:column;justify-content:flex-end;background:radial-gradient(ellipse at 50% 30%,color-mix(in srgb,var(--isle) 80%,transparent),transparent 70%),rgba(8,18,15,.96);padding:16px 16px calc(18px + env(safe-area-inset-bottom))}
 .scene.on{display:flex}
 .scskip{position:absolute;top:14px;right:14px;border-radius:999px;border:1.5px solid var(--line);background:var(--board-3);padding:6px 14px;font-weight:700}
 .scart{flex:1;display:flex;align-items:flex-end;justify-content:center;min-height:0;padding-bottom:10px}
@@ -525,12 +525,12 @@ sup{font-size:.62em}
 .g24op:disabled{opacity:.4}
 .g24m{min-height:26px;text-align:center;margin:10px 0;font-family:var(--display);color:var(--accent)}
 /* คัตซีนเปลี่ยนฉาก */
-#trans{position:fixed;inset:0;z-index:60;pointer-events:none;overflow:hidden;perspective:1100px;transition:opacity .4s ease .3s}
+#trans{position:fixed;top:0;right:0;bottom:0;left:0;z-index:60;pointer-events:none;overflow:hidden;perspective:1100px;transition:opacity .4s ease .3s}
 #trans.go{opacity:0}
 .tr-door{position:absolute;top:0;bottom:0;width:50.5%;background:linear-gradient(90deg,#7a4a26,#9a6232 50%,#7a4a26);box-shadow:inset 0 0 0 6px #5a3418;transition:transform .55s cubic-bezier(.5,.05,.3,1) .08s}
 .tr-door.l{left:0;transform-origin:left center}
 .tr-door.r{right:0;transform-origin:right center}
-.tr-dfr{position:absolute;inset:7% 14%;display:grid;grid-template-rows:1fr 1fr;gap:6%}
+.tr-dfr{position:absolute;top:7%;right:14%;bottom:7%;left:14%;display:grid;grid-template-rows:1fr 1fr;gap:6%}
 .tr-dfr i{border:4px solid #5a3418;border-radius:6px;background:rgba(0,0,0,.08)}
 .tr-dfr i:nth-child(n+3){display:none}
 .tr-knob{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#f2c14e;border:3px solid #5a3418}
@@ -539,7 +539,7 @@ sup{font-size:.62em}
 #trans.go .tr-door.r{transform:rotateY(105deg)}
 .tr-plate{position:absolute;left:50%;top:20%;transform:translateX(-50%);background:#fff6dc;color:#33261d;border:3px solid #5a3418;border-radius:10px;padding:6px 18px;font-family:var(--display);font-size:22px;white-space:nowrap;transition:opacity .25s .1s,transform .35s .1s}
 #trans.go .tr-plate{opacity:0;transform:translateX(-50%) translateY(-20px)}
-.tr-sky{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#ffffff,#bfe0ff);transition:opacity .35s .15s}
+.tr-sky{position:absolute;top:0;right:0;bottom:0;left:0;background:radial-gradient(circle at 50% 50%,#ffffff,#bfe0ff);transition:opacity .35s .15s}
 .trk-storm .tr-sky{background:radial-gradient(circle at 50% 50%,#4a4f70,#1a1d30)}
 #trans.go .tr-sky{opacity:0}
 .tr-cl{position:absolute;top:-4%;bottom:-4%;width:66%;display:flex;transition:transform .6s cubic-bezier(.5,.05,.3,1) .08s}
@@ -550,12 +550,12 @@ sup{font-size:.62em}
 #trans.go .tr-cl.r{transform:translateX(115%)}
 .tr-plate.cl{top:46%;background:rgba(255,255,255,.9);border-color:#7fb3e0;color:#23406a}
 .trk-storm .tr-plate.cl{background:rgba(30,32,52,.9);border-color:#ffe36b;color:#ffe36b}
-.tr-flash{position:absolute;inset:0;background:#fff;opacity:0;animation:trflash .35s .05s}
+.tr-flash{position:absolute;top:0;right:0;bottom:0;left:0;background:#fff;opacity:0;animation:trflash .35s .05s}
 @keyframes trflash{0%,100%{opacity:0}20%{opacity:.75}40%{opacity:.1}55%{opacity:.5}}
 .tr-bolt{position:absolute;left:50%;top:14%;width:60px;transform:translateX(-50%);opacity:0;animation:trbolt .4s 0s}
 @keyframes trbolt{0%{opacity:0}15%,45%{opacity:1}100%{opacity:0}}
 
-.tr-pat{position:absolute;inset:0;width:100%;height:100%}
+.tr-pat{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%}
 .tr-emb{position:absolute;left:50%;top:34%;width:64px;height:64px;transform:translateX(-50%)}
 .tr-door.l .tr-emb{left:56%}.tr-door.r .tr-emb{left:44%}
 .kn-gold .tr-knob{background:#f2c14e}
@@ -602,20 +602,20 @@ sup{font-size:.62em}
 .mon.hit2{animation:hit2 .5s}
 @keyframes hit2{0%{transform:none;filter:none}15%{transform:translateX(-18px) rotate(-6deg) scale(.92);filter:brightness(2.4)}35%{transform:translateX(14px) rotate(4deg)}55%{transform:translateX(-8px);filter:brightness(1.4)}100%{transform:none;filter:none}}
 .hitfx{position:absolute;left:50%;top:50%;width:min(70vw,300px);height:min(70vw,300px);transform:translate(-50%,-50%);pointer-events:none;z-index:4}
-.hitfx svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hitfx svg{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;overflow:visible}
 .hitfx .hs{stroke-dasharray:260;stroke-dashoffset:260;animation:hsd .2s ease-out forwards,fxo .3s .35s forwards}
 .hitfx .hs.b{animation-delay:.12s,.45s}
 @keyframes hsd{to{stroke-dashoffset:0}}
 @keyframes fxo{to{opacity:0}}
 .hitfx .sp{animation:spk .55s ease-out forwards}
 @keyframes spk{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--x),var(--y));opacity:0}}
-.hitfx.h3 .bolt{inset:auto;left:25%;top:-90%;width:50%;height:140%;animation:bolt .45s ease-out forwards;filter:drop-shadow(0 0 18px #fff59a)}
+.hitfx.h3 .bolt{top:auto;right:auto;bottom:auto;left:auto;left:25%;top:-90%;width:50%;height:140%;animation:bolt .45s ease-out forwards;filter:drop-shadow(0 0 18px #fff59a)}
 @keyframes bolt{0%{opacity:0;transform:translateY(-40%) scaleY(.4)}20%{opacity:1;transform:none}60%{opacity:1}100%{opacity:0}}
 .hitfx.h3 .ring circle:first-child{transform-origin:100px 100px;animation:ring .55s ease-out forwards}
 @keyframes ring{from{transform:scale(.2);opacity:1}to{transform:scale(1.8);opacity:0}}
 .hitfx.h3 .hcrit{position:absolute;left:50%;top:-6%;transform:translateX(-50%);font-family:var(--display);font-weight:700;font-size:30px;color:#ffe36b;-webkit-text-stroke:5px #5a2a00;paint-order:stroke fill;white-space:nowrap;animation:crit .8s ease-out forwards}
 @keyframes crit{0%{transform:translateX(-50%) scale(2.4);opacity:0}25%{transform:translateX(-50%) scale(1);opacity:1}80%{opacity:1}100%{transform:translateX(-50%) translateY(-24px);opacity:0}}
-.flashw{position:fixed;inset:0;background:#fffbe0;opacity:0;pointer-events:none;z-index:6}
+.flashw{position:fixed;top:0;right:0;bottom:0;left:0;background:#fffbe0;opacity:0;pointer-events:none;z-index:6}
 .flashw.on{animation:flw .35s ease-out}
 @keyframes flw{0%{opacity:.85}100%{opacity:0}}
 .float.t3{font-size:34px;color:#ffe36b;-webkit-text-stroke:5px #5a2a00;paint-order:stroke fill}
@@ -636,10 +636,10 @@ sup{font-size:.62em}
 .modeb.cl{color:#5fb3f0}.modeb.ad{color:#ffb020}
 .pring{position:absolute;right:8px;bottom:6px;width:58px;height:58px;z-index:3;--rc:#38d46a;transition:opacity .3s,filter .3s;pointer-events:none}
 .pring[hidden]{display:none}
-.pring svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pring svg{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;overflow:visible}
 .pring .rg{fill:rgba(0,0,0,.35);stroke:rgba(255,255,255,.25);stroke-width:9}
 .pring .rc{fill:none;stroke:var(--rc);stroke-width:7;transition:stroke .6s;filter:drop-shadow(0 0 6px var(--rc))}
-.pring b{position:absolute;inset:0;display:grid;place-items:center;font-size:24px;line-height:1}
+.pring b{position:absolute;top:0;right:0;bottom:0;left:0;display:grid;place-items:center;font-size:24px;line-height:1}
 .pring[data-t="3"] .rc{animation:rglow 1.2s ease-in-out infinite}
 @keyframes rglow{50%{stroke-width:9}}
 .pring[data-t="0"]{filter:grayscale(.7) brightness(.75)}
@@ -661,6 +661,60 @@ sup{font-size:.62em}
 .avpair>div{display:flex;flex-direction:column;align-items:center}
 .avpair svg{height:190px!important;width:auto}
 .avpair small{font-size:12px;color:var(--chalk-dim)}
+
+/* ===== จอเล็ก / จอเตี้ย ===== */
+@media (max-height:680px){
+ #app{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+ #battle .iconbtn{width:36px;height:36px}
+ #battle .heart{width:17px;height:17px}
+ #battle .runxp{font-size:12px}
+ #battle .lv{font-size:13px}
+ #battle .tray{margin-top:5px;gap:5px}
+ #battle .tray .it{width:38px;height:34px}
+ #battle .tray .it svg{width:20px;height:20px}
+ #battle .prog{margin-top:5px;font-size:11.5px}
+ #battle .arena{min-height:80px}
+ #battle .monwrap{height:min(13vh,110px);width:min(13vh,110px)}
+ #battle .monwrap.big{height:min(16vh,130px);width:min(16vh,130px)}
+ #battle .mon-name{font-size:15px}
+ #battle .mon-title{font-size:11px}
+ #battle .qcard{padding-top:8px;margin-top:4px}
+ #battle .qprompt{font-size:15.5px;line-height:1.5}
+ #battle .qexpr{font-size:24px;margin:0 0 4px}
+ #battle .qvis svg,#battle .qvis .vis{max-height:24vh;width:auto;max-width:100%}
+ #battle .choices{gap:7px;margin-top:7px}
+ #battle .ch{min-height:50px;font-size:19px}
+ #battle .pring{width:46px;height:46px}
+ #battle .pring b{font-size:19px}
+}
+@media (max-height:560px){
+ #battle .tray .it{width:34px;height:30px}
+ #battle .tray .it svg{width:18px;height:18px}
+ #battle .mon-title{display:none}
+ #battle .arena{min-height:64px}
+ #battle .monwrap{height:min(11vh,80px);width:min(11vh,80px)}
+ #battle .monwrap.big{height:min(13vh,96px);width:min(13vh,96px)}
+ #battle .qprompt{font-size:15px;line-height:1.45}
+ #battle .qvis svg,#battle .qvis .vis{max-height:20vh}
+ #battle .ch{min-height:44px;font-size:18px;border-bottom-width:3px}
+ #battle .choices{gap:6px;margin-top:6px}
+}
+/* บีบเพิ่มเมื่อยังล้นจอ (ตั้งโดย fitBattle) */
+#battle.tight .monwrap{height:44px!important;width:44px!important}
+#battle.tight .mon-title,#battle.tight .combo,#battle.tight .buffs{display:none}
+#battle.tight .arena{min-height:0;flex:0 0 auto}
+#battle.tight .tray{display:none}
+#battle.tight .pring{width:38px;height:38px;bottom:0}
+#battle.scrolly{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#battle.scrolly>*{flex-shrink:0}
+#battle.scrolly .choices{padding-bottom:6px}
+/* ===== WebView รุ่นเก่า: ไม่รองรับ color-mix ===== */
+@supports not (color:color-mix(in srgb,red 50%,blue)){
+ #battle{background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.07),transparent 70%)}
+ .scene{background:rgba(8,16,14,.94)}
+ .evb{background:var(--board-2)}
+ .evb b{color:var(--ec)}
+}
 </style>
 </head>
 <body>
@@ -2512,7 +2566,7 @@ function avatar(o){
   s+=`<rect x="${cx-tw/2-9}" y="${top+3}" width="10" height="${armL}" rx="5" fill="${out.top}" stroke="${ink}" stroke-width="2"/><rect x="${cx+tw/2-1}" y="${top+3}" width="10" height="${armL}" rx="5" fill="${out.top}" stroke="${ink}" stroke-width="2"/>`;
   s+=`<rect x="${cx-tw/2}" y="${top}" width="${tw}" height="${G.th+2}" rx="10" fill="${out.top}" stroke="${ink}" stroke-width="2.5"/>`;
   if(!o.bv)s+=`<path d="M${cx-8} ${top+1}L${cx} ${top+10}L${cx+8} ${top+1}" fill="${out.trim}" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/>`;
-  if(!o.bv&&BACKFRONT[back])s+=BACKFRONT[back]({cx,top,hip,tw,th:G.th,ink,armL});if(o.bv)s+=`<path d="M${cx} ${top+6}V${top+G.th-4}" stroke="${ink}" stroke-width="1.2" opacity=".35"/>`;
+  if(!o.bv&&BACKFRONT[back])s+=BACKFRONT[back]({cx,top,hip,tw,th:G.th,ink,armL});if(o.bv)s+=`<path d="M${cx} ${top+6}V${top+G.th-4}" stroke="${ink}" stroke-width="1.2" opacity=".35"/>`;if(o.bv&&BACKOUT[eq.outfit||'school'])s+=BACKOUT[eq.outfit||'school']({cx,top,hip,tw,th:G.th,ink,girl});
   if(!o.bv&&typeof outfitDetail==='function')s+=outfitDetail(eq.outfit||'school',{cx,top,hip,tw,th:G.th,lh:G.lh,ink,girl,armL,f});
   const plain=!eq.outfit||eq.outfit==='school';
   if(f>=2)s+=`<rect x="${cx-tw/2+1}" y="${hip-9}" width="${tw-2}" height="6" fill="#6b4a2a"/><rect x="${cx-4}" y="${hip-10}" width="8" height="8" rx="1.5" fill="#f2c14e" stroke="${ink}" stroke-width="1.5"/>`;
@@ -2554,7 +2608,7 @@ function avatar(o){
    goggles:`<path d="M${cx-hr-2} ${yT+12}Q${cx} ${yT+2} ${cx+hr+2} ${yT+12}" fill="none" stroke="#5a3a20" stroke-width="4"/>${[-1,1].map(k=>`<circle cx="${cx+k*9}" cy="${yT+6}" r="7" fill="#7fe3ffaa" stroke="#c9a66b" stroke-width="3"/><circle cx="${cx+k*9-2}" cy="${yT+4}" r="2" fill="#fff"/>`).join('')}`,
    foxmask:`<g transform="translate(${cx+hr*.55} ${yT+2}) rotate(24)"><path d="M-12 8L-13 -12L-4 -4L4 -4L13 -12L12 8Q0 20 -12 8Z" fill="#fff" stroke="${ink}" stroke-width="2" stroke-linejoin="round"/><path d="M-7 2l4 2M7 2l-4 2" stroke="#e0455a" stroke-width="2" stroke-linecap="round"/><path d="M-10 -8l3 3M10 -8l-3 3" stroke="#e0455a" stroke-width="2"/><circle cx="0" cy="9" r="1.8" fill="#e0455a"/></g>`,
   };
-  if(eq.hat&&H[eq.hat])s+=H[eq.hat];else if(eq.hat&&typeof AVX!=='undefined'&&AVX.hat[eq.hat])s+=AVX.hat[eq.hat]({cx,yT,hr,hcy,ey,ink});else if(!eq.hat&&typeof outfitHead==='function')s+=outfitHead(eq.outfit,{cx,yT,hr,hcy,ey,ink});
+  if(o.bv&&eq.hat&&HATBACK[eq.hat])s+=HATBACK[eq.hat]({cx,yT,hr,hcy,ey,ink});else if(o.bv&&!eq.hat&&OHBACK[eq.outfit])s+=OHBACK[eq.outfit]({cx,yT,hr,hcy,ey,ink});else if(eq.hat&&H[eq.hat])s+=H[eq.hat];else if(eq.hat&&typeof AVX!=='undefined'&&AVX.hat[eq.hat])s+=AVX.hat[eq.hat]({cx,yT,hr,hcy,ey,ink});else if(!eq.hat&&typeof outfitHead==='function')s+=outfitHead(eq.outfit,{cx,yT,hr,hcy,ey,ink});
   if(eq.outfit==='ninja')s+=`<path d="M${cx-hr+3} ${ey+5}Q${cx} ${ey+2} ${cx+hr-3} ${ey+5}Q${cx+hr-6} ${ey+hr*.75} ${cx} ${ey+hr*.8}Q${cx-hr+6} ${ey+hr*.75} ${cx-hr+3} ${ey+5}Z" fill="#2a2a3a" stroke="${ink}" stroke-width="2"/>`;
   const HI={
    pencil:`<g transform="rotate(-12 ${hxR} ${hyR})"><rect x="${hxR-5}" y="${hyR-66}" width="10" height="64" fill="#f2c14e" stroke="${ink}" stroke-width="2"/><path d="M${hxR-5} ${hyR-66}L${hxR} ${hyR-82}L${hxR+5} ${hyR-66}Z" fill="#f6d2b0" stroke="${ink}" stroke-width="2"/><rect x="${hxR-5}" y="${hyR-4}" width="10" height="8" fill="#ff8fb1" stroke="${ink}" stroke-width="2"/></g>`,
@@ -2568,7 +2622,7 @@ function avatar(o){
    protractor:`<path d="M${hxR-22} ${hyR-6}A22 22 0 0 1 ${hxR+22} ${hyR-6}Z" fill="#bfe8ffcc" stroke="${ink}" stroke-width="2"/>${[0,30,60,90,120,150,180].map(a=>`<line x1="${hxR+18*Math.cos(Math.PI*a/180)}" y1="${hyR-6-18*Math.sin(Math.PI*a/180)}" x2="${hxR+22*Math.cos(Math.PI*a/180)}" y2="${hyR-6-22*Math.sin(Math.PI*a/180)}" stroke="${ink}" stroke-width="1.2"/>`).join('')}<circle cx="${hxR}" cy="${hyR-6}" r="2.5" fill="${ink}"/>`,
    bookstaff:`<line x1="${hxR}" y1="${hyR+4}" x2="${hxR+6}" y2="${hyR-48}" stroke="#5a3412" stroke-width="4" stroke-linecap="round"/><g transform="translate(${hxR+6} ${hyR-62})"><path d="M0 -2C-6 -6 -14 -6 -18 -2V14C-14 10 -6 10 0 14Z" fill="#c99bff" stroke="${ink}" stroke-width="1.8"/><path d="M0 -2C6 -6 14 -6 18 -2V14C14 10 6 10 0 14Z" fill="#e9dcff" stroke="${ink}" stroke-width="1.8"/><text x="-9" y="8" font-size="8" fill="#3b2a7a" text-anchor="middle" font-family="serif">x²</text><text x="9" y="8" font-size="8" fill="#3b2a7a" text-anchor="middle" font-family="serif">√</text></g><circle cx="${hxR+6}" cy="${hyR-70}" r="4" fill="#ffe36b"/>`,
   };
-  if(eq.hand){const w=HI[eq.hand]||(typeof AVX!=='undefined'&&AVX.hand[eq.hand]?AVX.hand[eq.hand]({hxR,hyR,ink}):'');if(w)s+=`<g transform="rotate(32 ${hxR} ${hyR})">${w}</g>`}
+  if(eq.hand){const w=HI[eq.hand]||(typeof AVX!=='undefined'&&AVX.hand[eq.hand]?AVX.hand[eq.hand]({hxR,hyR,ink}):'');if(w){const _g=`<g transform="rotate(32 ${hxR} ${hyR})">${w}</g>`;if(o.bv)o._wb=wpBack(_g);else s+=_g}}
   s+=`<circle cx="${hxR}" cy="${hyR+2}" r="5.5" fill="${skin}" stroke="${ink}" stroke-width="2"/>`;
   const PT={
    slimepet:`<path d="M10 188C8 174 16 164 26 160C30 156 32 150 34 146C36 150 38 156 42 160C52 164 58 174 56 188Z" fill="#9be0c8" stroke="#24564b" stroke-width="2.5"/><circle cx="27" cy="174" r="2.5" fill="#1d2b28"/><circle cx="39" cy="174" r="2.5" fill="#1d2b28"/>`,
@@ -2582,8 +2636,8 @@ function avatar(o){
    bunny:`<ellipse cx="30" cy="178" rx="16" ry="12" fill="#fff" stroke="${ink}" stroke-width="2"/><circle cx="24" cy="164" r="10" fill="#fff" stroke="${ink}" stroke-width="2"/><ellipse cx="19" cy="146" rx="4" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><ellipse cx="28" cy="146" rx="4" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><ellipse cx="19" cy="147" rx="1.8" ry="7" fill="#ffc4dc"/><ellipse cx="28" cy="147" rx="1.8" ry="7" fill="#ffc4dc"/><circle cx="21" cy="163" r="2" fill="${ink}"/><circle cx="28" cy="163" r="2" fill="${ink}"/><circle cx="21.6" cy="162.4" r=".7" fill="#fff"/><ellipse cx="18" cy="168" rx="2.6" ry="1.4" fill="#ff9fb0"/><circle cx="46" cy="178" r="4" fill="#fff" stroke="${ink}" stroke-width="1.5"/>`,
    hamster:`<ellipse cx="30" cy="176" rx="18" ry="14" fill="#f2b56b" stroke="${ink}" stroke-width="2"/><ellipse cx="30" cy="180" rx="11" ry="8" fill="#fff1dc"/><circle cx="18" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="1.6"/><circle cx="42" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="1.6"/><circle cx="24" cy="171" r="2.2" fill="${ink}"/><circle cx="36" cy="171" r="2.2" fill="${ink}"/><circle cx="24.7" cy="170.3" r=".8" fill="#fff"/><circle cx="36.7" cy="170.3" r=".8" fill="#fff"/><ellipse cx="19" cy="176" rx="4" ry="3" fill="#ffb0a0"/><ellipse cx="41" cy="176" rx="4" ry="3" fill="#ffb0a0"/><path d="M28 175l2 2 2 -2" fill="none" stroke="${ink}" stroke-width="1.2"/>`,
   };
-  if(eq.pet&&PT[eq.pet])s+=PT[eq.pet];else if(eq.pet&&typeof AVX!=='undefined'&&AVX.pet[eq.pet])s+=AVX.pet[eq.pet](ink);
-  return `<svg viewBox="0 0 160 200" class="av" aria-hidden="true"><defs>${defs}</defs>${o.bv?`<g transform="translate(160 0) scale(-1 1)">${s}</g>`:s}</svg>`;
+  if(o.bv&&eq.pet&&PETBACK[eq.pet])s+=PETBACK[eq.pet](ink);else if(eq.pet&&PT[eq.pet])s+=PT[eq.pet];else if(eq.pet&&typeof AVX!=='undefined'&&AVX.pet[eq.pet])s+=AVX.pet[eq.pet](ink);
+  const _wb=o._wb||'';delete o._wb;return `<svg viewBox="0 0 160 200" class="av" aria-hidden="true"><defs>${defs}${o.bv?BVFILTER:''}</defs>${o.bv?`<g transform="translate(160 0) scale(-1 1)">${_wb}${s}</g>`:s}</svg>`;
 }function drawBack(back,{cx,top,hip,tw,G,ink,out,f}){let s='';
   if(back==='evocape'||back==='cape'){const c=back==='cape'?'#d6453a':out.trim;s+=`<path d="M${cx-tw/2+2} ${top+4}L${cx+tw/2-2} ${top+4}L${cx+tw/2+14} ${hip+18}Q${cx} ${hip+28} ${cx-tw/2-14} ${hip+18}Z" fill="${c}" stroke="${ink}" stroke-width="2.5" stroke-linejoin="round"/>`}
   if(back==='batwing'||back==='dragonwing')for(const k of[-1,1])s+=`<path d="M${cx+k*10} ${top+12}C${cx+k*40} ${top-24} ${cx+k*66} ${top-6} ${cx+k*72} ${top+18}C${cx+k*60} ${top+12} ${cx+k*56} ${top+22} ${cx+k*58} ${top+32}C${cx+k*48} ${top+24} ${cx+k*40} ${top+30} ${cx+k*40} ${top+40}C${cx+k*32} ${top+30} ${cx+k*22} ${top+30} ${cx+k*10} ${top+36}Z" fill="${back==='batwing'?'#3b2a4a':'#c33b2e'}" stroke="${ink}" stroke-width="2"/>`;
@@ -2643,6 +2697,83 @@ const BACKFRONT={
  shell:({cx,top,hip,tw,ink})=>[-1,1].map(k=>`<path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="#a8693a" stroke-width="3.6" stroke-linecap="round"/>`).join('')+`<circle cx="${cx}" cy="${(top+hip)/2-1}" r="5" fill="#4fae5a" stroke="${ink}" stroke-width="1.6"/>`,
  swords:({cx,top,hip,tw,ink})=>[-1,1].map(k=>`<path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="${ink}" stroke-width="6" stroke-linecap="round"/><path d="M${cx-k*(tw/2-3)} ${top+2}L${cx+k*(tw/2-3)} ${hip-5}" stroke="#3a2a20" stroke-width="3.6" stroke-linecap="round"/>`).join('')+`<circle cx="${cx}" cy="${(top+hip)/2-1}" r="5" fill="#c9d1d9" stroke="${ink}" stroke-width="1.6"/>`
 };
+
+</script>
+<script>
+/* ---------- สัตว์เลี้ยงมุมหลัง (ตำแหน่งเดียวกับด้านหน้า ไม่มีหน้า มีหาง/หลัง) ---------- */
+const PETBACK={
+ slimepet:ink=>`<path d="M10 188C8 174 16 164 26 160C30 156 32 150 34 146C36 150 38 156 42 160C52 164 58 174 56 188Z" fill="#8fd4bc" stroke="#24564b" stroke-width="2.5"/><path d="M20 178Q26 166 34 164" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".55"/><path d="M14 186Q33 192 52 186" stroke="#24564b" stroke-width="1.5" fill="none" opacity=".4"/>`,
+ cat:ink=>`<path d="M46 178Q60 174 56 160Q54 152 60 150" fill="none" stroke="${ink}" stroke-width="7" stroke-linecap="round"/><path d="M46 178Q60 174 56 160Q54 152 60 150" fill="none" stroke="#f0a24a" stroke-width="4" stroke-linecap="round"/><ellipse cx="32" cy="178" rx="18" ry="11" fill="#f0a24a" stroke="${ink}" stroke-width="2"/><circle cx="20" cy="166" r="10" fill="#f0a24a" stroke="${ink}" stroke-width="2"/><path d="M12 160L12 150L19 157ZM28 160L28 150L21 157Z" fill="#f0a24a" stroke="${ink}" stroke-width="2"/><path d="M17 160v5M20 159v6M23 160v5M26 172q6 4 12 0M28 178q4 3 8 0" stroke="#c97a2a" stroke-width="1.8" stroke-linecap="round" fill="none"/>`,
+ penguin:ink=>`<ellipse cx="24" cy="190" rx="5" ry="2.5" fill="#f2a23a"/><ellipse cx="36" cy="190" rx="5" ry="2.5" fill="#f2a23a"/><ellipse cx="30" cy="172" rx="15" ry="18" fill="#26303c" stroke="${ink}" stroke-width="2"/><path d="M26 188l4 4 4-4" fill="#26303c" stroke="${ink}" stroke-width="1.5"/><path d="M17 168q-4 8 0 14M43 168q4 8 0 14" stroke="#3a4656" stroke-width="2" fill="none"/>`,
+ owl:ink=>`<ellipse cx="30" cy="172" rx="15" ry="18" fill="#9a6a3a" stroke="${ink}" stroke-width="2"/><path d="M19 156l-2-8 7 5M41 156l2-8-7 5" fill="#9a6a3a" stroke="${ink}" stroke-width="1.6"/><path d="M18 170q12 10 24 0M20 178q10 8 20 0" stroke="#7a522a" stroke-width="2" fill="none"/><path d="M26 189l4 3 4-3" fill="#7a522a"/>`,
+ fox:ink=>`<path d="M52 176Q66 164 58 150Q50 162 44 168Z" fill="#ff7a2f" stroke="${ink}" stroke-width="2"/><path d="M58 150Q55 156 54 160L60 158Q61 153 58 150Z" fill="#fff"/><ellipse cx="32" cy="178" rx="16" ry="11" fill="#ff7a2f" stroke="${ink}" stroke-width="2"/><path d="M14 166L20 150L26 160L34 160L40 150L46 166Q30 178 14 166Z" fill="#ff7a2f" stroke="${ink}" stroke-width="2"/><path d="M20 152l2 6M40 152l-2 6" stroke="#2a1a10" stroke-width="2.5" stroke-linecap="round"/>`,
+ robot:ink=>`<rect x="16" y="166" width="30" height="22" rx="5" fill="#c9d1d9" stroke="${ink}" stroke-width="2"/><rect x="19" y="148" width="24" height="18" rx="4" fill="#e9eef5" stroke="${ink}" stroke-width="2"/><rect x="22" y="170" width="18" height="12" rx="2" fill="#aab4bf" stroke="${ink}" stroke-width="1.4"/><path d="M25 173h12M25 176h12M25 179h12" stroke="${ink}" stroke-width="1" opacity=".6"/><circle cx="31" cy="157" r="3.2" fill="#aab4bf" stroke="${ink}" stroke-width="1.2"/><path d="M29.5 157h3" stroke="${ink}" stroke-width="1"/><line x1="31" y1="148" x2="31" y2="140" stroke="${ink}" stroke-width="2"/><circle cx="31" cy="139" r="3" fill="#ee6b4d"/>`,
+ dragonling:ink=>`<path d="M44 182q14 2 14 -10l-4 2" fill="none" stroke="${ink}" stroke-width="5" stroke-linecap="round"/><path d="M44 182q14 2 14 -10" fill="none" stroke="#7a55d0" stroke-width="3" stroke-linecap="round"/><ellipse cx="30" cy="176" rx="15" ry="13" fill="#7a55d0" stroke="${ink}" stroke-width="2"/><path d="M14 162C2 150 4 140 10 136C14 146 18 148 22 152ZM46 162C58 150 56 140 50 136C46 146 42 148 38 152Z" fill="#c08bff" stroke="${ink}" stroke-width="2"/><circle cx="30" cy="158" r="11" fill="#7a55d0" stroke="${ink}" stroke-width="2"/>${[150,158,166,174,182].map((y,i)=>`<path d="M27 ${y}l3 -4 3 4z" fill="#ffe36b" stroke="${ink}" stroke-width="1"/>`).join('')}`,
+ phoenix:ink=>`<path d="M24 180L30 192L36 180" fill="#ffe36b" stroke="${ink}" stroke-width="2"/><ellipse cx="30" cy="168" rx="10" ry="13" fill="#ff6a2a" stroke="${ink}" stroke-width="2"/><path d="M30 170C10 160 4 140 8 130C16 142 22 146 28 150ZM30 170C50 160 56 140 52 130C44 142 38 146 32 150Z" fill="#ff9a4a" stroke="${ink}" stroke-width="2"/><circle cx="30" cy="152" r="8" fill="#ff6a2a" stroke="${ink}" stroke-width="2"/><path d="M30 144C28 136 34 132 36 128" fill="none" stroke="#ffe36b" stroke-width="3"/><path d="M26 160q4 6 8 0M25 168q5 6 10 0" stroke="#ffb36b" stroke-width="1.6" fill="none"/>`,
+ bunny:ink=>`<ellipse cx="30" cy="178" rx="16" ry="12" fill="#fff" stroke="${ink}" stroke-width="2"/><circle cx="24" cy="164" r="10" fill="#fff" stroke="${ink}" stroke-width="2"/><ellipse cx="19" cy="146" rx="4" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><ellipse cx="28" cy="146" rx="4" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><circle cx="31" cy="184" r="5" fill="#fff" stroke="${ink}" stroke-width="2"/><path d="M29 182q2-2 4 0" stroke="#e8e8f0" stroke-width="1.4" fill="none"/>`,
+ hamster:ink=>`<ellipse cx="30" cy="176" rx="18" ry="14" fill="#f2b56b" stroke="${ink}" stroke-width="2"/><circle cx="18" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="2"/><circle cx="42" cy="164" r="4.5" fill="#f2b56b" stroke="${ink}" stroke-width="2"/><path d="M30 164V184" stroke="#c98a40" stroke-width="5" stroke-linecap="round" opacity=".7"/><ellipse cx="22" cy="176" rx="4" ry="5" fill="#fff1dc" opacity=".8"/><ellipse cx="38" cy="176" rx="4" ry="5" fill="#fff1dc" opacity=".8"/><circle cx="30" cy="190" r="2.2" fill="#f2b56b" stroke="${ink}" stroke-width="1.4"/>`,
+ turtle:ink=>`<circle cx="52" cy="180" r="6" fill="#9be0a0" stroke="${ink}" stroke-width="2"/><ellipse cx="9" cy="182" rx="5" ry="2.5" fill="#9be0a0" stroke="${ink}" stroke-width="1.6"/><ellipse cx="16" cy="190" rx="5" ry="3" fill="#9be0a0" stroke="${ink}" stroke-width="2"/><ellipse cx="42" cy="190" rx="5" ry="3" fill="#9be0a0" stroke="${ink}" stroke-width="2"/><ellipse cx="30" cy="178" rx="20" ry="13" fill="#4fae5a" stroke="${ink}" stroke-width="2"/><path d="M30 168l8 5v7l-8 5-8-5v-7z" fill="#8fdc72" stroke="#256a32" stroke-width="1.6"/><path d="M22 175H12M38 175H48M22 180l-8 6M38 180l8 6M30 168V166M30 185v3" stroke="#256a32" stroke-width="1.6"/>`,
+ duck:ink=>`<path d="M48 172l8 -4-2 8z" fill="#ffd93d" stroke="${ink}" stroke-width="2"/><ellipse cx="32" cy="178" rx="18" ry="12" fill="#ffd93d" stroke="${ink}" stroke-width="2"/><circle cx="22" cy="162" r="10" fill="#ffd93d" stroke="${ink}" stroke-width="2"/><path d="M20 174q8 -6 14 0M24 180q8 -6 14 0" fill="none" stroke="#e8b81a" stroke-width="2"/><path d="M20 154q2 -4 5 -3" fill="none" stroke="${ink}" stroke-width="1.6"/>`,
+ panda:ink=>`<ellipse cx="18" cy="184" rx="6" ry="5" fill="#26201c"/><ellipse cx="42" cy="184" rx="6" ry="5" fill="#26201c"/><ellipse cx="30" cy="178" rx="18" ry="13" fill="#fff" stroke="${ink}" stroke-width="2"/><path d="M13 172Q30 160 47 172Q46 178 44 176Q30 168 16 176Q14 178 13 172Z" fill="#26201c"/><circle cx="20" cy="150" r="5" fill="#26201c"/><circle cx="40" cy="150" r="5" fill="#26201c"/><circle cx="30" cy="160" r="12" fill="#fff" stroke="${ink}" stroke-width="2"/><circle cx="30" cy="188" r="3" fill="#fff" stroke="${ink}" stroke-width="1.4"/>`,
+ unicorn:ink=>`<path d="M50 172q10 2 8 14q-4 -6 -8 -6z" fill="#7fe3ff" stroke="${ink}" stroke-width="2"/><ellipse cx="34" cy="178" rx="17" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><path d="M16 152L14 136L22 151Z" fill="#ffe36b" stroke="${ink}" stroke-width="2"/><ellipse cx="18" cy="162" rx="9" ry="11" fill="#fff" stroke="${ink}" stroke-width="2"/><path d="M12 152q8 -2 12 6q4 8 0 16q-4 -6 -8 -6q2 -8 -4 -16z" fill="#ff9ad1" stroke="${ink}" stroke-width="2"/>`,
+ ghost:ink=>`<path d="M14 186V166A16 16 0 0 1 46 166V186L40 180L34 186L28 180L22 186L18 182Z" fill="#e8ebf8" stroke="${ink}" stroke-width="2"/><path d="M20 162Q24 156 30 155" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>`,
+ axolotl:ink=>`<path d="M48 180q12 -4 12 4q-6 4 -12 2" fill="#ffb3d1" stroke="${ink}" stroke-width="2"/><ellipse cx="32" cy="180" rx="18" ry="9" fill="#ffb3d1" stroke="${ink}" stroke-width="2"/><path d="M18 176q14 -4 28 0" stroke="#ff8fbf" stroke-width="3" stroke-dasharray="3 3" fill="none"/>${[-1,1].map(s=>[0,1,2].map(i=>`<path d="M${24+s*12} ${160+i*4}l${s*8} ${-4+i*3}" stroke="#ff6fa8" stroke-width="3" stroke-linecap="round"/>`).join('')).join('')}<ellipse cx="24" cy="166" rx="13" ry="10" fill="#ffb3d1" stroke="${ink}" stroke-width="2"/>`
+};
+/* ---------- มุมหลัง: หมวก / ของบนหัวจากชุด / รายละเอียดชุดด้านหลัง / อาวุธ ---------- */
+const BVK=ink=>`stroke="${ink}" stroke-width="2"`;
+const hoodBack=(c,{cx,yT,hr,hcy,ink},ex='')=>`<path d="M${cx-hr-5} ${hcy+10}Q${cx-hr-8} ${yT-8} ${cx} ${yT-8}Q${cx+hr+8} ${yT-8} ${cx+hr+5} ${hcy+10}Q${cx} ${hcy+18} ${cx-hr-5} ${hcy+10}Z" fill="${c}" ${BVK(ink)}/><path d="M${cx} ${yT-6}V${hcy+12}" stroke="${ink}" stroke-width="1.2" opacity=".3"/>${ex}`;
+const capBack=(c,c2,{cx,yT,hr,ink})=>`<path d="M${cx-hr+1} ${yT+12}Q${cx} ${yT-16} ${cx+hr-1} ${yT+12}Z" fill="${c}" ${BVK(ink)}/><path d="M${cx-6} ${yT+12}A6 6 0 0 1 ${cx+6} ${yT+12}Z" fill="#2a1d16"/><path d="M${cx-8} ${yT+10}H${cx+8}" stroke="${c2}" stroke-width="2.5"/><circle cx="${cx}" cy="${yT-2}" r="2" fill="${c2}"/>`;
+const strapBack=(c,{cx,yT,hr,ink},y=12)=>`<path d="M${cx-hr-2} ${yT+y}Q${cx} ${yT+y+6} ${cx+hr+2} ${yT+y}" fill="none" stroke="${c}" stroke-width="4"/><rect x="${cx-4}" y="${yT+y+1}" width="8" height="5" rx="1" fill="#c9a66b" stroke="${ink}" stroke-width="1.2"/>`;
+const HATBACK={
+ cap:o=>capBack('#e0453a','#b8322a',o),
+ pirate:({cx,yT,hr,ink})=>`<path d="M${cx-hr-8} ${yT+12}Q${cx} ${yT-26} ${cx+hr+8} ${yT+12}Q${cx} ${yT+4} ${cx-hr-8} ${yT+12}Z" fill="#26201c" ${BVK(ink)}/>`,
+ goggles:o=>strapBack('#5a3a20',o,10),
+ band:({cx,yT,hr})=>`<path d="M${cx-hr+2} ${yT+12}Q${cx} ${yT+20} ${cx+hr-2} ${yT+12}" fill="none" stroke="#ff7ad9" stroke-width="4"/>`,
+ foxmask:({cx,yT,hr,ink})=>`<path d="M${cx-hr} ${yT+12}Q${cx} ${yT+18} ${cx+hr} ${yT+12}" fill="none" stroke="#e0453a" stroke-width="2.5"/><ellipse cx="${cx+hr*.55}" cy="${yT+2}" rx="7" ry="9" transform="rotate(25 ${cx+hr*.55} ${yT+2})" fill="#f2f2ea" ${BVK(ink)}/>`,
+ helmet:o=>hoodBack('#e0453a',o,`<path d="M${o.cx-4} ${o.yT-8}V${o.hcy+14}" stroke="#fff" stroke-width="2"/>`),
+ dinohood:o=>hoodBack('#6bcb77',o,[-14,-6,2,10,18].map((d,i)=>`<path d="M${o.cx-4} ${o.yT-4+i*7}l4 -8 4 8z" fill="#ffd93d" stroke="${o.ink}" stroke-width="1.6"/>`).join('')),
+ samuraihelm:({cx,yT,hr,hcy,ink})=>`<path d="M${cx} ${yT-4}C${cx-6} ${yT-14} ${cx-22} ${yT-20} ${cx-26} ${yT-30}C${cx-12} ${yT-26} ${cx-4} ${yT-18} ${cx} ${yT-12}C${cx+4} ${yT-18} ${cx+12} ${yT-26} ${cx+26} ${yT-30}C${cx+22} ${yT-20} ${cx+6} ${yT-14} ${cx} ${yT-4}Z" fill="#c9a033" ${BVK(ink)}/><path d="M${cx-hr-6} ${hcy+2}Q${cx-hr-4} ${yT-6} ${cx} ${yT-6}Q${cx+hr+4} ${yT-6} ${cx+hr+6} ${hcy+2}L${cx+hr+10} ${hcy+14}Q${cx} ${hcy+22} ${cx-hr-10} ${hcy+14}Z" fill="#22305e" ${BVK(ink)}/>${[0,1,2].map(i=>`<path d="M${cx-hr-6+i} ${hcy+4+i*4}Q${cx} ${hcy+12+i*4} ${cx+hr+6-i} ${hcy+4+i*4}" fill="none" stroke="#3a4a80" stroke-width="1.5"/>`).join('')}`
+};
+const OHBACK={
+ baseball:o=>capBack('#2b5fa8','#1f4580',o),
+ pilot:o=>hoodBack('#6b4a2a',o)+strapBack('#c9a66b',o,4),
+ labcoat:o=>strapBack('#3c6e71',o,10),
+ cyber:({cx,hr,ey})=>`<path d="M${cx-hr-1} ${ey-2}Q${cx} ${ey+4} ${cx+hr+1} ${ey-2}" fill="none" stroke="#39ffb6" stroke-width="3"/>`,
+ esport:({cx,yT,hr,hcy,ink})=>`<path d="M${cx-hr-2} ${hcy}Q${cx-hr} ${yT-8} ${cx} ${yT-8}Q${cx+hr} ${yT-8} ${cx+hr+2} ${hcy}" fill="none" stroke="#1a1a2e" stroke-width="5"/><rect x="${cx-hr-8}" y="${hcy-8}" width="11" height="18" rx="5" fill="#39ffb6" ${BVK(ink)}/><rect x="${cx+hr-3}" y="${hcy-8}" width="11" height="18" rx="5" fill="#39ffb6" ${BVK(ink)}/>`,
+ emperor:({cx,yT,ink})=>`<path d="M${cx-16} ${yT+8}L${cx-18} ${yT-12}L${cx-8} ${yT-2}L${cx} ${yT-18}L${cx+8} ${yT-2}L${cx+18} ${yT-12}L${cx+16} ${yT+8}Z" fill="#e0b040" ${BVK(ink)} stroke-linejoin="round"/>`,
+ dragonarmor:o=>`<path d="M${o.cx-10} ${o.yT-4}L${o.cx-18} ${o.yT-24}L${o.cx-4} ${o.yT-8}ZM${o.cx+10} ${o.yT-4}L${o.cx+18} ${o.yT-24}L${o.cx+4} ${o.yT-8}Z" fill="#ffe36b" ${BVK(o.ink)}/>`+hoodBack('#c0392b',o),
+ knight:o=>hoodBack('#c9d1d9',o,`<path d="M${o.cx} ${o.yT-6}q-4 -14 6 -20q-2 10 6 12" fill="#5fb3f0" ${BVK(o.ink)}/>`),
+ hoodie:o=>hoodBack('#8a96a3',o),
+ samurai:({cx,yT,hr,ink})=>`<path d="M${cx-hr+2} ${yT+12}Q${cx} ${yT+18} ${cx+hr-2} ${yT+12}" fill="none" stroke="#f5f5f0" stroke-width="5"/><path d="M${cx} ${yT+15}l-6 10M${cx} ${yT+15}l6 10" stroke="#f5f5f0" stroke-width="3" stroke-linecap="round"/><path d="M${cx-3} ${yT-2}q3 -12 6 0" fill="#1f1a17" ${BVK(ink)}/>`,
+ ninja:({cx,yT,hr})=>`<path d="M${cx-hr} ${yT+14}Q${cx} ${yT+20} ${cx+hr} ${yT+14}" fill="none" stroke="#2a2a3a" stroke-width="7"/><path d="M${cx} ${yT+17}q-4 12 -12 16M${cx} ${yT+17}q4 12 10 18" fill="none" stroke="#2a2a3a" stroke-width="4" stroke-linecap="round"/>`,
+ mage:({cx,yT,hr})=>`<path d="M${cx-hr+2} ${yT+12}Q${cx} ${yT+18} ${cx+hr-2} ${yT+12}" fill="none" stroke="#c99bff" stroke-width="4"/>`,
+ sport:({cx,yT,hr})=>`<path d="M${cx-hr+1} ${yT+13}Q${cx} ${yT+20} ${cx+hr-1} ${yT+13}" fill="none" stroke="#e8574a" stroke-width="6"/><path d="M${cx} ${yT+17}l-5 10M${cx} ${yT+17}l6 9" stroke="#e8574a" stroke-width="3.5" stroke-linecap="round"/>`
+};
+/* รายละเอียดด้านหลังของชุด (วาดทับลำตัวในมุมหลัง) */
+const BACKOUT={
+ sport:({cx,top,th})=>`<text x="${cx}" y="${top+th*.62}" text-anchor="middle" style="font-family:var(--display);font-size:15px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#b8322a;stroke-width:2px">1</text>`,
+ baseball:({cx,top,th})=>`<text x="${cx}" y="${top+th*.62}" text-anchor="middle" style="font-family:var(--display);font-size:14px;font-weight:700;fill:#2b5fa8">π</text>`,
+ esport:({cx,top,th})=>`<text x="${cx}" y="${top+th*.38}" text-anchor="middle" style="font-family:var(--display);font-size:6px;font-weight:700;fill:#39ffb6">KRUBOY</text><text x="${cx}" y="${top+th*.72}" text-anchor="middle" style="font-family:var(--display);font-size:13px;font-weight:700;fill:#39ffb6">7</text>`,
+ hoodie:({cx,top,ink})=>`<path d="M${cx-13} ${top-1}Q${cx} ${top+20} ${cx+13} ${top-1}Z" fill="#7a8692" stroke="${ink}" stroke-width="1.8"/>`,
+ sailor:({cx,top,tw,ink})=>`<path d="M${cx-tw/2+2} ${top+1}H${cx+tw/2-2}V${top+15}H${cx-tw/2+2}Z" fill="#2b5fa8" stroke="${ink}" stroke-width="1.6"/><path d="M${cx-tw/2+5} ${top+12}H${cx+tw/2-5}" stroke="#fff" stroke-width="1.4"/>`,
+ seifuku:({cx,top,tw,ink})=>`<path d="M${cx-tw/2+2} ${top+1}H${cx+tw/2-2}V${top+14}H${cx-tw/2+2}Z" fill="#24305e" stroke="${ink}" stroke-width="1.6"/><path d="M${cx-tw/2+5} ${top+11}H${cx+tw/2-5}" stroke="#fff" stroke-width="1.4"/>`,
+ chef:({cx,hip,ink})=>`<path d="M${cx} ${hip-8}l-9 -5v10zM${cx} ${hip-8}l9 -5v10z" fill="#fff" stroke="${ink}" stroke-width="1.5"/><path d="M${cx-3} ${hip-6}l-4 10M${cx+3} ${hip-6}l4 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>`,
+ yukata:({cx,hip,ink})=>`<path d="M${cx} ${hip-10}l-13 -8v16zM${cx} ${hip-10}l13 -8v16z" fill="#f2c14e" stroke="${ink}" stroke-width="1.6"/><rect x="${cx-4}" y="${hip-15}" width="8" height="10" rx="2" fill="#e0a530" stroke="${ink}" stroke-width="1.4"/>`,
+ idol:({cx,hip,ink})=>`<path d="M${cx} ${hip-10}l-11 -7v14zM${cx} ${hip-10}l11 -7v14z" fill="#ff9ad1" stroke="${ink}" stroke-width="1.6"/><circle cx="${cx}" cy="${hip-10}" r="3" fill="#e8708a" stroke="${ink}" stroke-width="1.2"/>`,
+ labcoat:({cx,top,hip})=>`<path d="M${cx} ${hip-14}V${hip+2}" stroke="#b8c4d0" stroke-width="2"/><path d="M${cx-9} ${hip-16}H${cx+9}" stroke="#b8c4d0" stroke-width="2.5"/>`,
+ knight:({cx,top,hip,tw})=>`<path d="M${cx-tw/2+3} ${top+3}L${cx+tw/2-3} ${hip-6}M${cx+tw/2-3} ${top+3}L${cx-tw/2+3} ${hip-6}" stroke="#7a5a3a" stroke-width="3"/>`,
+ dragonarmor:({cx,top,hip,ink})=>[0,1,2].map(i=>`<path d="M${cx-4} ${top+6+i*9}l4 -6 4 6z" fill="#ffe36b" stroke="${ink}" stroke-width="1.2"/>`).join(''),
+ thai:({cx,top,hip,tw})=>`<path d="M${cx-tw/2+2} ${top+4}L${cx+tw/2-2} ${hip-4}" stroke="#f2c14e" stroke-width="5"/>`,
+ scout:({cx,top,ink})=>`<path d="M${cx-9} ${top+1}L${cx} ${top+14}L${cx+9} ${top+1}Z" fill="#e0453a" stroke="${ink}" stroke-width="1.5"/>`,
+ doctor:({cx,top,th})=>`<path d="M${cx-6} ${top+th*.45}h12M${cx} ${top+th*.45-6}v12" stroke="#fff" stroke-width="3.5"/>`,
+ royal:({cx,top,hip,tw,ink})=>`<path d="M${cx-tw/2+1} ${top+2}H${cx+tw/2-1}L${cx+tw/2+4} ${hip+6}Q${cx} ${hip+12} ${cx-tw/2-4} ${hip+6}Z" fill="#7a2ac0" stroke="${ink}" stroke-width="1.8" opacity=".95"/><path d="M${cx-tw/2+1} ${top+4}H${cx+tw/2-1}" stroke="#fff" stroke-width="3" stroke-dasharray="2 2"/>`,
+ emperor:({cx,top,hip,tw,ink})=>`<path d="M${cx-tw/2+1} ${top+2}H${cx+tw/2-1}L${cx+tw/2+5} ${hip+8}Q${cx} ${hip+14} ${cx-tw/2-5} ${hip+8}Z" fill="#c0392b" stroke="${ink}" stroke-width="1.8"/><path d="M${cx-tw/2+1} ${top+4}H${cx+tw/2-1}" stroke="#f2c14e" stroke-width="3"/>`,
+ phoenixsuit:({cx,top,hip,ink})=>[-1,1].map(k=>`<path d="M${cx+k*3} ${top+8}Q${cx+k*14} ${top+18} ${cx+k*6} ${hip-4}" fill="none" stroke="#ffe36b" stroke-width="3" stroke-linecap="round"/>`).join(''),
+ galaxy:({cx,top,th})=>[[-6,.3],[5,.5],[-2,.75]].map(([x,y])=>`<circle cx="${cx+x}" cy="${top+th*y}" r="1.6" fill="#ffe36b"/>`).join('')
+};
+/* อาวุธมุมหลัง: อยู่หลังลำตัว ด้านหลังของอุปกรณ์ (ไม่มีตัวอักษร สีทึบลง) */
+const BVFILTER='<filter id="bkside"><feColorMatrix type="matrix" values=".62 .12 .08 0 0  .1 .62 .1 0 0  .08 .12 .6 0 0  0 0 0 1 0"/></filter>';
+function wpBack(g){g=g.replace(/<text[\s\S]*?<\/text>/g,'').replace(/(<rect x="[\d.-]+" y="[\d.-]+" width="18" height="8" rx="1.5") fill="#bfe8a8"\/>/,'$1 fill="#3a4660"/>');return `<g filter="url(#bkside)">${g}</g>`}
 
 </script>
 <script>
@@ -3474,6 +3605,7 @@ function modeBadge(){const b=$('#modeB');if(!b)return;b.className='modeb '+(st.a
 
 </script>
 <script>
+function mixHex(a,b,p){const h=x=>{x=String(x).trim();if(x[0]!=='#')return null;if(x.length===4)x='#'+[...x.slice(1)].map(c=>c+c).join('');return [1,3,5].map(i=>parseInt(x.slice(i,i+2),16))};const A=h(a),B=h(b);if(!A||!B)return a;return '#'+A.map((v,i)=>Math.round(v*p+B[i]*(1-p)).toString(16).padStart(2,'0')).join('')}
 /* ---------- รูปร่างเกาะเฉพาะตัว (KruBoy) ----------
    แต่ละเกาะ: H = ความสูงแผนที่, land = ชิ้นส่วนแผ่นดิน, cut = ส่วนที่เป็นน้ำตัดออก, nodes = ตำแหน่งด่าน, fin = ปราสาทบอส,
    under = ภาพใต้แผ่นดิน (หินลอยฟ้า), over = ภาพบนแผ่นดิน (ภูเขาไฟ ครีมเค้ก ฯลฯ) */
@@ -3537,7 +3669,7 @@ function spec(ii){return (ISLANDS.length>3?P1:P2)[ii]}
 function land(ii,T,sea){const sp=spec(ii),L=[...sp.land,...(sp.extra||[])],P1g=ISLANDS.length>3;
   const all=e=>L.map(o=>shp(o,e)).join('');let s=sp.under||'';
   if(P1g){s+=`<g>${all('fill="#fff4c9" stroke="#fff" stroke-width="30" opacity=".9"')}</g><g>${all('fill="#ffe7a8" stroke="#f2cf7a" stroke-width="18"')}</g><g>${all('fill="#ffe7a8" stroke="#ffe7a8" stroke-width="12"')}</g><g>${all(`fill="${T.land}"`)}</g>`}
-  else{const dk=`color-mix(in srgb,${T.land2} 60%,#000)`;s+=`<g>${all(`fill="${dk}" stroke="${dk}" stroke-width="20"`)}</g><g>${all(`fill="${T.land2}" stroke="${T.land2}" stroke-width="14"`)}</g><g>${all(`fill="${T.land}"`)}</g>`}
+  else{const dk=`${mixHex(T.land2,"#000000",.6)}`;s+=`<g>${all(`fill="${dk}" stroke="${dk}" stroke-width="20"`)}</g><g>${all(`fill="${T.land2}" stroke="${T.land2}" stroke-width="14"`)}</g><g>${all(`fill="${T.land}"`)}</g>`}
   if(sp.cut){const c=sp.cut.map(o=>shp(o,`fill="url(#psea${ii}u)"`)).join(''),rim=sp.cut.map(o=>shp(o,P1g?'fill="none" stroke="#ffe7a8" stroke-width="14"':`fill="none" stroke="${T.land2}" stroke-width="12"`)).join('');s+=rim+c+sp.cut.map(o=>shp(o,'fill="#fff" opacity=".12"')).join('')}
   if(sp.island)s+=sp.island.map(o=>shp(o,P1g?`fill="${T.land}" stroke="#ffe7a8" stroke-width="10"`:`fill="${T.land}" stroke="${T.land2}" stroke-width="8"`)).join('');
   return s+(sp.over||'')}
@@ -3735,7 +3867,7 @@ const ISLE_THEME=[
  {land:'#c9b6ff',land2:'#a990f0',sea:'#3b2f7a',deco:'sky'}];
 function placeMapSVG(ii){
   const is=ISLANDS[ii],T=ISLE_THEME[ii],W=360,H=ISX.H(ii),list=is.stages;let s='';
-  s+=`<defs><linearGradient id="psea${ii}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="color-mix(in srgb,${T.sea} 60%,#000)"/></linearGradient><linearGradient id="psea${ii}u" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="color-mix(in srgb,${T.sea} 60%,#000)"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#psea${ii}u)"/>`;
+  s+=`<defs><linearGradient id="psea${ii}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="${mixHex(T.sea,"#000000",.6)}"/></linearGradient><linearGradient id="psea${ii}u" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="${H}"><stop offset="0" stop-color="${T.sea}"/><stop offset="1" stop-color="${mixHex(T.sea,"#000000",.6)}"/></linearGradient></defs><rect width="${W}" height="${H}" fill="url(#psea${ii}u)"/>`;
   if(T.deco==='sky')s+=[[40,80],[300,140],[60,420],[320,520],[200,560]].map(([x,y])=>`<g fill="#fff" opacity=".25"><ellipse cx="${x}" cy="${y}" rx="36" ry="12"/><ellipse cx="${x+18}" cy="${y-8}" rx="20" ry="12"/></g>`).join('');
   else s+=[...Array(14)].map((_,i)=>{const x=(i*97)%340+10,y=(i*151)%560+10;return `<path d="M${x} ${y}q6 -5 12 0t12 0" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>`}).join('');
   s+=ISX.land(ii,T);
@@ -4026,6 +4158,27 @@ if(typeof prevItem==='function'){const _pv=prevItem;prevItem=function(k,big){con
   return `<div class="${big?'avbig':''} avpair"><div>${myAv(eq)}<small>ด้านหน้า</small></div><div>${myAvBack(eq)}<small>ด้านหลัง</small></div></div>`}}
 
 </script>
+<script>
+/* ---------- รับประกันว่าตัวเลือกคำตอบอยู่ในจอเสมอ (จอเล็ก / จอเตี้ย) ---------- */
+(function(){
+  const B=()=>document.getElementById('battle');
+  function lastBottom(){const cs=document.querySelectorAll('#choices .ch');let m=0;cs.forEach(c=>{const r=c.getBoundingClientRect();if(r.height)m=Math.max(m,r.bottom)});return m}
+  function over(){const m=lastBottom();return m>0&&m>window.innerHeight-2}
+  function fit(reset){const b=B();if(!b||typeof cur==='undefined'||cur!=='battle')return;
+    if(reset){b.classList.remove('tight','scrolly');b.scrollTop=0}
+    if(!b.classList.contains('tight')&&over())b.classList.add('tight');
+    if(!b.classList.contains('scrolly')&&over()){b.classList.add('scrolly')}
+    if(b.classList.contains('scrolly')&&over()){const c=document.getElementById('choices');if(c){const r=c.getBoundingClientRect();b.scrollTop+=r.bottom-window.innerHeight+8}}}
+  window.fitBattle=fit;
+  let t=0;const later=(reset)=>{clearTimeout(t);t=setTimeout(()=>fit(reset),60)};
+  if(typeof renderPart==='function'){const _rp=renderPart;renderPart=function(){const r=_rp.apply(this,arguments);requestAnimationFrame(()=>fit(true));setTimeout(()=>fit(false),450);return r}}
+  window.addEventListener('resize',()=>later(true));
+  const mo=new MutationObserver(()=>later(false));
+  const hook=()=>{['owlbub','qcard','choices'].forEach(id=>{const e=document.getElementById(id);if(e)mo.observe(e,{childList:true,subtree:true,characterData:true})})};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hook);else hook();
+})();
+
+</script>
 </body>
 </html>
-<!-- KruBoy ภาค2 v2.9 : END OF FILE -->
+<!-- KruBoy ภาค2 v3.0 : END OF FILE -->
